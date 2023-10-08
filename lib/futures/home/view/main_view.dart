@@ -1,18 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../ads/views/ads_view.dart';
 import '../../clients/views/clients_view.dart';
 import '../../drivers/views/drivers_view.dart';
+import '../controller/home_controller.dart';
 import 'home_view.dart';
 
-class MainView extends StatelessWidget {
+class MainView extends StatefulWidget {
+
+  MainView({super.key});
+
+  @override
+  State<MainView> createState() => _MainViewState();
+}
+
+class _MainViewState extends State<MainView> {
   final PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
-  MainView({super.key});
+
+  final controller=Get.put(HomeController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +74,7 @@ class MainView extends StatelessWidget {
   }
 
   List<Widget> _buildScreens() {
-    return const [
+    return  [
       HomeView(),
       AdsView(),
       ClientsView(),

@@ -1,10 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/functions/global_function.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
-import 'package:selivery_controlle_panal/futures/ads/views/add_ads_view.dart';
 import 'package:selivery_controlle_panal/futures/setting/view/add_vical.dart';
 import 'package:selivery_controlle_panal/futures/setting/view/all_vichal.dart';
 
@@ -12,10 +12,18 @@ import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
+import '../controller/setting_controller.dart';
+import '../controller/test.dart';
 
-class SettingView extends StatelessWidget {
+class SettingView extends StatefulWidget {
   const SettingView({super.key});
 
+  @override
+  State<SettingView> createState() => _SettingViewState();
+}
+
+class _SettingViewState extends State<SettingView> {
+  final settingController=Get.put(CategoryController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +44,7 @@ class SettingView extends StatelessWidget {
               customSettingWidget(context, 'assets/Car (1).png', 'المركبات'),
               const CustomSizedBox(value: .01),
               InkWell(
-                onTap: () => navigateTo(context, const AddVicalView()),
+                onTap: () => navigateTo(context, const AddVehicleView()),
                 child: SizedBox(
                   height: 50,
                   child: Stack(
@@ -90,34 +98,40 @@ class SettingView extends StatelessWidget {
   }
 
   customExitWidget() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: SizedBox(
-        height: 50,
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            const Divider(color: Colors.grey),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.logout,
-                    color: Colors.red,
-                  ),
-                  SizedBox(width: 5),
-                  ResponsiveText(
-                    text: 'تسجيل الخروج',
-                    scaleFactor: .06,
-                    color: AppColors.red,
-                  ),
-                ],
+    return InkWell(
+      onTap: ()async{
+        //ServiceClass().pickClientImage('title');
+     await  settingController.pickImage();
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: SizedBox(
+          height: 50,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              const Divider(color: Colors.grey),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 5),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    Icon(
+                      Icons.logout,
+                      color: Colors.red,
+                    ),
+                    SizedBox(width: 5),
+                    ResponsiveText(
+                      text: 'تسجيل الخروج',
+                      scaleFactor: .06,
+                      color: AppColors.red,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

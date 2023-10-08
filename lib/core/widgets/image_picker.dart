@@ -1,17 +1,18 @@
+import 'dart:io';
+
 import 'package:image_picker/image_picker.dart';
 
 class PickImage {
-  final ImagePicker _picker = ImagePicker();
-  ImagePicker get picker => _picker;
-  XFile? pickedImage;
-  Future<void> pickImage(ImageSource source) async {
-    try {
-      XFile? image = await _picker.pickImage(source: source);
-      if (image != null) {
-        pickedImage = image;
-      }
-    } catch (e) {
-      print("Error picking image: $e");
+  Future<File?> pickImage() async {
+    File pickedImage;
+    final imagePicker = ImagePicker();
+    final picked = await imagePicker.pickImage(
+      source: ImageSource.gallery,imageQuality: 80
+    );
+    if (picked != null) {
+      pickedImage = File(picked.path);
+      return pickedImage;
     }
+    return null;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
@@ -6,9 +7,22 @@ import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
+import '../controller/clients_controller.dart';
 
-class BestVicale extends StatelessWidget {
+class BestVicale extends StatefulWidget {
   const BestVicale({super.key});
+
+  @override
+  State<BestVicale> createState() => _BestVicaleState();
+}
+
+class _BestVicaleState extends State<BestVicale> {
+  final clientController = Get.find<ClientController>();
+  @override
+  void initState() {
+    super.initState();
+    clientController.getTopVehiclesData();
+  }
 
   @override
   Widget build(BuildContext context) {

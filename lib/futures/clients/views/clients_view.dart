@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:selivery_controlle_panal/futures/clients/controller/clients_controller.dart';
 import 'package:selivery_controlle_panal/futures/clients/views/best_client.dart';
 import 'package:selivery_controlle_panal/futures/clients/views/best_vicale.dart';
 import '../../../core/functions/global_function.dart';
@@ -8,9 +10,12 @@ import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
+import '../../home/controller/home_controller.dart';
 
 class ClientsView extends StatelessWidget {
-  const ClientsView({super.key});
+  final homeController = Get.find<HomeController>();
+  final ClientController controller = Get.put(ClientController());
+  ClientsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +78,13 @@ class ClientsView extends StatelessWidget {
                           color: AppColors.black,
                         ),
                         const Spacer(),
-                        const ResponsiveText(
-                          text: '231',
-                          scaleFactor: .06,
-                          color: AppColors.black,
+                        Obx(
+                          () => ResponsiveText(
+                            text: homeController.homeModel.value.usersNo
+                                .toString(),
+                            scaleFactor: .06,
+                            color: AppColors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -84,9 +92,9 @@ class ClientsView extends StatelessWidget {
                 ),
               ),
               const CustomSizedBox(value: .02),
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   ResponsiveText(
                     text: ' تفضيلات البحث',
                     scaleFactor: .06,
@@ -105,7 +113,7 @@ class ClientsView extends StatelessWidget {
                     alignment: Alignment.center,
                     children: [
                       ColorFiltered(
-                        colorFilter:const  ColorFilter.mode(
+                        colorFilter: const ColorFilter.mode(
                           Colors.grey,
                           BlendMode.modulate,
                         ),

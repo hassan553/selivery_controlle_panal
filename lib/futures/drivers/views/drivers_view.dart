@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:selivery_controlle_panal/core/contants/api.dart';
+import 'package:selivery_controlle_panal/futures/drivers/controller/drivers_controller.dart';
+import 'package:selivery_controlle_panal/futures/drivers/model/driver_model.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
@@ -6,9 +10,24 @@ import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
+import '../../home/controller/home_controller.dart';
 
-class DriversView extends StatelessWidget {
+class DriversView extends StatefulWidget {
   const DriversView({super.key});
+
+  @override
+  State<DriversView> createState() => _DriversViewState();
+}
+
+class _DriversViewState extends State<DriversView> {
+  final homeController = Get.find<HomeController>();
+  DriversController driversController = Get.put(DriversController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    driversController.getTopDriversData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +88,13 @@ class DriversView extends StatelessWidget {
                         color: AppColors.black,
                       ),
                       const Spacer(),
-                      const ResponsiveText(
-                        text: '231',
-                        scaleFactor: .06,
-                        color: AppColors.black,
+                      Obx(
+                        () => ResponsiveText(
+                          text:
+                              homeController.homeModel.value.usersNo.toString(),
+                          scaleFactor: .06,
+                          color: AppColors.black,
+                        ),
                       ),
                     ],
                   ),
@@ -103,9 +125,9 @@ class DriversView extends StatelessWidget {
             const CustomSizedBox(value: .02),
             Expanded(
               child: ListView.builder(
-                itemBuilder: (context, index) =>
-                    bestDriverWidget(context, index),
-                itemCount: 3,
+                itemBuilder: (context, index) => bestDriverWidget(
+                    context, index, driversController.driversList[index]),
+                itemCount: driversController.driversList.length,
               ),
             ),
           ],
@@ -114,7 +136,8 @@ class DriversView extends StatelessWidget {
     );
   }
 
-  Column bestDriverWidget(BuildContext context, int index) {
+  Column bestDriverWidget(
+      BuildContext context, int index, DriverModel driverModel) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -156,8 +179,8 @@ class DriversView extends StatelessWidget {
                         padding: const EdgeInsets.all(5.0),
                         child: Column(
                           children: [
-                            const ResponsiveText(
-                              text: 'الاسم : Hassan Ahmed',
+                            ResponsiveText(
+                              text: 'الاسم : ${driverModel.name ?? ""}',
                               scaleFactor: .06,
                               color: AppColors.black,
                             ),
@@ -166,8 +189,8 @@ class DriversView extends StatelessWidget {
                               scaleFactor: .06,
                               color: AppColors.black,
                             ),
-                            const ResponsiveText(
-                              text: ' 01115690652',
+                            ResponsiveText(
+                              text: driverModel.phone ?? "",
                               scaleFactor: .06,
                               color: AppColors.black,
                             ),
@@ -178,9 +201,9 @@ class DriversView extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 color: AppColors.red,
                               ),
-                              child: Row(
+                              child: const Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: const [
+                                children: [
                                   ResponsiveText(
                                     text: 'حذف',
                                     scaleFactor: .04,
@@ -199,11 +222,12 @@ class DriversView extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  CustomAssetsImage(
-                      width: p1.maxWidth * .4,
-                      height: p1.maxHeight,
-                      boxFit: BoxFit.fill,
-                      path: 'assets/Rectangle 253.png')
+                  Image.network(
+                    '$baseUri${driverModel.image}',
+                    width: p1.maxWidth * .4,
+                    height: p1.maxHeight,
+                    fit: BoxFit.fill,
+                  ),
                 ],
               ),
             )),

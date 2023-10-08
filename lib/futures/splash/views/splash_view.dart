@@ -21,7 +21,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     Future.delayed(
       const Duration(seconds: 2),
-      () => navigateOff(context, const LoginView())
+      () => navigateOff(context,  LoginView())
     );
   }
 
