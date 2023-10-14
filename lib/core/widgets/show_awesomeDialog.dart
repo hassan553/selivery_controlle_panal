@@ -1,10 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../functions/global_function.dart';
-
-showAwesomeDialog(BuildContext context, String? title, String? description,
-    Widget? screen) {
+showAwesomeDialog(
+    BuildContext context, String? title, String? description, Widget? screen) {
   AwesomeDialog(
     context: context,
     dialogType: DialogType.info,
@@ -12,6 +11,25 @@ showAwesomeDialog(BuildContext context, String? title, String? description,
     title: title,
     desc: description,
     btnCancelOnPress: () {},
-    btnOkOnPress: () =>screen==null?null: navigateTo(context,screen),
+    btnOkOnPress: () {},
   ).show();
+}
+
+void showDialogWithGetX(String message) {
+  Get.dialog(
+    SizedBox(
+      child: AlertDialog(
+        title: const Text('تنبيه'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back(); // Close the dialog
+            },
+            child: const Text('اغلاق'),
+          ),
+        ],
+      ),
+    ),
+  );
 }

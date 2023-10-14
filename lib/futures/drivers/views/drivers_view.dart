@@ -124,10 +124,18 @@ class _DriversViewState extends State<DriversView> {
             ),
             const CustomSizedBox(value: .02),
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) => bestDriverWidget(
-                    context, index, driversController.driversList[index]),
-                itemCount: driversController.driversList.length,
+              child: Obx(
+                () => driversController.driversList.isEmpty
+                    ? const Center(
+                        child: Text('is Empty'),
+                      )
+                    : ListView.builder(
+                        itemBuilder: (context, index) => bestDriverWidget(
+                            context,
+                            index,
+                            driversController.driversList[index]),
+                        itemCount: driversController.driversList.length,
+                      ),
               ),
             ),
           ],

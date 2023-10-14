@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/functions/global_function.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_column_divider.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
-
+import 'package:selivery_controlle_panal/futures/ads/controller/all_ads_controller.dart';
+import 'package:selivery_controlle_panal/futures/ads/model/ads_model.dart';
+import '../../../core/contants/api.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
 
 class AllAdsView extends StatelessWidget {
-  const AllAdsView({super.key});
+  final controller = Get.put(AllAdsController());
+  AllAdsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +29,9 @@ class AllAdsView extends StatelessWidget {
               const CustomSizedBox(value: .02),
               Expanded(
                 child: ListView.builder(
-                  itemBuilder: (context, index) =>
-                      customAdsWidget(context, index),
-                  itemCount: 10,
+                  itemBuilder: (context, index) => customAdsWidget(
+                      context, index, controller.allAdsList[index]),
+                  itemCount: controller.allAdsList.length,
                 ),
               ),
               const CustomSizedBox(value: .02),
@@ -38,7 +40,7 @@ class AllAdsView extends StatelessWidget {
         ));
   }
 
-  Column customAdsWidget(BuildContext context, int index) {
+  Column customAdsWidget(BuildContext context, int index, AdsModel model) {
     return Column(
       children: [
         Align(
@@ -56,11 +58,13 @@ class AllAdsView extends StatelessWidget {
             ),
           ),
         ),
-        CustomAssetsImage(
-          path: 'assets/Rectangle 247.png',
+        const SizedBox(height: 5),
+        Image.network(
+          '$baseUri${model.image}',
           width: screenSize(context).width,
           height: screenSize(context).height * .3,
-          boxFit: BoxFit.fill,
+          fit: BoxFit.fill,
+          errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
         ),
         const CustomSizedBox(value: .02),
         Row(
@@ -81,8 +85,8 @@ class AllAdsView extends StatelessWidget {
                       CustomAssetsImage(
                           width: 20,
                           path: 'assets/Natural User Interface 5.png'),
-                      const ResponsiveText(
-                        text: 'عدد النقرات :23 ',
+                      ResponsiveText(
+                        text: 'عدد النقرات :${model.views} ',
                         scaleFactor: .03,
                         color: AppColors.white,
                       ),
@@ -107,9 +111,9 @@ class AllAdsView extends StatelessWidget {
                 ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: FittedBox(
+                child: const FittedBox(
                   child: Row(
-                    children: const [
+                    children: [
                       ResponsiveText(
                         text: 'حذف الإعلان ',
                         scaleFactor: .03,

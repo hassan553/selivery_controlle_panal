@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:selivery_controlle_panal/futures/clients/model/vehicle_model.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
 import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
+import '../../../core/widgets/error_compant.dart';
 import '../../../core/widgets/responsive_text.dart';
 import '../controller/clients_controller.dart';
 
@@ -64,11 +66,20 @@ class _BestVicaleState extends State<BestVicale> {
             ),
             const CustomSizedBox(value: .02),
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) =>
-                    bestClientWidget(context, index, titles[index]),
-                itemCount: titles.length,
-              ),
+              child: Obx(() {
+                return clientController.vehicleList.isEmpty
+                    ? ErrorComponant(
+                        function: clientController.getTopVehiclesData,
+                        message: clientController.vehiclesDataError.value)
+                    : ListView.builder(
+                        itemBuilder: (context, index) => bestClientWidget(
+                            context,
+                            index,
+                            titles[index],
+                            clientController.vehicleList[index]),
+                        itemCount: clientController.vehicleList.length,
+                      );
+              }),
             ),
           ],
         ),
@@ -76,7 +87,8 @@ class _BestVicaleState extends State<BestVicale> {
     );
   }
 
-  Column bestClientWidget(BuildContext context, int index, String title) {
+  Column bestClientWidget(
+      BuildContext context, int index, String title, VehicleModel model) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -118,7 +130,7 @@ class _BestVicaleState extends State<BestVicale> {
                         child: Column(
                           children: [
                             ResponsiveText(
-                              text: title,
+                              text: model.model ?? '',
                               scaleFactor: .06,
                               color: AppColors.black,
                             ),
@@ -153,9 +165,9 @@ class _BestVicaleState extends State<BestVicale> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: AppColors.red,
                               ),
-                              child: Row(
+                              child: const Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: const [
+                                children: [
                                   ResponsiveText(
                                     text: 'حذف',
                                     scaleFactor: .04,
@@ -174,11 +186,13 @@ class _BestVicaleState extends State<BestVicale> {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  CustomAssetsImage(
+                  Image.network(
+                    model.images?[0] ?? '',
                     width: p1.maxWidth * .4,
                     height: p1.maxHeight,
-                    boxFit: BoxFit.fill,
-                    path: 'assets/pngwing 16.png',
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.error),
                   ),
                 ],
               ),

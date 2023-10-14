@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/functions/global_function.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
 import 'package:selivery_controlle_panal/futures/ads/controller/ads_controller.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_column_divider.dart';
@@ -48,33 +49,37 @@ class AddAdsView extends StatelessWidget {
                   ],
                 ),
                 const CustomSizedBox(value: .02),
-                customForm(context, 'إسم الإعلان', 40, controller.title),
-                const CustomSizedBox(value: .02),
-                customForm(context, 'لينك الإعلان', 40, controller.link),
-                const CustomSizedBox(value: .02),
                 customForm(
-                    context, 'تفاصيل الإعلان', 100, controller.description),
+                    context, 'إسم الإعلان', 1, controller.titleController),
+                const CustomSizedBox(value: .02),
+                customForm(context, 'لينك الإعلان', 1,
+                    controller.youtubeLinkController),
+                const CustomSizedBox(value: .02),
+                customForm(context, 'تفاصيل الإعلان', 5,
+                    controller.descriptionController),
                 const CustomSizedBox(value: .02),
                 customAddImageFormFiled(context),
                 const CustomSizedBox(value: .05),
-                InkWell(
-                  onTap: () {
-                    if (formKey.currentState!.validate() &&
-                        controller.adsImage != null) {
-                      controller.postDataWithFile();
-                    }
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: AppColors.primaryColor,
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                    child: const ResponsiveText(
-                      text: 'إضافة ',
-                      scaleFactor: .04,
-                      color: AppColors.black,
+                Obx(
+                  ()=>controller.isLoading.value?const CustomLoadingWidget(): InkWell(
+                    onTap: () {
+                      if (formKey.currentState!.validate() &&
+                          controller.adsImage != null) {
+                        controller.postDataWithFile();
+                      }
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.primaryColor,
+                      ),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                      child: const ResponsiveText(
+                        text: 'إضافة ',
+                        scaleFactor: .04,
+                        color: AppColors.black,
+                      ),
                     ),
                   ),
                 ),
@@ -112,7 +117,13 @@ class AddAdsView extends StatelessWidget {
               ),
               child: controller.adsImage == null
                   ? CustomAssetsImage(path: 'assets/Add Image.png')
-                  : Image.file(controller.adsImage!),
+                  : Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.file(
+                        controller.adsImage!,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
             ),
           ),
         ],
@@ -120,8 +131,8 @@ class AddAdsView extends StatelessWidget {
     );
   }
 
-  Row customForm(
-      BuildContext context, String title, double maxLine, String? newValue) {
+  Row customForm(BuildContext context, String title, int maxLine,
+      TextEditingController controller) {
     return Row(
       children: [
         FittedBox(
@@ -132,9 +143,9 @@ class AddAdsView extends StatelessWidget {
         ),
         const Spacer(),
         SizedBox(
-          height: maxLine,
           width: screenSize(context).width * .6,
           child: TextFormField(
+            controller: controller,
             validator: (value) {
               if (value == null) {
                 return 'Not Valid Empty Value';
@@ -143,10 +154,7 @@ class AddAdsView extends StatelessWidget {
               }
               return null;
             },
-            onChanged: (value) {
-              newValue = value;
-            },
-            maxLines: 4,
+            maxLines: maxLine,
             cursorColor: AppColors.primaryColor,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(10),

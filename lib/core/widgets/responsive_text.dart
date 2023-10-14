@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ResponsiveText extends StatelessWidget {
-  final String text;
+  final String? text;
   final double scaleFactor;
   final FontWeight fontWeight;
   final Color color;
   final TextAlign textAlign;
   const ResponsiveText({
     super.key,
-    required this.text,
+    this.text,
     this.scaleFactor = 0.05,
     this.fontWeight = FontWeight.normal,
     this.color = Colors.black,
@@ -20,7 +20,7 @@ class ResponsiveText extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double fontSize = screenWidth * scaleFactor;
     return Text(
-      text,
+      text??'',
       style: TextStyle(
         fontSize: fontSize,
         color: color,

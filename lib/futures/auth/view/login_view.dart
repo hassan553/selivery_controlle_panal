@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:selivery_controlle_panal/core/rescourcs/app_colors.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_button.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_sized_box.dart';
 import 'package:selivery_controlle_panal/core/widgets/responsive_text.dart';
-import 'package:selivery_controlle_panal/futures/home/view/main_view.dart';
 
 import '../../../core/functions/global_function.dart';
 import '../../../core/widgets/custom_image.dart';
 import '../controller/login_controller.dart';
 
 class LoginView extends StatelessWidget {
-  final controller = Get.put(LoginController());
+  final loginController = Get.put(LoginController());
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -51,14 +49,23 @@ class LoginView extends StatelessWidget {
                           color: AppColors.white,
                         ),
                       ),
-                      customTextFormField(controller.email, (String? value) {
-                        if (value == null) {
-                          return 'not valid empty value';
-                        } else if (!value.contains('@')) {
-                          return 'enter valid email';
-                        }
-                        return null;
-                      }, context),
+                      customTextFormField(
+                          loginController.email,
+                          (String? value) {
+                            if (value == null) {
+                              return 'not valid empty value';
+                            } else if (!value.contains('@')) {
+                              return 'enter valid email';
+                            }
+                            return null;
+                          },
+                          context,
+                          loginController.emailFocus,
+                          false,
+                          (value) {
+                            FocusScope.of(context)
+                                .requestFocus(loginController.passwordFocus);
+                          }),
                       const CustomSizedBox(value: .01),
                       const Align(
                         alignment: Alignment.bottomRight,
@@ -68,17 +75,27 @@ class LoginView extends StatelessWidget {
                           color: AppColors.white,
                         ),
                       ),
-                      customTextFormField(controller.password, (String? value) {
-                        if (value == null) {
-                          return 'not valid empty password';
-                        } else if (value.length < 6) {
-                          return 'short Password';
-                        }
-                        return null;
-                      }, context),
+                      customTextFormField(
+                          loginController.password,
+                          (String? value) {
+                            if (value == null) {
+                              return 'not valid empty password';
+                            } else if (value.length < 6) {
+                              return 'short Password';
+                            }
+                            return null;
+                          },
+                          context,
+                          loginController.passwordFocus,
+                          true,
+                          (value) {
+                            if (formKey.currentState!.validate()) {
+                              loginController.login(context);
+                            }
+                          }),
                       const CustomSizedBox(value: .04),
                       Obx(
-                        () => controller.isLoading.value
+                        () => loginController.isLoading.value
                             ? const CustomLoadingWidget(
                                 color: Colors.white,
                               )
@@ -86,7 +103,7 @@ class LoginView extends StatelessWidget {
                                 function: () {
                                   FocusScope.of(context).unfocus();
                                   if (formKey.currentState!.validate()) {
-                                    controller.login(context);
+                                    loginController.login(context);
                                   }
                                 },
                                 title: 'دخول',
@@ -102,17 +119,24 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  SizedBox customTextFormField(TextEditingController controller,
-      String? Function(String?)? validator, BuildContext context) {
+  SizedBox customTextFormField(
+      TextEditingController controller,
+      String? Function(String?)? validator,
+      BuildContext context,
+      FocusNode focusNode,
+      bool obscure,
+      void Function(String)? onsubmit) {
     return SizedBox(
       height: 50,
       child: TextFormField(
         onTapOutside: (event) => FocusScope.of(context).unfocus(),
-        autovalidateMode: AutovalidateMode.always,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         cursorColor: AppColors.primaryColor,
         controller: controller,
+        obscureText: obscure,
         validator: validator,
-        onFieldSubmitted: (value) => FocusScope.of(context).unfocus(),
+        focusNode: focusNode,
+        onFieldSubmitted: onsubmit,
         decoration: InputDecoration(
           fillColor: AppColors.white,
           filled: true,

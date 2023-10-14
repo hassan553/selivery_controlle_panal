@@ -13,7 +13,7 @@ import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
 import '../controller/setting_controller.dart';
-import '../controller/test.dart';
+
 
 class SettingView extends StatefulWidget {
   const SettingView({super.key});

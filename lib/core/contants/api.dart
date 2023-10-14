@@ -10,6 +10,13 @@ final topVehicles = Uri.parse("${baseUri}dashboard/trip/top_vehicles");
 final topDrivers = Uri.parse("${baseUri}dashboard/driver");
 final uploadCategoryUri = Uri.parse('${baseUri}dashboard/category');
 final addAdsUri = Uri.parse('${baseUri}dashboard/advertisement');
+final getAllAdsUri = Uri.parse('${baseUri}dashboard/advertisement');
+
+
+Uri deleteCategoryUri(String? id) =>
+    Uri.parse('${baseUri}dashboard/category/$id');
+Uri updateCategoryUri(String? id) =>
+    Uri.parse('${baseUri}dashboard/category/$id');
 
 final authHeaders = {
   'Keep-Alive': 'timeout=5',

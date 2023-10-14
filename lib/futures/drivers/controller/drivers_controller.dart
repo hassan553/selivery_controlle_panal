@@ -9,7 +9,7 @@ import '../model/driver_model.dart';
 class DriversController extends GetxController {
   var isLoading = false.obs;
   var error = ''.obs;
-  List<DriverModel> driversList = [];
+  RxList driversList = <DriverModel>[].obs;
   Future<void> getTopDriversData() async {
     isLoading.value = true;
     try {
@@ -20,8 +20,6 @@ class DriversController extends GetxController {
 
       if (response.statusCode == 200) {
         final result = jsonDecode(response.body);
-
-        //homeModel.value=HomeModel.fromJson(result['stats']);
         print('top Drivers  $result');
         var r = result['drivers'] as List;
         r.map((e) {

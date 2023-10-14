@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:selivery_controlle_panal/core/widgets/error_compant.dart';
 import 'package:selivery_controlle_panal/futures/clients/controller/clients_controller.dart';
+import 'package:selivery_controlle_panal/futures/clients/model/passengers_model.dart';
+import '../../../core/contants/api.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
+import '../../../core/widgets/custom_button.dart';
 import '../../../core/widgets/custom_column_divider.dart';
-import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
 
@@ -18,12 +21,6 @@ class BestClients extends StatefulWidget {
 
 class _BestClientsState extends State<BestClients> {
   final clientController = Get.find<ClientController>();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    clientController.getTopPassengersData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +63,19 @@ class _BestClientsState extends State<BestClients> {
             ),
             const CustomSizedBox(value: .02),
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) =>
-                    bestClientWidget(context, titles[index]),
-                itemCount: 3,
-              ),
+              child: Obx(() {
+                return clientController.passengerList.isEmpty
+                    ? ErrorComponant(
+                        function: clientController.getTopPassengersData,
+                        message: clientController.passengersDataError.value)
+                    : ListView.builder(
+                        itemBuilder: (context, index) => bestClientWidget(
+                            context,
+                            titles[index],
+                            clientController.passengerList[index]),
+                        itemCount: clientController.passengerList.length,
+                      );
+              }),
             ),
           ],
         ),
@@ -78,7 +83,8 @@ class _BestClientsState extends State<BestClients> {
     );
   }
 
-  Column bestClientWidget(BuildContext context, String title) {
+  Column bestClientWidget(
+      BuildContext context, String title, PassengerModel model) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -114,18 +120,18 @@ class _BestClientsState extends State<BestClients> {
             child: LayoutBuilder(
               builder: (p0, p1) => Row(
                 children: [
-                const   Expanded(
+                  Expanded(
                     child: FittedBox(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children:  [
+                        children: [
                           ResponsiveText(
-                            text: 'الاسم : Mahmoud Ahmed',
+                            text: 'الاسم : ${model.passenger ?? ""}',
                             scaleFactor: .05,
                             color: AppColors.black,
                           ),
                           ResponsiveText(
-                            text: 'رقم الموبايل\n 0115690652',
+                            text: 'رقم الموبايل\n ${model.phone ?? ""}',
                             scaleFactor: .05,
                             color: AppColors.black,
                           ),
@@ -134,11 +140,14 @@ class _BestClientsState extends State<BestClients> {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  CustomAssetsImage(
-                      width: p1.maxWidth * .4,
-                      height: p1.maxHeight,
-                      boxFit: BoxFit.fill,
-                      path: 'assets/Rectangle 253.png')
+                  Image.network(
+                    '$baseUri${model.image}',
+                    width: p1.maxWidth * .4,
+                    height: p1.maxHeight,
+                    fit: BoxFit.fill,
+                    errorBuilder: (context, error, stackTrace) =>
+                        const Icon(Icons.error),
+                  )
                 ],
               ),
             )),

@@ -1,13 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/contants/api.dart';
 import 'package:selivery_controlle_panal/core/functions/global_function.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/futures/setting/controller/setting_controller.dart';
 import 'package:selivery_controlle_panal/futures/setting/model/category_model.dart';
 
@@ -25,12 +20,6 @@ class AllVicale extends StatefulWidget {
 
 class _AllVicaleState extends State<AllVicale> {
   final CategoryController categoryController = Get.find<CategoryController>();
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    categoryController.getAllCategories();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,15 +52,15 @@ class _AllVicaleState extends State<AllVicale> {
               )),
             ],
           ),
-          
           Expanded(
-            child: ListView.builder(
-              itemCount: categoryController.categoryList.length,
-              itemBuilder: (context, index) {
-                print(categoryController.categoryList[index].image);
-                return customVicalWidget(
-                    context, categoryController.categoryList[index]);
-              },
+            child: Obx(
+              ()=> ListView.builder(
+                itemCount: categoryController.categoryList.length,
+                itemBuilder: (context, index) {
+                  return customVicalWidget(
+                      context, categoryController.categoryList[index]);
+                },
+              ),
             ),
           ),
         ],
@@ -80,7 +69,6 @@ class _AllVicaleState extends State<AllVicale> {
   }
 
   Container customVicalWidget(BuildContext context, CategoryModel model) {
-    print("$baseUri${model.image}");
     return Container(
       width: screenSize(context).width,
       height: screenSize(context).height * .3,
@@ -95,9 +83,20 @@ class _AllVicaleState extends State<AllVicale> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             const SizedBox(height: 3),
-            Image.network(
-              "http://192.168.1.122:8000/images/2023-09-02T15-26-50.951Zimage3.png",
-              fit: BoxFit.cover,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.network(
+                    '$baseUri${model.image}' ??
+                        'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
+                    errorBuilder: (context, url, error) =>
+                        const Icon(Icons.error),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
             ),
             const Divider(color: AppColors.black),
             FittedBox(
@@ -125,28 +124,31 @@ class _AllVicaleState extends State<AllVicale> {
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: AppColors.red,
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  child: const FittedBox(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ResponsiveText(
-                          text: 'حذف ',
-                          scaleFactor: .04,
-                          color: AppColors.white,
-                        ),
-                        SizedBox(width: 2),
-                        Icon(
-                          Icons.delete,
-                          color: AppColors.white,
-                        ),
-                      ],
+                InkWell(
+                  onTap: () =>categoryController.deleteCategory(model.sId),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: AppColors.red,
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    child: const FittedBox(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ResponsiveText(
+                            text: 'حذف ',
+                            scaleFactor: .04,
+                            color: AppColors.white,
+                          ),
+                          SizedBox(width: 2),
+                          Icon(
+                            Icons.delete,
+                            color: AppColors.white,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
