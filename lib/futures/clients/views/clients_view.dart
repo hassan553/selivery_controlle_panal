@@ -20,7 +20,7 @@ class ClientsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context),
+      appBar: customAppBarForSearch(context, ''),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -28,29 +28,14 @@ class ClientsView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const CustomSizedBox(value: .02),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: AppColors.primaryColor,
-                      ),
-                      padding: const EdgeInsets.all(8),
-                      child: const Icon(
-                        Icons.list,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  const Expanded(
-                      child: CustomColumnDivider(
+              const SizedBox(
+                height: 80,
+                child: Expanded(
+                  child: CustomColumnDivider(
                     title: 'العملاء',
-                    imagePath: 'assets/Businessman.png',
-                  )),
-                ],
+                    imagePath: 'assets/Driving.png',
+                  ),
+                ),
               ),
               const CustomSizedBox(value: .01),
               SizedBox(
@@ -66,8 +51,8 @@ class ClientsView extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
+                        const Padding(
+                          padding:  EdgeInsets.only(bottom: 8),
                           child:
                               CustomAssetsImage(path: 'assets/Businessman.png'),
                         ),

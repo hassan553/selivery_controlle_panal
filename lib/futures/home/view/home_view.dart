@@ -18,169 +18,172 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: customAppBar(context),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const CustomSizedBox(value: .02),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: InkWell(
-                        onTap: () => navigateTo(context, const SettingView()),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: AppColors.primaryColor,
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          child: const Icon(
-                            Icons.list,
-                            color: Colors.black,
+      child: SafeArea(
+        child: Scaffold(
+          appBar: customAppBar(),
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CustomSizedBox(value: .02),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: InkWell(
+                          onTap: () => navigateTo(context, const SettingView()),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: AppColors.primaryColor,
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            child: const Icon(
+                              Icons.list,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const ResponsiveText(
-                            text: 'معلومات التطبيق',
-                            scaleFactor: .05,
-                            color: AppColors.black,
-                          ),
-                          SizedBox(
-                            width: screenSize(context).width * .4,
-                            child: const Divider(
-                              color: AppColors.primaryColor,
-                              thickness: 2,
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const ResponsiveText(
+                              text: 'معلومات التطبيق',
+                              scaleFactor: .05,
+                              color: AppColors.black,
                             ),
-                          ),
-                          SizedBox(
-                            width: screenSize(context).width * .2,
-                            child: const Divider(
-                              color: AppColors.primaryColor,
-                              thickness: 2,
+                            SizedBox(
+                              width: screenSize(context).width * .4,
+                              child: const Divider(
+                                color: AppColors.primaryColor,
+                                thickness: 2,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                const CustomSizedBox(value: .02),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      CustomAssetsImage(path: 'assets/Europe.png'),
-                      const SizedBox(width: 4),
-                      const ResponsiveText(
-                        text: 'نظرة عامة علي التطبيق',
-                        scaleFactor: .05,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.black,
+                            SizedBox(
+                              width: screenSize(context).width * .2,
+                              child: const Divider(
+                                color: AppColors.primaryColor,
+                                thickness: 2,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                ),
-                Obx(
-                  () => homeController.isLoading.value
-                      ? const Center(
-                          child: CustomLoadingWidget(
-                          color: AppColors.primaryColor,
-                        ))
-                      : homeController.error.value.isNotEmpty
-                          ? Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ResponsiveText(
-                                    text: homeController.error.value,
-                                    scaleFactor: .04,
-                                    color: AppColors.black,
-                                  ),
-                                  TextButton(
-                                    onPressed: () =>
-                                        homeController.getHomeData(),
-                                    child: const ResponsiveText(
-                                      text: 'refresh',
+                  const CustomSizedBox(value: .02),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CustomAssetsImage(path: 'assets/Europe.png'),
+                        const SizedBox(width: 4),
+                        const ResponsiveText(
+                          text: 'نظرة عامة علي التطبيق',
+                          scaleFactor: .05,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.black,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Obx(
+                    () => homeController.isLoading.value
+                        ? const Center(
+                            child: CustomLoadingWidget(
+                            color: AppColors.primaryColor,
+                          ))
+                        : homeController.error.value.isNotEmpty
+                            ? Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ResponsiveText(
+                                      text: homeController.error.value,
                                       scaleFactor: .04,
                                       color: AppColors.black,
+                                    ),
+                                    TextButton(
+                                      onPressed: () =>
+                                          homeController.getHomeData(),
+                                      child: const ResponsiveText(
+                                        text: 'refresh',
+                                        scaleFactor: .04,
+                                        color: AppColors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  bestClientWidget(
+                                      context,
+                                      'عدد السائقين',
+                                      'assets/Driving.png',
+                                      homeController.homeModel.value.driversNo),
+                                  const CustomSizedBox(value: .01),
+                                  bestClientWidget(
+                                      context,
+                                      'عدد العملاء',
+                                      'assets/Businessman.png',
+                                      homeController.homeModel.value.usersNo),
+                                  const CustomSizedBox(value: .01),
+                                  bestClientWidget(
+                                      context,
+                                      'عدد المركبات الذي تم إضافتها للبيع',
+                                      'assets/Car.png',
+                                      homeController
+                                          .homeModel.value.salesVehiclesNo),
+                                  const CustomSizedBox(value: .01),
+                                  bestClientWidget(
+                                      context,
+                                      'عدد المركبات الذي تم إضافتها للإيجار',
+                                      'assets/Car.png',
+                                      homeController
+                                          .homeModel.value.rentVehiclesNo),
+                                  const CustomSizedBox(value: .03),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: InkWell(
+                                      onTap: () => navigateTo(
+                                          context, DriversLicenseView()),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: AppColors.primaryColor,
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 30, vertical: 5),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const ResponsiveText(
+                                              text: 'فحص بيانات السائق ',
+                                              scaleFactor: .04,
+                                              color: AppColors.black,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            CustomAssetsImage(
+                                                path: 'assets/Driving.png'),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
-                            )
-                          : Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                bestClientWidget(
-                                    context,
-                                    'عدد السائقين',
-                                    'assets/Driving.png',
-                                    homeController.homeModel.value.driversNo),
-                                const CustomSizedBox(value: .01),
-                                bestClientWidget(
-                                    context,
-                                    'عدد العملاء',
-                                    'assets/Businessman.png',
-                                    homeController.homeModel.value.usersNo),
-                                const CustomSizedBox(value: .01),
-                                bestClientWidget(
-                                    context,
-                                    'عدد المركبات الذي تم إضافتها للبيع',
-                                    'assets/Car.png',
-                                    homeController
-                                        .homeModel.value.salesVehiclesNo),
-                                const CustomSizedBox(value: .01),
-                                bestClientWidget(
-                                    context,
-                                    'عدد المركبات الذي تم إضافتها للإيجار',
-                                    'assets/Car.png',
-                                    homeController
-                                        .homeModel.value.rentVehiclesNo),
-                                const CustomSizedBox(value: .03),
-                                Align(
-                                  alignment: Alignment.center,
-                                  child: InkWell(
-                                    onTap: () => navigateTo(
-                                        context, DriversLicenseView()),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: AppColors.primaryColor,
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 30, vertical: 5),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          const ResponsiveText(
-                                            text: 'فحص بيانات السائق ',
-                                            scaleFactor: .04,
-                                            color: AppColors.black,
-                                          ),
-                                          const SizedBox(width: 5),
-                                          CustomAssetsImage(
-                                              path: 'assets/Driving.png'),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

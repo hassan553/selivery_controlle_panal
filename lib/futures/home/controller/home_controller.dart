@@ -8,11 +8,16 @@ import 'package:selivery_controlle_panal/futures/home/model/home_model.dart';
 
 import '../../../core/functions/global_function.dart';
 
-
 class HomeController extends GetxController {
   var isLoading = false.obs;
   var homeModel = HomeModel().obs;
   var error = ''.obs;
+  int currentIndex = 0;
+  void changeBottomNavIndex(int index) {
+    currentIndex = index;
+    update();
+  }
+
   Future<void> getHomeData() async {
     isLoading.value = true;
     print(token);
@@ -23,24 +28,21 @@ class HomeController extends GetxController {
       );
       final result = jsonDecode(response.body);
       if (response.statusCode == 200) {
-
         print(token);
-        homeModel.value=HomeModel.fromJson(result['stats']);
-        isLoading.value=false;
-        error.value='';
+        homeModel.value = HomeModel.fromJson(result['stats']);
+        isLoading.value = false;
+        error.value = '';
         print(homeModel.value.driversNo);
       } else {
-         isLoading.value = false;
-         error.value=result['message'];
-         if(result['message']=="Token is not valid"){
-           navigatorOff(LoginView());
-         }
-
+        isLoading.value = false;
+        error.value = result['message'];
+        if (result['message'] == "Token is not valid") {
+          navigatorOff(LoginView());
+        }
       }
     } catch (e) {
-
       isLoading.value = false;
-      error.value=e.toString();
+      error.value = e.toString();
     } finally {
       isLoading.value = false;
     }

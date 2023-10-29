@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../core/contants/api.dart';
+import '../../../core/widgets/show_awesomeDialog.dart';
+import '../../../core/widgets/snack_bar_widget.dart';
 import '../model/ads_model.dart';
 
 class AllAdsController extends GetxController {
@@ -14,8 +17,9 @@ class AllAdsController extends GetxController {
 
   Future<void> getAllAdsData() async {
     if (await checkInternet()) {
-      isLoading.value = true;
       try {
+        isLoading.value = true;
+        allAdsList.value = <AdsModel>[].obs;
         final response = await http.get(
           getAllAdsUri,
           headers: authHeadersWithToken(token),
@@ -28,7 +32,9 @@ class AllAdsController extends GetxController {
           r.map((e) {
             allAdsList.add(AdsModel.fromJson(e));
           }).toList();
-          print('all ads   $allAdsList');
+          allAdsList.isEmpty
+              ? allAdsDataError.value = 'لا يوجد بيانات'
+              : allAdsDataError.value = '';
           isLoading.value = false;
         } else {
           isLoading.value = false;
@@ -44,13 +50,27 @@ class AllAdsController extends GetxController {
     } else {
       allAdsDataError.value = 'لا يوجد اتصال بالانترنت';
     }
-    print(allAdsDataError.value);
+    print(allAdsList);
   }
 
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    getAllAdsData();
+  void deleteAds(String? id) async {
+    if (await checkInternet()) {
+      try {
+        final response = await http.delete(deleteAdsUri(id!),
+            headers: authHeadersWithToken(token));
+        final result = jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          showDialogWithGetX(result['message']);
+          getAllAdsData();
+        } else {
+          showDialogWithGetX(result['message']);
+        }
+      } catch (error) {
+        showDialogWithGetX(error.toString());
+      }
+    } else {
+      showDialogWithGetX("لا يوجد اتصال بالانترنت");
+    }
+    update();
   }
 }

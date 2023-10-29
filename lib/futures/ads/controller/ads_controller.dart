@@ -5,15 +5,13 @@ import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
 import 'package:selivery_controlle_panal/core/widgets/image_picker.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:selivery_controlle_panal/core/widgets/snack_bar_widget.dart';
-
 import '../../../core/contants/api.dart';
 import '../../../core/widgets/show_awesomeDialog.dart';
 
 class AdsController extends GetxController {
-  final titleController = TextEditingController();
-  final youtubeLinkController = TextEditingController();
-  final descriptionController = TextEditingController();
+  final titleController = TextEditingController(text: '');
+  final youtubeLinkController = TextEditingController(text: '');
+  final descriptionController = TextEditingController(text: '');
   var isLoading = false.obs;
   var adsError = ''.obs;
   File? adsImage;
@@ -25,7 +23,7 @@ class AdsController extends GetxController {
     } catch (error) {}
   }
 
-  postDataWithFile() async {
+  postDataWithFile(Map data) async {
     if (await checkInternet()) {
       try {
         isLoading.value = true;
@@ -34,31 +32,33 @@ class AdsController extends GetxController {
           "Authorization": 'Bearer $token',
           "Content-Type": 'multipart/form-data',
         };
+        var response;
+        if (adsImage == null) {
+          print('i in');
+          response = await http.post(addAdsUri,
+              body: jsonEncode(data), headers: headers);
+          print(response.body);
+        } else {
+          var request = http.MultipartRequest("POST", addAdsUri);
+          request.headers.addAll(headers);
+          var fileExtension = adsImage?.path;
 
-        var request = http.MultipartRequest("POST", addAdsUri);
-        request.headers.addAll(headers);
-        var fileExtension = adsImage!.path;
+          var length = await adsImage!.length();
+          var stream = http.ByteStream(adsImage!.openRead());
 
-        var length = await adsImage!.length();
-        var stream = http.ByteStream(adsImage!.openRead());
+          var multipartFile = http.MultipartFile("image", stream, length,
+              filename: adsImage!.path);
+          request.files.add(multipartFile);
 
-        var multipartFile = http.MultipartFile("image", stream, length,
-            filename: adsImage!.path);
-        request.files.add(multipartFile);
-        final Map data = {
-          'name': titleController.text,
-          'description': descriptionController.text,
-          'youtubelink': youtubeLinkController.text.trim()
-        };
-        data.forEach((key, value) {
-          request.fields[key] = value;
-        });
+          data.forEach((key, value) {
+            request.fields[key] = value;
+          });
 
-        var myrequest = await request.send();
+          var myrequest = await request.send();
 
-        var response = await http.Response.fromStream(myrequest);
+          response = await http.Response.fromStream(myrequest);
+        }
         Map responsebody = jsonDecode(response.body);
-
         if (response.statusCode == 200 || response.statusCode == 201) {
           print("tm");
           print(response.body);
@@ -68,7 +68,6 @@ class AdsController extends GetxController {
         } else {
           print(response.body);
           showDialogWithGetX(responsebody['message']);
-
           isLoading.value = false;
         }
       } catch (error) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/functions/global_function.dart';
 import 'package:selivery_controlle_panal/core/rescourcs/app_colors.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
@@ -6,16 +7,21 @@ import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_sized_box.dart';
 
 import '../../../core/widgets/responsive_text.dart';
+import '../controller/ads_controller.dart';
+import '../controller/all_ads_controller.dart';
 import 'add_ads_view.dart';
 import 'all_ads_view.dart';
 
 class AdsView extends StatelessWidget {
-  const AdsView({super.key});
+  final AdsController controller = Get.put(AdsController());
+  final allAdsController = Get.put(AllAdsController());
+
+  AdsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context),
+      appBar: customAppBarForSearch(context,''),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

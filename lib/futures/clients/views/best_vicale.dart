@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/futures/clients/model/vehicle_model.dart';
+import '../../../core/contants/api.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
@@ -33,7 +34,7 @@ class _BestVicaleState extends State<BestVicale> {
       'إسم الدراجة النارية \n TVS sport 2018',
     ];
     return Scaffold(
-      appBar: customAppBar(context),
+      appBar: customAppBarForSearch(context,''),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -187,7 +188,8 @@ class _BestVicaleState extends State<BestVicale> {
                   ),
                   const SizedBox(width: 5),
                   Image.network(
-                    model.images?[0] ?? '',
+                    '$baseUri${model.images?[0]}' ??
+                        'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
                     width: p1.maxWidth * .4,
                     height: p1.maxHeight,
                     fit: BoxFit.fill,

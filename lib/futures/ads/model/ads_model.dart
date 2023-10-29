@@ -2,6 +2,7 @@ class AdsModel {
   final String? id;
   final String? name;
   final String? description;
+  final String? link;
   final String? image;
   final int? views;
   final int? v;
@@ -13,6 +14,7 @@ class AdsModel {
     this.image,
     this.views,
     this.v,
+    this.link,
   });
 
   factory AdsModel.fromJson(Map json) {
@@ -22,6 +24,7 @@ class AdsModel {
       description: json['description'],
       image: json['image'],
       views: json['views'],
+      link: json['youtubeLink'],
       v: json['__v'],
     );
   }

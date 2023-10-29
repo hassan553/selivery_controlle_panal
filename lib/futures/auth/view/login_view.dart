@@ -20,98 +20,95 @@ class LoginView extends StatelessWidget {
       backgroundColor: AppColors.primaryColor,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: InkWell(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Form(
-                key: formKey,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CustomSizedBox(value: .04),
-                      const ResponsiveText(
-                        text: 'Admin',
-                        scaleFactor: .09,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: formKey,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CustomSizedBox(value: .04),
+                    const ResponsiveText(
+                      text: 'Admin',
+                      scaleFactor: .09,
+                      color: AppColors.white,
+                    ),
+                    CustomAssetsImage(
+                      path: 'assets/Admin Settings Male.png',
+                      width: screenSize(context).width * .6,
+                      boxFit: BoxFit.fill,
+                    ),
+                    const CustomSizedBox(value: .02),
+                    const Align(
+                      alignment: Alignment.bottomRight,
+                      child: ResponsiveText(
+                        text: 'البريد الإلكتروني',
+                        scaleFactor: .06,
                         color: AppColors.white,
                       ),
-                      CustomAssetsImage(
-                        path: 'assets/Admin Settings Male.png',
-                        width: screenSize(context).width * .6,
-                        boxFit: BoxFit.fill,
+                    ),
+                    customTextFormField(
+                        loginController.email,
+                        (String? value) {
+                          if (value == null) {
+                            return 'not valid empty value';
+                          } else if (!value.contains('@')) {
+                            return 'enter valid email';
+                          }
+                          return null;
+                        },
+                        context,
+                        loginController.emailFocus,
+                        false,
+                        (value) {
+                          FocusScope.of(context)
+                              .requestFocus(loginController.passwordFocus);
+                        }),
+                    const CustomSizedBox(value: .01),
+                    const Align(
+                      alignment: Alignment.bottomRight,
+                      child: ResponsiveText(
+                        text: 'كلمة المرور',
+                        scaleFactor: .06,
+                        color: AppColors.white,
                       ),
-                      const CustomSizedBox(value: .02),
-                      const Align(
-                        alignment: Alignment.bottomRight,
-                        child: ResponsiveText(
-                          text: 'البريد الإلكتروني',
-                          scaleFactor: .06,
-                          color: AppColors.white,
-                        ),
-                      ),
-                      customTextFormField(
-                          loginController.email,
-                          (String? value) {
-                            if (value == null) {
-                              return 'not valid empty value';
-                            } else if (!value.contains('@')) {
-                              return 'enter valid email';
-                            }
-                            return null;
-                          },
-                          context,
-                          loginController.emailFocus,
-                          false,
-                          (value) {
-                            FocusScope.of(context)
-                                .requestFocus(loginController.passwordFocus);
-                          }),
-                      const CustomSizedBox(value: .01),
-                      const Align(
-                        alignment: Alignment.bottomRight,
-                        child: ResponsiveText(
-                          text: 'كلمة المرور',
-                          scaleFactor: .06,
-                          color: AppColors.white,
-                        ),
-                      ),
-                      customTextFormField(
-                          loginController.password,
-                          (String? value) {
-                            if (value == null) {
-                              return 'not valid empty password';
-                            } else if (value.length < 6) {
-                              return 'short Password';
-                            }
-                            return null;
-                          },
-                          context,
-                          loginController.passwordFocus,
-                          true,
-                          (value) {
-                            if (formKey.currentState!.validate()) {
-                              loginController.login(context);
-                            }
-                          }),
-                      const CustomSizedBox(value: .04),
-                      Obx(
-                        () => loginController.isLoading.value
-                            ? const CustomLoadingWidget(
-                                color: Colors.white,
-                              )
-                            : CustomButton(
-                                function: () {
-                                  FocusScope.of(context).unfocus();
-                                  if (formKey.currentState!.validate()) {
-                                    loginController.login(context);
-                                  }
-                                },
-                                title: 'دخول',
-                                fontSize: 25,
-                                color: AppColors.black),
-                      ),
-                    ]),
-              ),
+                    ),
+                    customTextFormField(
+                        loginController.password,
+                        (String? value) {
+                          if (value == null) {
+                            return 'not valid empty password';
+                          } else if (value.length < 6) {
+                            return 'short Password';
+                          }
+                          return null;
+                        },
+                        context,
+                        loginController.passwordFocus,
+                        true,
+                        (value) {
+                          if (formKey.currentState!.validate()) {
+                            loginController.login(context);
+                          }
+                        }),
+                    const CustomSizedBox(value: .04),
+                    Obx(
+                      () => loginController.isLoading.value
+                          ? const CustomLoadingWidget(
+                              color: Colors.white,
+                            )
+                          : CustomButton(
+                              function: () {
+                                FocusScope.of(context).unfocus();
+                                if (formKey.currentState!.validate()) {
+                                  loginController.login(context);
+                                }
+                              },
+                              title: 'دخول',
+                              fontSize: 25,
+                              color: AppColors.black),
+                    ),
+                  ]),
             ),
           ),
         ),

@@ -14,7 +14,6 @@ import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
 import '../controller/setting_controller.dart';
 
-
 class SettingView extends StatefulWidget {
   const SettingView({super.key});
 
@@ -23,11 +22,11 @@ class SettingView extends StatefulWidget {
 }
 
 class _SettingViewState extends State<SettingView> {
-  final settingController=Get.put(CategoryController());
+  final settingController = Get.put(CategoryController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: customAppBar(context),
+        appBar: customAppBar(),
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -99,9 +98,9 @@ class _SettingViewState extends State<SettingView> {
 
   customExitWidget() {
     return InkWell(
-      onTap: ()async{
+      onTap: () async {
         //ServiceClass().pickClientImage('title');
-     await  settingController.pickImage();
+        await settingController.pickImage();
       },
       child: Padding(
         padding: const EdgeInsets.only(right: 10),

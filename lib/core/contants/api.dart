@@ -8,15 +8,21 @@ final allCategory =
 final topPassengers = Uri.parse("${baseUri}dashboard/trip/top_passengers");
 final topVehicles = Uri.parse("${baseUri}dashboard/trip/top_vehicles");
 final topDrivers = Uri.parse("${baseUri}dashboard/driver");
+
 final uploadCategoryUri = Uri.parse('${baseUri}dashboard/category');
 final addAdsUri = Uri.parse('${baseUri}dashboard/advertisement');
 final getAllAdsUri = Uri.parse('${baseUri}dashboard/advertisement');
+final getAllDriverLicenseAdsUri = Uri.parse('${baseUri}dashboard/request');
 
+Uri deleteDriverAccountUri(String id) =>
+    Uri.parse("${baseUri}dashboard/driver/$id");
 
 Uri deleteCategoryUri(String? id) =>
     Uri.parse('${baseUri}dashboard/category/$id');
 Uri updateCategoryUri(String? id) =>
     Uri.parse('${baseUri}dashboard/category/$id');
+Uri deleteAdsUri(String id) =>
+    Uri.parse("${baseUri}dashboard/advertisement/$id");
 
 final authHeaders = {
   'Keep-Alive': 'timeout=5',
@@ -37,3 +43,8 @@ authHeadersWithToken(String token) => {
       'Access-Control-Allow-Origin': '*',
       'AUTHORIZATION': 'Bearer $token',
     };
+/*
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.blue, // Set your desired color
+    ));
+    */

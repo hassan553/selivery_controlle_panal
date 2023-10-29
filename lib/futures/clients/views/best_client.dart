@@ -30,7 +30,7 @@ class _BestClientsState extends State<BestClients> {
       'الأكثر شراءاً من Selivery هذا السنة :-',
     ];
     return Scaffold(
-      appBar: customAppBar(context),
+      appBar: customAppBarForSearch(context,''),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -51,7 +51,7 @@ class _BestClientsState extends State<BestClients> {
                       Icons.list,
                       color: Colors.black,
                     ),
-                  ),
+                   ),
                 ),
                 const Expanded(
                   child: CustomColumnDivider(

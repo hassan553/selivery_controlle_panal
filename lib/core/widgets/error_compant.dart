@@ -6,7 +6,7 @@ import '../functions/global_function.dart';
 import '../rescourcs/app_colors.dart';
 
 class ErrorComponant extends StatelessWidget {
-  final Function()? function;
+  final Function() function;
   final String message;
   const ErrorComponant(
       {super.key, required this.function, required this.message});
@@ -22,7 +22,9 @@ class ErrorComponant extends StatelessWidget {
           SizedBox(
             width: screenSize(context).width * .3,
             child: CustomButton(
-              function: () => function,
+              function: () {
+                function();
+              },
               title: 'اعاده المحاوله',
               color: AppColors.primaryColor,
             ),

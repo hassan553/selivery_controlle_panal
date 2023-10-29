@@ -5,11 +5,13 @@ import 'package:selivery_controlle_panal/core/functions/global_function.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
 import 'package:selivery_controlle_panal/futures/setting/controller/setting_controller.dart';
 import 'package:selivery_controlle_panal/futures/setting/model/category_model.dart';
-
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_column_divider.dart';
+import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
+import '../../../core/widgets/error_compant.dart';
 import '../../../core/widgets/responsive_text.dart';
+import '../widget/custom_input_dailog.dart';
 
 class AllVicale extends StatefulWidget {
   const AllVicale({super.key});
@@ -24,43 +26,32 @@ class _AllVicaleState extends State<AllVicale> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context),
+      appBar: customAppBarForSearch(context, ''),
       body: Column(
         children: [
           const CustomSizedBox(value: .02),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColors.primaryColor,
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: const Icon(
-                    Icons.list,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const Expanded(
-                  child: CustomColumnDivider(
+          const SizedBox(
+            height: 80,
+            child: Expanded(
+              child: CustomColumnDivider(
                 title: 'المركبات',
                 imagePath: 'assets/Car.png',
-              )),
-            ],
+              ),
+            ),
           ),
           Expanded(
             child: Obx(
-              ()=> ListView.builder(
-                itemCount: categoryController.categoryList.length,
-                itemBuilder: (context, index) {
-                  return customVicalWidget(
-                      context, categoryController.categoryList[index]);
-                },
-              ),
+              () => categoryController.categoryList.isEmpty
+                  ? ErrorComponant(
+                      function: categoryController.getAllCategories,
+                      message: categoryController.categoryError.value)
+                  : ListView.builder(
+                      itemCount: categoryController.categoryList.length,
+                      itemBuilder: (context, index) {
+                        return customVicalWidget(
+                            context, categoryController.categoryList[index]);
+                      },
+                    ),
             ),
           ),
         ],
@@ -68,7 +59,7 @@ class _AllVicaleState extends State<AllVicale> {
     );
   }
 
-  Container customVicalWidget(BuildContext context, CategoryModel model) {
+  Container customVicalWidget(BuildContext context, CategoryModel? model) {
     return Container(
       width: screenSize(context).width,
       height: screenSize(context).height * .3,
@@ -88,12 +79,9 @@ class _AllVicaleState extends State<AllVicale> {
                 padding: const EdgeInsets.all(10.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.network(
-                    '$baseUri${model.image}' ??
-                        'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
-                    errorBuilder: (context, url, error) =>
-                        const Icon(Icons.error),
-                    fit: BoxFit.fill,
+                  child: CustomNetworkImage(
+                    imagePath: "$baseUri${model?.image}",
+                    boxFit: BoxFit.fill,
                   ),
                 ),
               ),
@@ -101,7 +89,7 @@ class _AllVicaleState extends State<AllVicale> {
             const Divider(color: AppColors.black),
             FittedBox(
               child: ResponsiveText(
-                text: 'النوع:${model.name}',
+                text: 'النوع:${model?.name}',
                 scaleFactor: .04,
                 color: AppColors.black,
               ),
@@ -109,23 +97,33 @@ class _AllVicaleState extends State<AllVicale> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: AppColors.primaryColor,
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                  child: const FittedBox(
-                    child: ResponsiveText(
-                      text: 'تعديل ',
-                      scaleFactor: .04,
-                      color: AppColors.white,
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return CustomDialog();
+                      },
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: AppColors.primaryColor,
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                    child: const FittedBox(
+                      child: ResponsiveText(
+                        text: 'تعديل ',
+                        scaleFactor: .04,
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ),
                 InkWell(
-                  onTap: () =>categoryController.deleteCategory(model.sId),
+                  onTap: () => categoryController.deleteCategory(model?.sId),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),

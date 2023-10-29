@@ -10,80 +10,105 @@ import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
 
-class AddAdsView extends StatelessWidget {
-  final AdsController controller = Get.put(AdsController());
-  final formKey = GlobalKey<FormState>();
+class AddAdsView extends StatefulWidget {
   AddAdsView({super.key});
+
+  @override
+  State<AddAdsView> createState() => _AddAdsViewState();
+}
+
+class _AddAdsViewState extends State<AddAdsView> {
+  final formKey = GlobalKey<FormState>();
+
+  final controller = Get.find<AdsController>();
+  @override
+  void dispose() {
+    controller.isLoading.value = false;
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: SingleChildScrollView(
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                const CustomSizedBox(value: .02),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.primaryColor,
+      appBar: customAppBarForSearch(context,''),
+      body: InkWell(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  const CustomSizedBox(value: .02),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AppColors.primaryColor,
+                          ),
+                          padding: const EdgeInsets.all(8),
+                          child: const Icon(
+                            Icons.list,
+                            color: Colors.black,
+                          ),
                         ),
-                        padding: const EdgeInsets.all(8),
-                        child: const Icon(
-                          Icons.list,
-                          color: Colors.black,
-                        ),
                       ),
-                    ),
-                    const Expanded(
-                        child: CustomColumnDivider(title: 'إضافة إعلان جديد')),
-                  ],
-                ),
-                const CustomSizedBox(value: .02),
-                customForm(
-                    context, 'إسم الإعلان', 1, controller.titleController),
-                const CustomSizedBox(value: .02),
-                customForm(context, 'لينك الإعلان', 1,
-                    controller.youtubeLinkController),
-                const CustomSizedBox(value: .02),
-                customForm(context, 'تفاصيل الإعلان', 5,
-                    controller.descriptionController),
-                const CustomSizedBox(value: .02),
-                customAddImageFormFiled(context),
-                const CustomSizedBox(value: .05),
-                Obx(
-                  ()=>controller.isLoading.value?const CustomLoadingWidget(): InkWell(
-                    onTap: () {
-                      if (formKey.currentState!.validate() &&
-                          controller.adsImage != null) {
-                        controller.postDataWithFile();
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: AppColors.primaryColor,
-                      ),
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                      child: const ResponsiveText(
-                        text: 'إضافة ',
-                        scaleFactor: .04,
-                        color: AppColors.black,
-                      ),
-                    ),
+                      const Expanded(
+                          child:
+                              CustomColumnDivider(title: 'إضافة إعلان جديد')),
+                    ],
                   ),
-                ),
-              ],
+                  const CustomSizedBox(value: .02),
+                  customForm(
+                      context, 'إسم الإعلان', 1, controller.titleController),
+                  const CustomSizedBox(value: .02),
+                  customForm(context, 'لينك الإعلان', 1,
+                      controller.youtubeLinkController),
+                  const CustomSizedBox(value: .02),
+                  customForm(context, 'تفاصيل الإعلان', 5,
+                      controller.descriptionController),
+                  const CustomSizedBox(value: .02),
+                  customAddImageFormFiled(context),
+                  const CustomSizedBox(value: .05),
+                  Obx(
+                    () => controller.isLoading.value
+                        ? const CustomLoadingWidget()
+                        : InkWell(
+                            onTap: () {
+                              //formKey.currentState!.validate()
+                              // if (controller.youtubeLinkController.text.isNotEmpty||
+                              //     controller.adsImage != null) {
+                              controller.postDataWithFile({
+                                'name': controller.titleController.text,
+                                'description':
+                                    controller.descriptionController.text,
+                                'youtubeLink':
+                                    controller.youtubeLinkController.text.trim()
+                              });
+                              //}
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: AppColors.primaryColor,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 30, vertical: 5),
+                              child: const ResponsiveText(
+                                text: 'إضافة ',
+                                scaleFactor: .04,
+                                color: AppColors.black,
+                              ),
+                            ),
+                          ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
