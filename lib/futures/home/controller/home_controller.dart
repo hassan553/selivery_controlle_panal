@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:selivery_controlle_panal/core/contants/api.dart';
 import 'package:selivery_controlle_panal/futures/auth/view/login_view.dart';
 import 'package:selivery_controlle_panal/futures/home/model/home_model.dart';
-
+import 'package:selivery_controlle_panal/main.dart';
 import '../../../core/functions/global_function.dart';
 
 class HomeController extends GetxController {
@@ -19,12 +19,13 @@ class HomeController extends GetxController {
   }
 
   Future<void> getHomeData() async {
+    String myToken = sharedPreferences.getString('token') ?? '';
     isLoading.value = true;
-    print(token);
+    print(myToken);
     try {
       final response = await http.get(
         Uri.parse('http://192.168.1.122:8000/dashboard'),
-        headers: authHeadersWithToken(token),
+        headers: authHeadersWithToken(myToken),
       );
       final result = jsonDecode(response.body);
       if (response.statusCode == 200) {
@@ -36,7 +37,10 @@ class HomeController extends GetxController {
       } else {
         isLoading.value = false;
         error.value = result['message'];
-        if (result['message'] == "Token is not valid") {
+        print(error.value);
+        if (result['message'] == "Token is not valid"||result['message']=='Your are not authorized.') {
+          sharedPreferences.clear();
+          print('token $myToken');
           navigatorOff(LoginView());
         }
       }

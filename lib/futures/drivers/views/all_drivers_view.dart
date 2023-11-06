@@ -27,8 +27,10 @@ class _AllDriversViewState extends State<AllDriversView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          customAppBarForSearch(context, driversController.searchText.value),
+      appBar: customAppBarForSearch(context, driversController.searchText.value,
+          (value) {
+        driversController.searchText.value = value;
+      }),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Obx(
@@ -38,9 +40,13 @@ class _AllDriversViewState extends State<AllDriversView> {
                   message: driversController.error.value)
               : ListView.builder(
                   itemBuilder: (context, index) => InkWell(
-                    onTap: () =>navigateTo(context, DriverProfileView(driverModel: driversController.filteredItems[index]!)),
-                    child: bestDriverWidget(
-                        context, index, driversController.filteredItems[index]!),
+                    onTap: () => navigateTo(
+                        context,
+                        DriverProfileView(
+                            driverModel:
+                                driversController.filteredItems[index]!)),
+                    child: bestDriverWidget(context, index,
+                        driversController.filteredItems[index]!),
                   ),
                   itemCount: driversController.filteredItems.length,
                 ),

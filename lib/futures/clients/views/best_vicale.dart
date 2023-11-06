@@ -24,7 +24,7 @@ class _BestVicaleState extends State<BestVicale> {
   @override
   void initState() {
     super.initState();
-    clientController.getTopVehiclesData();
+    //clientController.getTopVehiclesData();
   }
 
   @override
@@ -34,7 +34,7 @@ class _BestVicaleState extends State<BestVicale> {
       'إسم الدراجة النارية \n TVS sport 2018',
     ];
     return Scaffold(
-      appBar: customAppBarForSearch(context,''),
+      appBar: customAppBarForSearch(context, ''),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -89,7 +89,7 @@ class _BestVicaleState extends State<BestVicale> {
   }
 
   Column bestClientWidget(
-      BuildContext context, int index, String title, VehicleModel model) {
+      BuildContext context, int index, String title, VehicleModel? model) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -125,76 +125,80 @@ class _BestVicaleState extends State<BestVicale> {
               builder: (p0, p1) => Row(
                 children: [
                   Expanded(
-                    child: FittedBox(
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Column(
-                          children: [
-                            ResponsiveText(
-                              text: model.model ?? '',
-                              scaleFactor: .06,
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 20),
+                          FittedBox(
+                            child: ResponsiveText(
+                              text: model?.model ?? '',
+                              scaleFactor: .04,
                               color: AppColors.black,
                             ),
-                            SizedBox(
-                              width: screenSize(context).width * .4,
-                              child: const Divider(
-                                thickness: 2,
-                                color: AppColors.primaryColor,
-                              ),
+                          ),
+                          SizedBox(
+                            width: screenSize(context).width * .4,
+                            child: const Divider(
+                              thickness: 2,
+                              color: AppColors.primaryColor,
                             ),
-                            const ResponsiveText(
-                              text: 'رقم المالك',
-                              scaleFactor: .06,
+                          ),
+                          const ResponsiveText(
+                            text: 'رقم المالك',
+                            scaleFactor: .04,
+                            color: AppColors.black,
+                          ),
+                          const FittedBox(
+                            child: ResponsiveText(
+                              text: ' 011156906520111569065201115690652',
+                              scaleFactor: .04,
                               color: AppColors.black,
                             ),
-                            const ResponsiveText(
-                              text: ' 01115690652',
-                              scaleFactor: .06,
-                              color: AppColors.black,
-                            ),
-                            SizedBox(
-                              width: screenSize(context).width * .2,
-                              child: const Divider(
-                                thickness: 2,
-                                color: AppColors.primaryColor,
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 8, horizontal: 15),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.red,
-                              ),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  ResponsiveText(
-                                    text: 'حذف',
-                                    scaleFactor: .04,
-                                    color: AppColors.white,
-                                  ),
-                                  Icon(
-                                    Icons.delete,
-                                    color: AppColors.white,
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                          // SizedBox(
+                          //   width: screenSize(context).width * .2,
+                          //   child: const Divider(
+                          //     thickness: 2,
+                          //     color: AppColors.primaryColor,
+                          //   ),
+                          // ),
+                          // Container(
+                          //   padding: const EdgeInsets.symmetric(
+                          //       vertical: 8, horizontal: 15),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(10),
+                          //     color: AppColors.red,
+                          //   ),
+                          //   child: const Row(
+                          //     mainAxisSize: MainAxisSize.min,
+                          //     children: [
+                          //       ResponsiveText(
+                          //         text: 'حذف',
+                          //         scaleFactor: .04,
+                          //         color: AppColors.white,
+                          //       ),
+                          //       Icon(
+                          //         Icons.delete,
+                          //         color: AppColors.white,
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
+                        ],
                       ),
                     ),
                   ),
                   const SizedBox(width: 5),
-                  Image.network(
-                    '$baseUri${model.images?[0]}' ??
-                        'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
-                    width: p1.maxWidth * .4,
-                    height: p1.maxHeight,
-                    fit: BoxFit.fill,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.error),
+                  Expanded(
+                    flex: 1,
+                    child: CustomNetworkImage(
+                      imagePath: checkImage(model?.images),
+                      width: p1.maxWidth * .4,
+                      height: p1.maxHeight,
+                      boxFit: BoxFit.fill,
+                    ),
                   ),
                 ],
               ),
@@ -202,5 +206,14 @@ class _BestVicaleState extends State<BestVicale> {
         const SizedBox(height: 5),
       ],
     );
+  }
+
+  String checkImage(List<String>? images) {
+    if (images == null) {
+      return '';
+    } else if (images.isEmpty) {
+      return '';
+    }
+    return images.first;
   }
 }

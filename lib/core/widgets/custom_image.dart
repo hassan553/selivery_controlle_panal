@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
+import '../contants/api.dart';
 import '../rescourcs/app_colors.dart';
 
 class CustomAssetsImage extends StatelessWidget {
@@ -43,11 +44,21 @@ class CustomNetworkImage extends StatelessWidget {
     this.height,
     this.boxFit,
   });
-
+String checkImage(String? image) {
+    try {
+      String i = '$baseUri$image';
+      if (i == baseUri) {
+        return '';
+      }
+      return i;
+    } catch (error) {
+      return '';
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Image.network(
-      imagePath ?? '',
+      checkImage(imagePath),
       loadingBuilder: (BuildContext context, Widget child,
           ImageChunkEvent? loadingProgress) {
         if (loadingProgress == null) {

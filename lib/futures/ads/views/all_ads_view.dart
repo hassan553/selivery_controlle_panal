@@ -5,15 +5,17 @@ import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/futures/ads/controller/all_ads_controller.dart';
 import 'package:selivery_controlle_panal/futures/ads/model/ads_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
+import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/error_compant.dart';
 import '../../../core/widgets/responsive_text.dart';
+import '../../../main.dart';
+import '../widget/web_view_widget.dart';
 
 class AllAdsView extends StatefulWidget {
-  AllAdsView({super.key});
+  const AllAdsView({super.key});
 
   @override
   State<AllAdsView> createState() => _AllAdsViewState();
@@ -78,15 +80,59 @@ class _AllAdsViewState extends State<AllAdsView> {
             ),
           ),
         ),
-        const SizedBox(height: 5),
-        YouTubePlayerWidget(videoId: model.link!),
-        // Image.network(
-        //   '$baseUri${model.image}',
-        //   width: screenSize(context).width,
-        //   height: screenSize(context).height * .3,
-        //   fit: BoxFit.fill,
-        //   errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
-        // ),
+        const SizedBox(height: 10),
+        // YouTubePlayerWidget(videoId: model.link!),
+        Align(alignment: Alignment.centerRight, child: Text(model.name ?? '')),
+        const SizedBox(height: 8),
+        // YouTubePlayerWidget(videoId: model.link!),
+        Align(
+            alignment: Alignment.centerRight,
+            child: Text(model.description ?? '')),
+        const SizedBox(height: 8),
+        SizedBox(
+          width: screenSize(context).width,
+          height: 120,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: CustomNetworkImage(
+                  imagePath: model.image,
+                  boxFit: BoxFit.fitWidth,
+                  width: screenSize(context).width,
+                  height: 120,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                    return const WebPage();
+                  }));
+                },
+                child: Card(
+                  elevation: 10,
+                  semanticContainer: true,
+                  clipBehavior: Clip.hardEdge,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: SizedBox(
+                      width: 100,
+                      child: Image.asset(
+                        'assets/Screenshot 2023-11-05 224007.png',
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+
         const CustomSizedBox(value: .02),
         Row(
           children: [
@@ -174,7 +220,7 @@ class YouTubePlayerWidget extends StatefulWidget {
 
 class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
   YoutubePlayerController? _controller;
-
+  bool _videoError = false;
   String? errorMessage;
   initAds() {
     try {
@@ -185,10 +231,15 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
           mute: false,
         ),
       );
-    } catch (e) {
-      setState(() {
-        errorMessage = 'حدث خطأ أثناء تشغيل الفيديو.';
+      _controller?.addListener(() {
+        if (_controller?.value.playerState == PlayerState.unknown) {
+          _videoError = true;
+          errorMessage = 'حدث خطأ أثناء تشغيل الفيديو.';
+        }
       });
+    } catch (e) {
+      errorMessage = 'حدث خطأ أثناء تشغيل الفيديو.';
+      _videoError = true;
     }
   }
 
@@ -206,7 +257,7 @@ class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return errorMessage != null
+    return _videoError
         ? Center(
             child: Text(
               errorMessage!,

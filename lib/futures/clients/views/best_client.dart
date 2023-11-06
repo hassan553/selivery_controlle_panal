@@ -9,6 +9,7 @@ import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
 import '../../../core/widgets/custom_button.dart';
 import '../../../core/widgets/custom_column_divider.dart';
+import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
 
@@ -30,7 +31,7 @@ class _BestClientsState extends State<BestClients> {
       'الأكثر شراءاً من Selivery هذا السنة :-',
     ];
     return Scaffold(
-      appBar: customAppBarForSearch(context,''),
+      appBar: customAppBarForSearch(context, ''),
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: Column(
@@ -51,7 +52,7 @@ class _BestClientsState extends State<BestClients> {
                       Icons.list,
                       color: Colors.black,
                     ),
-                   ),
+                  ),
                 ),
                 const Expanded(
                   child: CustomColumnDivider(
@@ -140,14 +141,15 @@ class _BestClientsState extends State<BestClients> {
                     ),
                   ),
                   const SizedBox(width: 5),
-                  Image.network(
-                    '$baseUri${model.image}',
-                    width: p1.maxWidth * .4,
-                    height: p1.maxHeight,
-                    fit: BoxFit.fill,
-                    errorBuilder: (context, error, stackTrace) =>
-                        const Icon(Icons.error),
-                  )
+                  Expanded(
+                    flex: 1,
+                    child: CustomNetworkImage(
+                      imagePath: model.image,
+                      width: p1.maxWidth * .4,
+                      height: p1.maxHeight,
+                      boxFit: BoxFit.fill,
+                    ),
+                  ),
                 ],
               ),
             )),
@@ -155,4 +157,6 @@ class _BestClientsState extends State<BestClients> {
       ],
     );
   }
+
+  
 }

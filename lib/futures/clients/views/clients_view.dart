@@ -30,11 +30,9 @@ class ClientsView extends StatelessWidget {
               const CustomSizedBox(value: .02),
               const SizedBox(
                 height: 80,
-                child: Expanded(
-                  child: CustomColumnDivider(
-                    title: 'العملاء',
-                    imagePath: 'assets/Driving.png',
-                  ),
+                child: CustomColumnDivider(
+                  title: 'العملاء',
+                  imagePath: 'assets/Driving.png',
                 ),
               ),
               const CustomSizedBox(value: .01),
@@ -52,7 +50,7 @@ class ClientsView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Padding(
-                          padding:  EdgeInsets.only(bottom: 8),
+                          padding: EdgeInsets.only(bottom: 8),
                           child:
                               CustomAssetsImage(path: 'assets/Businessman.png'),
                         ),
@@ -91,7 +89,7 @@ class ClientsView extends StatelessWidget {
               ),
               const CustomSizedBox(value: .02),
               InkWell(
-                onTap: () => navigateTo(context, BestClients()),
+                onTap: () => navigateTo(context, const BestClients()),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Stack(
@@ -109,7 +107,7 @@ class ClientsView extends StatelessWidget {
                           boxFit: BoxFit.fill,
                         ),
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomAssetsImage(
@@ -118,8 +116,8 @@ class ClientsView extends StatelessWidget {
                             //height: screenSize(context).height * .2,
                             boxFit: BoxFit.fill,
                           ),
-                          const SizedBox(width: 5),
-                          const ResponsiveText(
+                          SizedBox(width: 5),
+                          ResponsiveText(
                             text: 'أكثر العملاء',
                             scaleFactor: .06,
                             color: AppColors.white,
@@ -132,7 +130,7 @@ class ClientsView extends StatelessWidget {
               ),
               const CustomSizedBox(value: .015),
               InkWell(
-                onTap: () => navigateTo(context, BestVicale()),
+                onTap: () => navigateTo(context, const BestVicale()),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Stack(
@@ -150,7 +148,7 @@ class ClientsView extends StatelessWidget {
                           boxFit: BoxFit.fill,
                         ),
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomAssetsImage(
@@ -159,8 +157,8 @@ class ClientsView extends StatelessWidget {
                             //height: screenSize(context).height * .2,
                             boxFit: BoxFit.fill,
                           ),
-                          const SizedBox(width: 5),
-                          const ResponsiveText(
+                          SizedBox(width: 5),
+                          ResponsiveText(
                             text: 'أكثر المركبات طلباً في Selivery',
                             scaleFactor: .06,
                             color: AppColors.white,

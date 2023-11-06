@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../core/contants/api.dart';
 import '../../../core/widgets/show_awesomeDialog.dart';
-import '../../../core/widgets/snack_bar_widget.dart';
+import '../../../main.dart';
 import '../model/ads_model.dart';
 
 class AllAdsController extends GetxController {
@@ -16,13 +14,15 @@ class AllAdsController extends GetxController {
   RxList allAdsList = <AdsModel>[].obs;
 
   Future<void> getAllAdsData() async {
+         String myToken = sharedPreferences.getString('token') ?? '';
+
     if (await checkInternet()) {
       try {
         isLoading.value = true;
         allAdsList.value = <AdsModel>[].obs;
         final response = await http.get(
           getAllAdsUri,
-          headers: authHeadersWithToken(token),
+          headers: authHeadersWithToken(myToken),
         );
         final result = jsonDecode(response.body);
 
@@ -54,10 +54,12 @@ class AllAdsController extends GetxController {
   }
 
   void deleteAds(String? id) async {
+      String myToken = sharedPreferences.getString('token') ?? '';
+
     if (await checkInternet()) {
       try {
         final response = await http.delete(deleteAdsUri(id!),
-            headers: authHeadersWithToken(token));
+            headers: authHeadersWithToken(myToken));
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
           showDialogWithGetX(result['message']);

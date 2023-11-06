@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/futures/drivers/controller/get_driverLicense_controller.dart';
 import 'package:selivery_controlle_panal/futures/drivers/model/driver_license_model.dart';
-
 import '../../../core/contants/api.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_column_divider.dart';
-import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/error_compant.dart';
 import '../../../core/widgets/responsive_text.dart';
@@ -21,34 +19,13 @@ class DriversLicenseView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarForSearch(context,''),
+      appBar: customAppBar(),
       body: Column(
         children: [
-          const CustomSizedBox(value: .02),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColors.primaryColor,
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: const Icon(
-                    Icons.list,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const Expanded(
-                child: CustomColumnDivider(
-                  title: 'رخص السائقين',
-                  imagePath: 'assets/Identification Documents.png',
-                ),
-              ),
-            ],
+          SizedBox(height: screenSize(context).height * .02),
+          const CustomColumnDivider(
+            title: 'رخص السائقين',
+            imagePath: 'assets/Identification Documents.png',
           ),
           SizedBox(height: screenSize(context).height * .03),
           Expanded(
@@ -83,6 +60,7 @@ class DriversLicenseView extends StatelessWidget {
             ),
             child: LayoutBuilder(
               builder: (p0, p1) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     height: p1.maxHeight / 2,
@@ -118,70 +96,60 @@ class DriversLicenseView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 5),
-                        Image.network(
-                          model.driverData!.isEmpty
-                              ? '${baseUri}images/user.jpg'
-                              : '$baseUri${model.driverData?[0].image}',
+                        CustomNetworkImage(
+                          imagePath: checkImage(model.driverData),
                           width: p1.maxWidth * .4,
                           height: p1.maxHeight,
-                          fit: BoxFit.fill,
-                          errorBuilder: (context, error, stackTrace) =>
-                              const Icon(Icons.error),
+                          boxFit: BoxFit.fill,
                         ),
                       ],
                     ),
                   ),
                   const Divider(),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     Column(
-                  //       children: [
-                  //         const ResponsiveText(
-                  //           text: 'رخصة القيادة',
-                  //           scaleFactor: .04,
-                  //           color: AppColors.black,
-                  //         ),
-                  //         Image.network(
-                  //           '$baseUri${model.driverLicense}',
-                  //           fit: BoxFit.fill,
-                  //           errorBuilder: (context, error, stackTrace) =>
-                  //               const Icon(Icons.error),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     Column(
-                  //       children: [
-                  //         const ResponsiveText(
-                  //           text: 'رخصة السيارة',
-                  //           scaleFactor: .04,
-                  //           color: AppColors.black,
-                  //         ),
-                  //         Image.network(
-                  //           '$baseUri${model.vehicleLicense}',
-                  //           fit: BoxFit.fill,
-                  //           errorBuilder: (context, error, stackTrace) =>
-                  //               const Icon(Icons.error),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //     Column(
-                  //       children: [
-                  //         const ResponsiveText(
-                  //           text: 'صورة البطاقة',
-                  //           scaleFactor: .04,
-                  //           color: AppColors.black,
-                  //         ),
-                  //         Image.network(
-                  //           '$baseUri${model.nationalId}',
-                  //           fit: BoxFit.fill,
-                  //           errorBuilder: (context, error, stackTrace) =>
-                  //               const Icon(Icons.error),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ],
-                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          const ResponsiveText(
+                            text: 'رخصة القيادة',
+                            scaleFactor: .04,
+                            color: AppColors.black,
+                          ),
+                          CustomNetworkImage(
+                            imagePath: model.driverLicense,
+                            boxFit: BoxFit.fill,
+                          ),
+                        ],
+                      ),
+                      // Column(
+                      //   children: [
+                      //     const ResponsiveText(
+                      //       text: 'رخصة السيارة',
+                      //       scaleFactor: .04,
+                      //       color: AppColors.black,
+                      //     ),
+                      //     CustomNetworkImage(
+                      //       imagePath: model.vehicleLicense,
+                      //       boxFit: BoxFit.fill,
+                      //     ),
+                      //   ],
+                      // ),
+                      // Column(
+                      //   children: [
+                      //     const ResponsiveText(
+                      //       text: 'صورة البطاقة',
+                      //       scaleFactor: .04,
+                      //       color: AppColors.black,
+                      //     ),
+                      //     CustomNetworkImage(
+                      //       imagePath: model.nationalId,
+                      //       boxFit: BoxFit.fill,
+                      //     ),
+                      //   ],
+                      // ),
+                    ],
+                  ),
                 ],
               ),
             )),
@@ -224,5 +192,14 @@ class DriversLicenseView extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String checkImage(List<DriverData>? images) {
+    if (images == null) {
+      return '';
+    } else if (images.isEmpty) {
+      return '';
+    }
+    return images.first.image ?? '';
   }
 }

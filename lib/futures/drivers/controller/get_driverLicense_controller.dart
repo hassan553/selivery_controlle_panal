@@ -10,12 +10,13 @@ import '../model/driver_license_model.dart';
 class GetDriverLicenseController extends GetxController {
   var isLoading = false.obs;
   var allLicenseDataError = ''.obs;
-  RxList allLicenseList = <DriverLicenseModel>[].obs;
+  RxList<DriverLicenseModel> allLicenseList = <DriverLicenseModel>[].obs;
 
   Future<void> getAllLicenseData() async {
     if (await checkInternet()) {
       isLoading.value = true;
       try {
+        allLicenseList.value = [];
         final response = await http.get(
           getAllDriverLicenseAdsUri,
           headers: authHeadersWithToken(token),
@@ -27,8 +28,9 @@ class GetDriverLicenseController extends GetxController {
           var r = result['requests'] as List;
           r.map((e) {
             allLicenseList.add(DriverLicenseModel.fromJson(e));
+         
           }).toList();
-          print('all ads   $allLicenseList');
+
           isLoading.value = false;
         } else {
           isLoading.value = false;

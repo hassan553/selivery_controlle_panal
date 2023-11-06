@@ -16,22 +16,30 @@ class DriversController extends GetxController {
   var deleteIsLoading = false.obs;
   var error = ''.obs;
   RxList bestDriversList = <DriverModel>[].obs;
+  bool isSearch = false;
+  void isSearchMethod() {
+    isSearch = !isSearch;
+    update();
+  }
+
   RxList<DriverModel> driversList = <DriverModel>[
     //
     DriverModel(
-        sId: '1',
-        name: 'hassan',
-        image: 'images/user.jpg',
-        phone: '12121212',
-        age: 20,
-        gender: 'male',
-        rating: Rating(cool: 1, fair: 0, good: 3),
-        vehicle: Vehicle(
-            category: 'سياره',
-            model: "Toyota Crolla 2008",
-            images: [
-              'https://cdn.pixabay.com/photo/2012/04/12/23/48/car-30990_640.png'
-            ],),),
+      sId: '1',
+      name: 'hassan',
+      image: 'images/user.jpg',
+      phone: '12121212',
+      age: 20,
+      gender: 'male',
+      rating: Rating(cool: 1, fair: 0, good: 3),
+      vehicle: Vehicle(
+        category: 'سياره',
+        model: "Toyota Crolla 2008",
+        images: [
+          'https://cdn.pixabay.com/photo/2012/04/12/23/48/car-30990_640.png'
+        ],
+      ),
+    ),
     DriverModel(
         sId: '2',
         name: 'Marzouk',

@@ -11,8 +11,20 @@ class ClientController extends GetxController {
   var isLoading = false.obs;
   var passengersDataError = ''.obs;
   var vehiclesDataError = ''.obs;
-  RxList passengerList = <PassengerModel>[].obs;
-  RxList vehicleList = <VehicleModel>[].obs;
+  RxList passengerList = <PassengerModel>[
+    PassengerModel(
+        email: 'hassan@gmail.com',
+        image: '',
+        passenger: 'hassan',
+        phone: '01000',
+        sId: '12',
+        tripsCount: 12),
+  ].obs;
+  RxList vehicleList = <VehicleModel>[
+    VehicleModel(tripsCount: 2, model: 'frirrai', images: null),
+    VehicleModel(tripsCount: 2, model: 'frirrai', images: []),
+  ].obs;
+
   Future<void> getTopPassengersData() async {
     if (await checkInternet()) {
       isLoading.value = true;
@@ -95,7 +107,7 @@ class ClientController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getTopPassengersData();
-    getTopVehiclesData();
+    //getTopPassengersData();
+    //getTopVehiclesData();
   }
 }

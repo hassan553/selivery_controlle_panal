@@ -31,7 +31,8 @@ class LoginController extends GetxController {
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
           await sharedPreferences.setString('token', result['token']);
-          navigateTo(context,MainView());
+          print('my token ${result['token']}');
+          navigateTo(context, MainView());
           isLoading.value = false;
           showSnackBarWidget(
               context: context,

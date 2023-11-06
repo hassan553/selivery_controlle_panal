@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/contants/api.dart';
@@ -20,11 +19,11 @@ import '../widgets/user_info.dart';
 
 class DriverProfileView extends StatelessWidget {
   final DriverModel driverModel;
-  const DriverProfileView({super.key, required this.driverModel});
+   DriverProfileView({super.key, required this.driverModel});
+  final DriversController controller = Get.find<DriversController>();
 
   @override
   Widget build(BuildContext context) {
-    DriversController controller = Get.find<DriversController>();
     return Scaffold(
       appBar: customAppBar(),
       body: GetBuilder<DriversController>(
@@ -82,7 +81,8 @@ class DriverProfileView extends StatelessWidget {
           color: AppColors.red,
         ),
         child: InkWell(
-          onTap: () => controller.deleteDriverAccount(driverModel.sId!,context),
+          onTap: () =>
+              controller.deleteDriverAccount(driverModel.sId!, context),
           child: controller.deleteIsLoading.value
               ? const CustomLoadingWidget()
               : const Row(
@@ -185,7 +185,7 @@ class DriverProfileView extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(color: AppColors.primaryColor)),
-            child: const CustomNetworkImage(),
+            child: const CustomNetworkImage(imagePath: ''),
           ),
         )
       ],

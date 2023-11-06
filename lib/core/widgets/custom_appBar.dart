@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/futures/drivers/controller/drivers_controller.dart';
 import '../functions/global_function.dart';
 import '../rescourcs/app_colors.dart';
 
-final controller = Get.find<DriversController>();
-PreferredSize customAppBarForSearch(context, String value) {
+PreferredSize customAppBarForSearch(context, String value,[void Function(String)? onChanged]) {
   return PreferredSize(
     preferredSize: const Size.fromHeight(150),
     child: FittedBox(
@@ -33,9 +30,9 @@ PreferredSize customAppBarForSearch(context, String value) {
                     border: Border.all(color: Colors.white, width: 2)),
                 child: TextField(
                   onTapOutside: (event) => FocusScope.of(context).unfocus(),
-                  onChanged: (newValue) {
-                    controller.searchText.value = newValue;
-                  },
+                  onChanged: onChanged, 
+                         
+                 
                   decoration: const InputDecoration(
                       suffixIcon: Icon(
                         Icons.search,
