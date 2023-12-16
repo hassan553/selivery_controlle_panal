@@ -30,25 +30,20 @@ class _AllVicaleState extends State<AllVicale> {
       body: Column(
         children: [
           const CustomSizedBox(value: .02),
-          const SizedBox(
-            height: 80,
-            child: Expanded(
-              child: CustomColumnDivider(
-                title: 'المركبات',
-                imagePath: 'assets/Car.png',
-              ),
-            ),
+          const CustomColumnDivider(
+            title: 'المركبات',
+            imagePath: 'assets/Car.png',
           ),
           Expanded(
             child: Obx(
               () => categoryController.categoryList.isEmpty
-                  ? ErrorComponant(
+                  ? ErrorComponent(
                       function: categoryController.getAllCategories,
                       message: categoryController.categoryError.value)
                   : ListView.builder(
                       itemCount: categoryController.categoryList.length,
                       itemBuilder: (context, index) {
-                        return customVicalWidget(
+                        return customVicelWidget(
                             context, categoryController.categoryList[index]);
                       },
                     ),
@@ -59,7 +54,7 @@ class _AllVicaleState extends State<AllVicale> {
     );
   }
 
-  Container customVicalWidget(BuildContext context, CategoryModel? model) {
+  Container customVicelWidget(BuildContext context, CategoryModel? model) {
     return Container(
       width: screenSize(context).width,
       height: screenSize(context).height * .3,
@@ -80,8 +75,9 @@ class _AllVicaleState extends State<AllVicale> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: CustomNetworkImage(
-                    imagePath: "$baseUri${model?.image}",
+                    imagePath: model?.image,
                     boxFit: BoxFit.fill,
+                    width: screenSize(context).width * .8,
                   ),
                 ),
               ),

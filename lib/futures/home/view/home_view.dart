@@ -5,6 +5,7 @@ import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart
 import 'package:selivery_controlle_panal/futures/setting/view/setting_view.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
+import '../../../core/services/cache_storage_services.dart';
 import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
@@ -34,7 +35,10 @@ class HomeView extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
-                          onTap: () => navigateTo(context, const SettingView()),
+                          onTap: () {
+                              print(CacheStorageServices().token);
+                            navigateTo(context, const SettingView());
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(5),

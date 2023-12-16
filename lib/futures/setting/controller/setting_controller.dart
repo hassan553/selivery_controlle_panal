@@ -15,7 +15,7 @@ class CategoryController extends GetxController {
   var addLoading = false.obs;
   final titleController = TextEditingController();
 
-  ///get all category
+
   RxList<CategoryModel> categoryList = <CategoryModel>[].obs;
   var categoryError = ''.obs;
   var categoryLoading = false.obs;

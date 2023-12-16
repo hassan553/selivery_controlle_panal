@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/futures/drivers/views/driver_profile_view.dart';
 
 import '../../../core/contants/api.dart';
@@ -73,12 +74,14 @@ Widget bestDriverWidget(
                     ),
                   ),
                   const SizedBox(width: 5),
-                  Image.network(
-                    '$baseUri${driverModel.image}',
-                    width: p1.maxWidth * .4,
-                    height: p1.maxHeight,
-                    fit: BoxFit.fill,
+                  CustomNetworkImage(
+                  imagePath:  driverModel.image,
+                  width: p1.maxWidth * .4,
+                  height: p1.maxHeight,
+                  boxFit: BoxFit.fill,
+
                   ),
+                  
                 ],
               ),
             )),

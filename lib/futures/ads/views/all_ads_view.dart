@@ -45,7 +45,7 @@ class _AllAdsViewState extends State<AllAdsView> {
             Expanded(
               child: Obx(
                 () => controller.allAdsList.isEmpty
-                    ? ErrorComponant(
+                    ? ErrorComponent(
                         function: controller.getAllAdsData,
                         message: controller.allAdsDataError.value)
                     : ListView.builder(

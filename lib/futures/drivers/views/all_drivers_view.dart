@@ -35,7 +35,7 @@ class _AllDriversViewState extends State<AllDriversView> {
         padding: const EdgeInsets.all(20),
         child: Obx(
           () => driversController.filteredItems.isEmpty
-              ? ErrorComponant(
+              ? ErrorComponent(
                   function: driversController.getAllDriversData,
                   message: driversController.error.value)
               : ListView.builder(

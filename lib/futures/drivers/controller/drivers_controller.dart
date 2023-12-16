@@ -28,7 +28,7 @@ class DriversController extends GetxController {
     DriverModel(
       sId: '1',
       name: 'hassan',
-      image: 'images/user.jpg',
+      image: 'user.jpg',
       phone: '12121212',
       age: 20,
       gender: 'male',
@@ -44,7 +44,7 @@ class DriversController extends GetxController {
     DriverModel(
         sId: '2',
         name: 'Marzouk',
-        image: 'images/user.jpg',
+        image: 'user.jpg',
         phone: '12121212',
         age: 20,
         gender: 'male',

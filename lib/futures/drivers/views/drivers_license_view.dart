@@ -31,7 +31,7 @@ class DriversLicenseView extends StatelessWidget {
           Expanded(
             child: Obx(() {
               return controller.allLicenseList.isEmpty
-                  ? ErrorComponant(
+                  ? ErrorComponent(
                       function: controller.getAllLicenseData,
                       message: controller.allLicenseDataError.value)
                   : ListView.builder(

@@ -30,7 +30,6 @@ class HomeController extends GetxController {
       );
       final result = jsonDecode(response.body);
       if (response.statusCode == 200) {
-   
         homeModel.value = HomeModel.fromJson(result['stats']);
         isLoading.value = false;
         error.value = '';
@@ -41,7 +40,6 @@ class HomeController extends GetxController {
         print(error.value);
         if (result['message'] == "Token is not valid"||result['message']=='Your are not authorized.') {
           CacheStorageServices().clear();
-       
           navigatorOff(LoginView());
         }
       }

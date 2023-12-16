@@ -133,7 +133,7 @@ class _DriversViewState extends State<TopDriversView> {
             Expanded(
               child: Obx(
                 () => driversController.bestDriversList.isEmpty
-                    ? ErrorComponant(
+                    ? ErrorComponent(
                         function: driversController.getTopDriversData,
                         message: driversController.error.value)
                     : ListView.builder(

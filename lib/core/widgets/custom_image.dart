@@ -44,9 +44,9 @@ class CustomNetworkImage extends StatelessWidget {
     this.height,
     this.boxFit,
   });
-String checkImage(String? image) {
+  String checkImage(String? image) {
     try {
-      String i = '$baseUri$image';
+      String i = '${baseUri}images/$image';
       if (i == baseUri) {
         return '';
       }
@@ -55,10 +55,12 @@ String checkImage(String? image) {
       return '';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Image.network(
       checkImage(imagePath),
+      fit: boxFit,
       loadingBuilder: (BuildContext context, Widget child,
           ImageChunkEvent? loadingProgress) {
         if (loadingProgress == null) {

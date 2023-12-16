@@ -32,14 +32,9 @@ class _AddVehicleViewState extends State<AddVehicleView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const CustomSizedBox(value: 0.02),
-                const SizedBox(
-                  height: 80,
-                  child: Expanded(
-                    child: CustomColumnDivider(
-                      title: 'إضافة مركبة',
-                      imagePath: 'assets/Car.png',
-                    ),
-                  ),
+                const CustomColumnDivider(
+                  title: 'إضافة مركبة',
+                  imagePath: 'assets/Car.png',
                 ),
                 const CustomSizedBox(value: 0.1),
                 Center(
@@ -137,7 +132,7 @@ class _AddVehicleViewState extends State<AddVehicleView> {
                   border: Border.all(color: AppColors.primaryColor),
                 ),
                 child: controller.categoryImage == null
-                    ? CustomAssetsImage(path: 'assets/Add Image.png')
+                    ? const CustomAssetsImage(path: 'assets/Add Image.png')
                     : Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Image.file(

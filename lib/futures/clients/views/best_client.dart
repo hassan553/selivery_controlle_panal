@@ -3,11 +3,9 @@ import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/widgets/error_compant.dart';
 import 'package:selivery_controlle_panal/futures/clients/controller/clients_controller.dart';
 import 'package:selivery_controlle_panal/futures/clients/model/passengers_model.dart';
-import '../../../core/contants/api.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
-import '../../../core/widgets/custom_button.dart';
 import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/custom_sized_box.dart';
@@ -66,7 +64,7 @@ class _BestClientsState extends State<BestClients> {
             Expanded(
               child: Obx(() {
                 return clientController.passengerList.isEmpty
-                    ? ErrorComponant(
+                    ? ErrorComponent(
                         function: clientController.getTopPassengersData,
                         message: clientController.passengersDataError.value)
                     : ListView.builder(

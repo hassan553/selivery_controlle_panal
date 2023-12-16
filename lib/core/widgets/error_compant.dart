@@ -5,10 +5,10 @@ import 'package:selivery_controlle_panal/core/widgets/custom_button.dart';
 import '../functions/global_function.dart';
 import '../rescourcs/app_colors.dart';
 
-class ErrorComponant extends StatelessWidget {
+class ErrorComponent extends StatelessWidget {
   final Function() function;
   final String message;
-  const ErrorComponant(
+  const ErrorComponent(
       {super.key, required this.function, required this.message});
 
   @override

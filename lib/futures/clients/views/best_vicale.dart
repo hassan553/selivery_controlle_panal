@@ -69,7 +69,7 @@ class _BestVicaleState extends State<BestVicale> {
             Expanded(
               child: Obx(() {
                 return clientController.vehicleList.isEmpty
-                    ? ErrorComponant(
+                    ? ErrorComponent(
                         function: clientController.getTopVehiclesData,
                         message: clientController.vehiclesDataError.value)
                     : ListView.builder(
@@ -152,7 +152,7 @@ class _BestVicaleState extends State<BestVicale> {
                           ),
                           const FittedBox(
                             child: ResponsiveText(
-                              text: ' 011156906520111569065201115690652',
+                              text: ' 01000000',
                               scaleFactor: .04,
                               color: AppColors.black,
                             ),

@@ -27,12 +27,12 @@ class LoginController extends GetxController {
           body: {
             'email': email.text.trim(),
             'password': password.text.trim(),
-            'deviceToken':'121212',
+            'deviceToken': '121212',
           },
         );
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
-        CacheStorageServices().setToken(result['token']);
+          CacheStorageServices().setToken(result['token']);
           print('my token ${result['token']}');
           navigateTo(context, MainView());
           isLoading.value = false;
@@ -54,6 +54,7 @@ class LoginController extends GetxController {
     } else {
       showDialogWithGetX("لا يوجد اتصال بالانترنت");
       isLoading.value = false;
+      print(CacheStorageServices().token);
     }
   }
 
