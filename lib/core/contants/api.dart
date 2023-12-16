@@ -2,7 +2,7 @@ import 'package:selivery_controlle_panal/main.dart';
 
 const baseUri = 'http://192.168.1.122:8000/';
 const authBaseUri = 'http://192.168.1.122:8000/auth/';
-String token = sharedPreferences.getString('token') ?? '';
+
 final allCategory =
     Uri.parse('${baseUri}dashboard/category'); // Replace with your API URL
 final topPassengers = Uri.parse("${baseUri}dashboard/trip/top_passengers");
@@ -43,8 +43,3 @@ authHeadersWithToken(String token) => {
       'Access-Control-Allow-Origin': '*',
       'AUTHORIZATION': 'Bearer $token',
     };
-/*
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.blue, // Set your desired color
-    ));
-    */

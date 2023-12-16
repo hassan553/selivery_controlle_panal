@@ -7,6 +7,7 @@ import 'package:selivery_controlle_panal/core/functions/global_function.dart';
 import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
 import 'package:selivery_controlle_panal/core/widgets/show_awesomeDialog.dart';
 import 'package:selivery_controlle_panal/futures/drivers/views/all_drivers_view.dart';
+import '../../../core/services/cache_storage_services.dart';
 import '../model/driver_model.dart';
 
 class DriversController extends GetxController {
@@ -76,7 +77,7 @@ class DriversController extends GetxController {
         allDriversLoading.value = true;
         final response = await http.get(
           topDrivers,
-          headers: authHeadersWithToken(token),
+          headers: authHeadersWithToken(CacheStorageServices().token),
         );
         final result = jsonDecode(response.body);
 
@@ -115,7 +116,7 @@ class DriversController extends GetxController {
         isLoading.value = true;
         final response = await http.get(
           topDrivers,
-          headers: authHeadersWithToken(token),
+          headers: authHeadersWithToken(CacheStorageServices().token),
         );
         final result = jsonDecode(response.body);
 
@@ -153,7 +154,7 @@ class DriversController extends GetxController {
         deleteIsLoading.value = true;
         final response = await http.delete(
           deleteDriverAccountUri(id),
-          headers: authHeadersWithToken(token),
+          headers: authHeadersWithToken(CacheStorageServices().token),
         );
         final result = jsonDecode(response.body);
 

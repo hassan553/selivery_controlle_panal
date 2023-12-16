@@ -7,6 +7,8 @@ import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
 import 'package:selivery_controlle_panal/futures/clients/model/passengers_model.dart';
 import 'package:selivery_controlle_panal/futures/clients/model/vehicle_model.dart';
 
+import '../../../core/services/cache_storage_services.dart';
+
 class ClientController extends GetxController {
   var isLoading = false.obs;
   var passengersDataError = ''.obs;
@@ -31,7 +33,7 @@ class ClientController extends GetxController {
       try {
         final response = await http.get(
           topPassengers,
-          headers: authHeadersWithToken(token),
+          headers: authHeadersWithToken(CacheStorageServices().token),
         );
         final result = jsonDecode(response.body);
 
@@ -66,11 +68,11 @@ class ClientController extends GetxController {
   Future<void> getTopVehiclesData() async {
     if (await checkInternet()) {
       isLoading.value = true;
-      print(token);
+
       try {
         final response = await http.get(
           topVehicles,
-          headers: authHeadersWithToken(token),
+          headers: authHeadersWithToken(CacheStorageServices().token),
         );
 
         if (response.statusCode == 200) {

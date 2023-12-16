@@ -6,6 +6,7 @@ import 'package:selivery_controlle_panal/core/widgets/image_picker.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../../core/contants/api.dart';
+import '../../../core/services/cache_storage_services.dart';
 import '../../../core/widgets/show_awesomeDialog.dart';
 
 class AdsController extends GetxController {
@@ -29,7 +30,7 @@ class AdsController extends GetxController {
         isLoading.value = true;
         var headers = {
           'Accept': 'application/json',
-          "Authorization": 'Bearer $token',
+          "Authorization": 'Bearer ${CacheStorageServices().token}',
           "Content-Type": 'multipart/form-data',
         };
         var response;

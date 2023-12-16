@@ -7,6 +7,7 @@ import 'package:selivery_controlle_panal/core/contants/api.dart';
 import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
 import 'package:selivery_controlle_panal/core/widgets/image_picker.dart';
 import 'package:selivery_controlle_panal/core/widgets/show_awesomeDialog.dart';
+import '../../../core/services/cache_storage_services.dart';
 import '../model/category_model.dart';
 
 class CategoryController extends GetxController {
@@ -23,7 +24,7 @@ class CategoryController extends GetxController {
       categoryLoading.value = true;
       categoryList.value = <CategoryModel>[];
       final response =
-          await http.get(allCategory, headers: authHeadersWithToken(token));
+          await http.get(allCategory, headers: authHeadersWithToken(CacheStorageServices().token));
       if (response.statusCode == 200) {
         final result = json.decode(response.body);
         result['categories'].forEach((json) {
@@ -64,7 +65,7 @@ class CategoryController extends GetxController {
         addLoading.value = true;
         var headers = {
           'Accept': 'application/json',
-          "Authorization": 'Bearer $token',
+          "Authorization": 'Bearer ${CacheStorageServices().token}',
           "Content-Type": 'multipart/form-data',
         };
 
@@ -113,7 +114,7 @@ class CategoryController extends GetxController {
         addLoading.value = true;
         var headers = {
           'Accept': 'application/json',
-          "Authorization": 'Bearer $token',
+          "Authorization": 'Bearer ${CacheStorageServices().token}',
           "Content-Type": 'multipart/form-data',
         };
 
@@ -159,7 +160,7 @@ class CategoryController extends GetxController {
       try {
         print(deleteCategoryUri(id));
         final response = await http.delete(deleteCategoryUri(id),
-            headers: authHeadersWithToken(token));
+            headers: authHeadersWithToken(CacheStorageServices().token));
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
           showDialogWithGetX(result['message']);

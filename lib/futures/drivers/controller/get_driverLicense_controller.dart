@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import '../../../core/contants/api.dart';
 import '../../../core/functions/internet_checker.dart';
+import '../../../core/services/cache_storage_services.dart';
 import '../model/driver_license_model.dart';
 
 class GetDriverLicenseController extends GetxController {
@@ -19,7 +20,7 @@ class GetDriverLicenseController extends GetxController {
         allLicenseList.value = [];
         final response = await http.get(
           getAllDriverLicenseAdsUri,
-          headers: authHeadersWithToken(token),
+          headers: authHeadersWithToken(CacheStorageServices().token),
         );
         final result = jsonDecode(response.body);
 

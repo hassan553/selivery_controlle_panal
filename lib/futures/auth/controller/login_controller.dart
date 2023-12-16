@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:selivery_controlle_panal/core/functions/global_function.dart';
+import 'package:selivery_controlle_panal/core/services/cache_storage_services.dart';
 import 'package:selivery_controlle_panal/core/widgets/snack_bar_widget.dart';
 import 'package:selivery_controlle_panal/futures/home/view/main_view.dart';
 import 'package:selivery_controlle_panal/main.dart';
@@ -24,13 +25,14 @@ class LoginController extends GetxController {
         final response = await http.post(
           Uri.parse('http://192.168.1.122:8000/auth/login/admin'),
           body: {
-            'email': email.text,
-            'password': password.text,
+            'email': email.text.trim(),
+            'password': password.text.trim(),
+            'deviceToken':'121212',
           },
         );
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
-          await sharedPreferences.setString('token', result['token']);
+        CacheStorageServices().setToken(result['token']);
           print('my token ${result['token']}');
           navigateTo(context, MainView());
           isLoading.value = false;
