@@ -56,7 +56,7 @@ class TopTitleWidget extends StatelessWidget {
           },
         ),
         ResponsiveText(
-          text: name ?? 'hassan ',
+          text: name ?? ' ',
           scaleFactor: .07,
           color: AppColors.primaryColor,
         ),

@@ -17,7 +17,6 @@ import '../../../core/widgets/custom_loading_widget.dart';
 import '../widgets/top_title.dart';
 import '../widgets/user_info.dart';
 
-
 class DriverProfileView extends StatelessWidget {
   final DriverModel driverModel;
   DriverProfileView({super.key, required this.driverModel});
@@ -62,7 +61,7 @@ class DriverProfileView extends StatelessWidget {
               UserInfo(driverModel: driverModel),
               const CustomDivider(),
               const CustomSizedBox(value: .02),
-              licensesWidget(),
+               licensesWidget(),
               const CustomDivider(),
               const CustomSizedBox(value: .02),
               deleteButton(context),
@@ -142,7 +141,7 @@ class DriverProfileView extends StatelessWidget {
               scaleFactor: .04,
               color: AppColors.black,
             ),
-         CustomNetworkImage(
+            CustomNetworkImage(
               imagePath: driverModel.image,
               boxFit: BoxFit.fill,
             ),
@@ -205,13 +204,15 @@ class DriverProfileView extends StatelessWidget {
                   Icons.star,
                   color: Colors.red,
                 ),
-                'مقبول'),
+                'مقبول',
+                driverModel.rating?.cool ?? 0),
             driverEvaluate(
                 const Icon(
                   Icons.star,
                   color: Colors.blue,
                 ),
-                'جيد'),
+                'جيد',
+                driverModel.rating?.good ?? 0),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -221,7 +222,8 @@ class DriverProfileView extends StatelessWidget {
                       Icons.star,
                       color: Colors.yellow,
                     ),
-                    'رائع'),
+                    'رائع',
+                    driverModel.rating?.fair ?? 0),
                 CustomText(title: '50 تفاعل', fontSize: 8),
               ],
             )
@@ -260,13 +262,17 @@ class DriverProfileView extends StatelessWidget {
     );
   }
 
-  Widget driverEvaluate(Icon icon, String title) {
+  Widget driverEvaluate(Icon icon, String title, int? rating) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         icon,
         CustomText(
           title: title,
+          fontSize: 14,
+        ),
+        CustomText(
+          title: rating.toString(),
           fontSize: 14,
         ),
       ],
