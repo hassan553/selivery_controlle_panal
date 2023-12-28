@@ -4,6 +4,7 @@ import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/futures/drivers/controller/get_driverLicense_controller.dart';
 import 'package:selivery_controlle_panal/futures/drivers/model/driver_license_model.dart';
+import 'package:selivery_controlle_panal/futures/drivers/views/image_details.dart';
 import '../../../core/contants/api.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
@@ -20,28 +21,34 @@ class DriversLicenseView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
-      body: Column(
-        children: [
-          SizedBox(height: screenSize(context).height * .02),
-          const CustomColumnDivider(
-            title: 'رخص السائقين',
-            imagePath: 'assets/Identification Documents.png',
-          ),
-          SizedBox(height: screenSize(context).height * .03),
-          Expanded(
-            child: Obx(() {
-              return controller.allLicenseList.isEmpty
-                  ? ErrorComponent(
-                      function: controller.getAllLicenseData,
-                      message: controller.allLicenseDataError.value)
-                  : ListView.builder(
-                      itemBuilder: (context, index) => licenseWidget(
-                          context, controller.allLicenseList[index]),
-                      itemCount: controller.allLicenseList.length,
-                    );
-            }),
-          ),
-        ],
+      body: RefreshIndicator(
+        color: AppColors.primaryColor,
+        onRefresh: () {
+          return controller.getAllLicenseData();
+        },
+        child: Column(
+          children: [
+            SizedBox(height: screenSize(context).height * .02),
+            const CustomColumnDivider(
+              title: 'رخص السائقين',
+              imagePath: 'assets/Identification Documents.png',
+            ),
+            SizedBox(height: screenSize(context).height * .03),
+            Expanded(
+              child: Obx(() {
+                return controller.allLicenseList.isEmpty
+                    ? ErrorComponent(
+                        function: controller.getAllLicenseData,
+                        message: controller.allLicenseDataError.value)
+                    : ListView.builder(
+                        itemBuilder: (context, index) => licenseWidget(
+                            context, controller.allLicenseList[index]),
+                        itemCount: controller.allLicenseList.length,
+                      );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -116,38 +123,56 @@ class DriversLicenseView extends StatelessWidget {
                             scaleFactor: .04,
                             color: AppColors.black,
                           ),
-                          CustomNetworkImage(
-                            imagePath: model.driverLicense,
-                            boxFit: BoxFit.fill,
+                          InkWell(
+                            onTap: () => navigateTo(
+                                context,
+                                ImageDetails(
+                                    imagePath: model.driverLicense ?? '')),
+                            child: CustomNetworkImage(
+                              imagePath: model.driverLicense,
+                              boxFit: BoxFit.fill,
+                            ),
                           ),
                         ],
                       ),
-                      // Column(
-                      //   children: [
-                      //     const ResponsiveText(
-                      //       text: 'رخصة السيارة',
-                      //       scaleFactor: .04,
-                      //       color: AppColors.black,
-                      //     ),
-                      //     CustomNetworkImage(
-                      //       imagePath: model.vehicleLicense,
-                      //       boxFit: BoxFit.fill,
-                      //     ),
-                      //   ],
-                      // ),
-                      // Column(
-                      //   children: [
-                      //     const ResponsiveText(
-                      //       text: 'صورة البطاقة',
-                      //       scaleFactor: .04,
-                      //       color: AppColors.black,
-                      //     ),
-                      //     CustomNetworkImage(
-                      //       imagePath: model.nationalId,
-                      //       boxFit: BoxFit.fill,
-                      //     ),
-                      //   ],
-                      // ),
+                      Column(
+                        children: [
+                          const ResponsiveText(
+                            text: 'رخصة السيارة',
+                            scaleFactor: .04,
+                            color: AppColors.black,
+                          ),
+                          InkWell(
+                            onTap: () => navigateTo(
+                                context,
+                                ImageDetails(
+                                    imagePath: model.vehicleLicense ?? '')),
+                            child: CustomNetworkImage(
+                              imagePath: model.vehicleLicense,
+                              boxFit: BoxFit.fill,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          const ResponsiveText(
+                            text: 'صورة البطاقة',
+                            scaleFactor: .04,
+                            color: AppColors.black,
+                          ),
+                          InkWell(
+                            onTap: () => navigateTo(
+                                context,
+                                ImageDetails(
+                                    imagePath: model.nationalId ?? '')),
+                            child: CustomNetworkImage(
+                              imagePath: model.nationalId,
+                              boxFit: BoxFit.fill,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],

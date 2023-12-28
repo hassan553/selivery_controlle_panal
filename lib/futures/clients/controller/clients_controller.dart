@@ -24,7 +24,9 @@ class ClientController extends GetxController {
   ].obs;
   RxList vehicleList = <VehicleModel>[
     VehicleModel(tripsCount: 2, model: 'frirrai', images: null),
-    VehicleModel(tripsCount: 2, model: 'frirrai', images: []),
+    VehicleModel(tripsCount: 2, model: 'frirrai', images: [
+      '2023-12-28T07-33-58.547Zscaled_IMG-20231227-WA0003.jpg',
+    ]),
   ].obs;
 
   Future<void> getTopPassengersData() async {
@@ -74,10 +76,8 @@ class ClientController extends GetxController {
           topVehicles,
           headers: authHeadersWithToken(CacheStorageServices().token),
         );
-
+        final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
-          final result = jsonDecode(response.body);
-
           //homeModel.value=HomeModel.fromJson(result['stats']);
           print('top Vehicles  $result');
           var r = result['vehicles'] as List;

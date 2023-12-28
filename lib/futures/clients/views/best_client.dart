@@ -29,54 +29,39 @@ class _BestClientsState extends State<BestClients> {
       'الأكثر شراءاً من Selivery هذا السنة :-',
     ];
     return Scaffold(
-      appBar: customAppBarForSearch(context, ''),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            const CustomSizedBox(value: .02),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.primaryColor,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(
-                      Icons.list,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                const Expanded(
-                  child: CustomColumnDivider(
-                    title: 'العملاء',
-                    imagePath: 'assets/Businessman.png',
-                  ),
-                ),
-              ],
-            ),
-            const CustomSizedBox(value: .02),
-            Expanded(
-              child: Obx(() {
-                return clientController.passengerList.isEmpty
-                    ? ErrorComponent(
-                        function: clientController.getTopPassengersData,
-                        message: clientController.passengersDataError.value)
-                    : ListView.builder(
-                        itemBuilder: (context, index) => bestClientWidget(
-                            context,
-                            titles[index],
-                            clientController.passengerList[index]),
-                        itemCount: clientController.passengerList.length,
-                      );
-              }),
-            ),
-          ],
+      appBar: customAppBar(),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return clientController.getTopPassengersData();
+        },
+        color: AppColors.primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              const CustomSizedBox(value: .02),
+              const CustomColumnDivider(
+                title: 'العملاء',
+                imagePath: 'assets/Businessman.png',
+              ),
+              const CustomSizedBox(value: .02),
+              Expanded(
+                child: Obx(() {
+                  return clientController.passengerList.isEmpty
+                      ? ErrorComponent(
+                          function: clientController.getTopPassengersData,
+                          message: clientController.passengersDataError.value)
+                      : ListView.builder(
+                          itemBuilder: (context, index) => bestClientWidget(
+                              context,
+                              titles[index],
+                              clientController.passengerList[index]),
+                          itemCount: clientController.passengerList.length,
+                        );
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -155,6 +140,4 @@ class _BestClientsState extends State<BestClients> {
       ],
     );
   }
-
-  
 }

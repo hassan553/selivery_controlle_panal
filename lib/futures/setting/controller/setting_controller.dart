@@ -15,7 +15,6 @@ class CategoryController extends GetxController {
   var addLoading = false.obs;
   final titleController = TextEditingController();
 
-
   RxList<CategoryModel> categoryList = <CategoryModel>[].obs;
   var categoryError = ''.obs;
   var categoryLoading = false.obs;
@@ -23,8 +22,8 @@ class CategoryController extends GetxController {
     try {
       categoryLoading.value = true;
       categoryList.value = <CategoryModel>[];
-      final response =
-          await http.get(allCategory, headers: authHeadersWithToken(CacheStorageServices().token));
+      final response = await http.get(allCategory,
+          headers: authHeadersWithToken(CacheStorageServices().token));
       if (response.statusCode == 200) {
         final result = json.decode(response.body);
         result['categories'].forEach((json) {
@@ -95,6 +94,7 @@ class CategoryController extends GetxController {
           clearData();
           getAllCategories();
         } else {
+          print(responsebody['message']);
           showDialogWithGetX(responsebody['message']);
           addLoading.value = false;
         }

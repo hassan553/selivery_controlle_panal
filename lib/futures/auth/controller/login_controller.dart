@@ -9,6 +9,7 @@ import 'package:selivery_controlle_panal/core/widgets/snack_bar_widget.dart';
 import 'package:selivery_controlle_panal/futures/home/view/main_view.dart';
 import 'package:selivery_controlle_panal/main.dart';
 
+import '../../../core/contants/api.dart';
 import '../../../core/functions/internet_checker.dart';
 import '../../../core/widgets/show_awesomeDialog.dart';
 
@@ -23,7 +24,7 @@ class LoginController extends GetxController {
     if (await checkInternet()) {
       try {
         final response = await http.post(
-          Uri.parse('http://192.168.1.122:8000/auth/login/admin'),
+          loginUri,
           body: {
             'email': email.text.trim(),
             'password': password.text.trim(),
@@ -31,8 +32,8 @@ class LoginController extends GetxController {
           },
         );
         final result = jsonDecode(response.body);
-        if (response.statusCode == 200) {
-          CacheStorageServices().setToken(result['token']);
+        if (response.statusCode == 200){
+        await  CacheStorageServices().setToken(result['token']);
           print('my token ${result['token']}');
           navigateTo(context, MainView());
           isLoading.value = false;

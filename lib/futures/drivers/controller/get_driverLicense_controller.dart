@@ -29,9 +29,8 @@ class GetDriverLicenseController extends GetxController {
           var r = result['requests'] as List;
           r.map((e) {
             allLicenseList.add(DriverLicenseModel.fromJson(e));
-         
           }).toList();
-
+          print(allLicenseList[0].driverLicense);
           isLoading.value = false;
         } else {
           isLoading.value = false;

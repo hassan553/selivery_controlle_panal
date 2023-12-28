@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
 import 'package:selivery_controlle_panal/futures/clients/model/vehicle_model.dart';
 import '../../../core/contants/api.dart';
 import '../../../core/functions/global_function.dart';
@@ -24,7 +25,7 @@ class _BestVicaleState extends State<BestVicale> {
   @override
   void initState() {
     super.initState();
-    //clientController.getTopVehiclesData();
+    clientController.getTopVehiclesData();
   }
 
   @override
@@ -34,55 +35,42 @@ class _BestVicaleState extends State<BestVicale> {
       'إسم الدراجة النارية \n TVS sport 2018',
     ];
     return Scaffold(
-      appBar: customAppBarForSearch(context, ''),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            const CustomSizedBox(value: .02),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: AppColors.primaryColor,
-                    ),
-                    padding: const EdgeInsets.all(8),
-                    child: const Icon(
-                      Icons.list,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                const Expanded(
-                  child: CustomColumnDivider(
-                    title: 'المركبات',
-                    imagePath: 'assets/Car.png',
-                  ),
-                ),
-              ],
-            ),
-            const CustomSizedBox(value: .02),
-            Expanded(
-              child: Obx(() {
-                return clientController.vehicleList.isEmpty
-                    ? ErrorComponent(
-                        function: clientController.getTopVehiclesData,
-                        message: clientController.vehiclesDataError.value)
-                    : ListView.builder(
-                        itemBuilder: (context, index) => bestClientWidget(
-                            context,
-                            index,
-                            titles[index],
-                            clientController.vehicleList[index]),
-                        itemCount: clientController.vehicleList.length,
-                      );
-              }),
-            ),
-          ],
+      appBar: customAppBar(),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return clientController.getTopVehiclesData();
+        },
+        color: AppColors.primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              const CustomSizedBox(value: .02),
+              const CustomColumnDivider(
+                title: 'المركبات',
+                imagePath: 'assets/Car.png',
+              ),
+              const CustomSizedBox(value: .02),
+              Expanded(
+                child: Obx(() {
+                  return clientController.isLoading.value == true
+                      ? const CustomLoadingWidget()
+                      : clientController.vehicleList.isEmpty
+                          ? ErrorComponent(
+                              function: clientController.getTopVehiclesData,
+                              message: clientController.vehiclesDataError.value)
+                          : ListView.builder(
+                              itemBuilder: (context, index) => bestClientWidget(
+                                  context,
+                                  index,
+                                  titles[index],
+                                  clientController.vehicleList[index]),
+                              itemCount: clientController.vehicleList.length,
+                            );
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );

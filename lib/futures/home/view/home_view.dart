@@ -12,17 +12,28 @@ import '../../../core/widgets/responsive_text.dart';
 import '../../drivers/views/drivers_license_view.dart';
 import '../controller/home_controller.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   final homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: customAppBar(),
-          body: SingleChildScrollView(
+      child: Scaffold(
+        appBar: customAppBar(),
+        body: SingleChildScrollView(
+          child: RefreshIndicator(
+            color: AppColors.primaryColor,
+            onRefresh: () {
+              return homeController.getHomeData();
+            },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -36,7 +47,7 @@ class HomeView extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: InkWell(
                           onTap: () {
-                              print(CacheStorageServices().token);
+                            print(CacheStorageServices().token);
                             navigateTo(context, const SettingView());
                           },
                           child: Container(
@@ -81,14 +92,14 @@ class HomeView extends StatelessWidget {
                     ],
                   ),
                   const CustomSizedBox(value: .02),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
+                  const Padding(
+                    padding: EdgeInsets.only(right: 20),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         CustomAssetsImage(path: 'assets/Europe.png'),
-                        const SizedBox(width: 4),
-                        const ResponsiveText(
+                        SizedBox(width: 4),
+                        ResponsiveText(
                           text: 'نظرة عامة علي التطبيق',
                           scaleFactor: .05,
                           fontWeight: FontWeight.bold,
@@ -167,15 +178,15 @@ class HomeView extends StatelessWidget {
                                         ),
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 30, vertical: 5),
-                                        child: Row(
+                                        child: const Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            const ResponsiveText(
+                                            ResponsiveText(
                                               text: 'فحص بيانات السائق ',
                                               scaleFactor: .04,
                                               color: AppColors.black,
                                             ),
-                                            const SizedBox(width: 5),
+                                            SizedBox(width: 5),
                                             CustomAssetsImage(
                                                 path: 'assets/Driving.png'),
                                           ],

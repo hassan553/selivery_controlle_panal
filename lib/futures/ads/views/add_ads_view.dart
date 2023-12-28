@@ -11,7 +11,7 @@ import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
 
 class AddAdsView extends StatefulWidget {
-  AddAdsView({super.key});
+  const AddAdsView({super.key});
 
   @override
   State<AddAdsView> createState() => _AddAdsViewState();
@@ -30,7 +30,7 @@ class _AddAdsViewState extends State<AddAdsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarForSearch(context,''),
+      appBar: customAppBar(),
       body: InkWell(
         onTap: () => FocusScope.of(context).unfocus(),
         child: Padding(
@@ -41,28 +41,7 @@ class _AddAdsViewState extends State<AddAdsView> {
               child: Column(
                 children: [
                   const CustomSizedBox(value: .02),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: AppColors.primaryColor,
-                          ),
-                          padding: const EdgeInsets.all(8),
-                          child: const Icon(
-                            Icons.list,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      const Expanded(
-                          child:
-                              CustomColumnDivider(title: 'إضافة إعلان جديد')),
-                    ],
-                  ),
+                  const CustomColumnDivider(title: 'إضافة إعلان جديد'),
                   const CustomSizedBox(value: .02),
                   customForm(
                       context, 'إسم الإعلان', 1, controller.titleController),
@@ -141,7 +120,7 @@ class _AddAdsViewState extends State<AddAdsView> {
                 border: Border.all(color: AppColors.primaryColor),
               ),
               child: controller.adsImage == null
-                  ? CustomAssetsImage(path: 'assets/Add Image.png')
+                  ? const CustomAssetsImage(path: 'assets/Add Image.png')
                   : Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Image.file(

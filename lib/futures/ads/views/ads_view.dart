@@ -21,33 +21,18 @@ class AdsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarForSearch(context,''),
+      appBar: customAppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CustomSizedBox(value: .02),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: AppColors.primaryColor,
-                  ),
-                  padding: const EdgeInsets.all(8),
-                  child: const Icon(
-                    Icons.list,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const CustomSizedBox(value: .02),
+              const CustomSizedBox(value: .05),
               SizedBox(
                 height: 120,
                 width: screenSize(context).width / 2,
-                child: Stack(
+                child: const Stack(
                   alignment: Alignment.topLeft,
                   children: [
                     CustomAssetsImage(path: 'assets/megaphone.png'),
@@ -62,7 +47,7 @@ class AdsView extends StatelessWidget {
               ),
               const CustomSizedBox(value: .02),
               InkWell(
-                onTap: () => navigateTo(context, AddAdsView()),
+                onTap: () => navigateTo(context, const AddAdsView()),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Stack(
@@ -80,7 +65,7 @@ class AdsView extends StatelessWidget {
                           boxFit: BoxFit.fill,
                         ),
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomAssetsImage(
@@ -89,8 +74,8 @@ class AdsView extends StatelessWidget {
                             //height: screenSize(context).height * .2,
                             boxFit: BoxFit.fill,
                           ),
-                          const SizedBox(width: 5),
-                          const ResponsiveText(
+                          SizedBox(width: 5),
+                          ResponsiveText(
                             text: 'إضافة إعلان',
                             scaleFactor: .06,
                             color: AppColors.white,
@@ -103,7 +88,7 @@ class AdsView extends StatelessWidget {
               ),
               const CustomSizedBox(value: .015),
               InkWell(
-                onTap: () => navigateTo(context, AllAdsView()),
+                onTap: () => navigateTo(context, const AllAdsView()),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Stack(
@@ -121,7 +106,7 @@ class AdsView extends StatelessWidget {
                           boxFit: BoxFit.fill,
                         ),
                       ),
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CustomAssetsImage(
@@ -130,8 +115,8 @@ class AdsView extends StatelessWidget {
                             //height: screenSize(context).height * .2,
                             boxFit: BoxFit.fill,
                           ),
-                          const SizedBox(width: 5),
-                          const ResponsiveText(
+                          SizedBox(width: 5),
+                          ResponsiveText(
                             text: 'مراقبة الإعلانات',
                             scaleFactor: .06,
                             color: AppColors.white,

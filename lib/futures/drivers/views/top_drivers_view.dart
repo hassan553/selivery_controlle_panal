@@ -27,125 +27,131 @@ class _DriversViewState extends State<TopDriversView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //driversController.getTopDriversData();
+    driversController.getTopDriversData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CustomSizedBox(value: .02),
-            SizedBox(
-              height: 80,
-              child: Row(
-                children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: InkWell(
-                      onTap: () => navigateTo(context, AllDriversView()),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: AppColors.primaryColor,
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        child: const Icon(
-                          Icons.people,
-                          color: Colors.black,
+      body: RefreshIndicator(
+        onRefresh: () {
+          return driversController.getAllDriversData();
+        },
+        color: AppColors.primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const CustomSizedBox(value: .02),
+              SizedBox(
+                height: 80,
+                child: Row(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: InkWell(
+                        onTap: () => navigateTo(context, AllDriversView()),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: AppColors.primaryColor,
+                          ),
+                          padding: const EdgeInsets.all(8),
+                          child: const Icon(
+                            Icons.people,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const Expanded(
-                    child: CustomColumnDivider(
-                      title: 'السائقين',
-                      imagePath: 'assets/Driving.png',
+                    const Expanded(
+                      child: CustomColumnDivider(
+                        title: 'السائقين',
+                        imagePath: 'assets/Driving.png',
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const CustomSizedBox(value: .01),
-            SizedBox(
-              height: 50,
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  const Divider(
-                    thickness: 1,
-                    color: AppColors.primaryColor,
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Padding(
-                        padding:  EdgeInsets.only(bottom: 8),
-                        child: CustomAssetsImage(path: 'assets/Driving.png'),
-                      ),
-                      const SizedBox(width: 5),
-                      const ResponsiveText(
-                        text: 'عدد السائقين',
-                        scaleFactor: .06,
-                        color: AppColors.black,
-                      ),
-                      const Spacer(),
-                      Obx(
-                        () => ResponsiveText(
-                          text: homeController.homeModel.value.driversNo
-                              .toString(),
+              const CustomSizedBox(value: .01),
+              SizedBox(
+                height: 50,
+                child: Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    const Divider(
+                      thickness: 1,
+                      color: AppColors.primaryColor,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(bottom: 8),
+                          child: CustomAssetsImage(path: 'assets/Driving.png'),
+                        ),
+                        const SizedBox(width: 5),
+                        const ResponsiveText(
+                          text: 'عدد السائقين',
                           scaleFactor: .06,
                           color: AppColors.black,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const CustomSizedBox(value: .02),
-            Container(
-              width: screenSize(context).width,
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  gradient: const LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        AppColors.white,
-                        AppColors.primaryColor,
-                      ])),
-              child: const FittedBox(
-                child: ResponsiveText(
-                  text: 'أفضل ثلاث سائقين حاصلين علي تقييم رائع هذا الأسبوع',
-                  scaleFactor: .06,
-                  color: AppColors.black,
+                        const Spacer(),
+                        Obx(
+                          () => ResponsiveText(
+                            text: homeController.homeModel.value.driversNo
+                                .toString(),
+                            scaleFactor: .06,
+                            color: AppColors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ),
-            const CustomSizedBox(value: .02),
-            Expanded(
-              child: Obx(
-                () => driversController.bestDriversList.isEmpty
-                    ? ErrorComponent(
-                        function: driversController.getTopDriversData,
-                        message: driversController.error.value)
-                    : ListView.builder(
-                        itemBuilder: (context, index) => bestDriverWidget(
-                            context,
-                            index,
-                            driversController.bestDriversList[index]),
-                        itemCount: driversController.bestDriversList.length,
-                      ),
+              const CustomSizedBox(value: .02),
+              Container(
+                width: screenSize(context).width,
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    gradient: const LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          AppColors.white,
+                          AppColors.primaryColor,
+                        ])),
+                child: const FittedBox(
+                  child: ResponsiveText(
+                    text: 'أفضل ثلاث سائقين حاصلين علي تقييم رائع هذا الأسبوع',
+                    scaleFactor: .06,
+                    color: AppColors.black,
+                  ),
+                ),
               ),
-            ),
-          ],
+              const CustomSizedBox(value: .02),
+              Expanded(
+                child: Obx(
+                  () => driversController.bestDriversList.isEmpty
+                      ? ErrorComponent(
+                          function: driversController.getTopDriversData,
+                          message: driversController.error.value)
+                      : ListView.builder(
+                          itemBuilder: (context, index) => bestDriverWidget(
+                              context,
+                              index,
+                              driversController.bestDriversList[index]),
+                          itemCount: driversController.bestDriversList.length,
+                        ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

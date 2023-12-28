@@ -1,8 +1,7 @@
-import 'package:selivery_controlle_panal/main.dart';
-
-const baseUri = 'http://192.168.1.122:8000/';
-const authBaseUri = 'http://192.168.1.122:8000/auth/';
-
+const baseUri =
+    'https://selivery.onrender.com/'; //'http://192.168.1.122:8000/';
+const authBaseUri = '${baseUri}auth/';
+final loginUri = Uri.parse('${authBaseUri}login/admin');
 final allCategory =
     Uri.parse('${baseUri}dashboard/category'); // Replace with your API URL
 final topPassengers = Uri.parse("${baseUri}dashboard/trip/top_passengers");

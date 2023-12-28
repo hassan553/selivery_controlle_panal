@@ -17,9 +17,10 @@ import '../../../core/widgets/custom_loading_widget.dart';
 import '../widgets/top_title.dart';
 import '../widgets/user_info.dart';
 
+
 class DriverProfileView extends StatelessWidget {
   final DriverModel driverModel;
-   DriverProfileView({super.key, required this.driverModel});
+  DriverProfileView({super.key, required this.driverModel});
   final DriversController controller = Get.find<DriversController>();
 
   @override
@@ -47,7 +48,7 @@ class DriverProfileView extends StatelessWidget {
                 builder: (controller) => TopTitleWidget(
                   title1: 'سا',
                   title2: 'ئق',
-                  image: "$baseUri${driverModel.image}",
+                  image: driverModel.image,
                   name: driverModel.name,
                 ),
               ),
@@ -115,12 +116,9 @@ class DriverProfileView extends StatelessWidget {
               scaleFactor: .04,
               color: AppColors.black,
             ),
-            Image.network(
-              "$baseUri${driverModel.image}",
-              // '$baseUri${model.driverLicense}',
-              fit: BoxFit.fill,
-              errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.error),
+            CustomNetworkImage(
+              imagePath: driverModel.image,
+              boxFit: BoxFit.fill,
             ),
           ],
         ),
@@ -131,12 +129,9 @@ class DriverProfileView extends StatelessWidget {
               scaleFactor: .04,
               color: AppColors.black,
             ),
-            Image.network(
-              "$baseUri${driverModel.image}",
-              // '$baseUri${model.vehicleLicense}',
-              fit: BoxFit.fill,
-              errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.error),
+            CustomNetworkImage(
+              imagePath: driverModel.image,
+              boxFit: BoxFit.fill,
             ),
           ],
         ),
@@ -147,12 +142,9 @@ class DriverProfileView extends StatelessWidget {
               scaleFactor: .04,
               color: AppColors.black,
             ),
-            Image.network(
-              "$baseUri${driverModel.image}",
-              //'$baseUri${model.nationalId}',
-              fit: BoxFit.fill,
-              errorBuilder: (context, error, stackTrace) =>
-                  const Icon(Icons.error),
+         CustomNetworkImage(
+              imagePath: driverModel.image,
+              boxFit: BoxFit.fill,
             ),
           ],
         ),

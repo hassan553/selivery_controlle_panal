@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/responsive_text.dart';
 
@@ -37,18 +38,10 @@ class TopTitleWidget extends StatelessWidget {
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(60),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.fill,
+                  child: CustomNetworkImage(
+                    boxFit: BoxFit.fill,
                     width: 120,
-                    imageUrl: image!,
-                    placeholder: (context, url) =>
-                      const  Center(
-                          child:  SizedBox(
-                            width: 50,
-                            child:  CircularProgressIndicator()),
-                        ),
-                    errorWidget: (context, url, error) => const Icon(
-                        Icons.error), // Error widget if image fails to load
+                    imagePath: image ?? '',
                   ),
                 ),
                 FittedBox(

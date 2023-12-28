@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_column_divider.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
 import 'package:selivery_controlle_panal/futures/ads/controller/all_ads_controller.dart';
 import 'package:selivery_controlle_panal/futures/ads/model/ads_model.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -33,30 +34,38 @@ class _AllAdsViewState extends State<AllAdsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarForSearch(context, ''),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const CustomSizedBox(value: .01),
-            const CustomColumnDivider(title: 'الإعلانات'),
-            const CustomSizedBox(value: .02),
-            Expanded(
-              child: Obx(
-                () => controller.allAdsList.isEmpty
-                    ? ErrorComponent(
-                        function: controller.getAllAdsData,
-                        message: controller.allAdsDataError.value)
-                    : ListView.builder(
-                        itemBuilder: (context, index) => customAdsWidget(
-                            context, index, controller.allAdsList[index]),
-                        itemCount: controller.allAdsList.length,
-                      ),
+      appBar: customAppBar(),
+      body: RefreshIndicator(
+        onRefresh: () {
+          return controller.getAllAdsData();
+        },
+        color: AppColors.primaryColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const CustomSizedBox(value: .01),
+              const CustomColumnDivider(title: 'الإعلانات'),
+              const CustomSizedBox(value: .02),
+              Expanded(
+                child: Obx(
+                  () => controller.isLoading.value == true
+                      ? const CustomLoadingWidget()
+                      : controller.allAdsList.isEmpty
+                          ? ErrorComponent(
+                              function: controller.getAllAdsData,
+                              message: controller.allAdsDataError.value)
+                          : ListView.builder(
+                              itemBuilder: (context, index) => customAdsWidget(
+                                  context, index, controller.allAdsList[index]),
+                              itemCount: controller.allAdsList.length,
+                            ),
+                ),
               ),
-            ),
-            const CustomSizedBox(value: .02),
-          ],
+              const CustomSizedBox(value: .02),
+            ],
+          ),
         ),
       ),
     );
@@ -107,7 +116,7 @@ class _AllAdsViewState extends State<AllAdsView> {
               InkWell(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-                    return const WebPage();
+                    return WebPage(link: model.link ?? '');
                   }));
                 },
                 child: Card(
@@ -120,7 +129,7 @@ class _AllAdsViewState extends State<AllAdsView> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(15),
                     child: SizedBox(
-                      width: 100,
+                      width: 80,
                       child: Image.asset(
                         'assets/Screenshot 2023-11-05 224007.png',
                         fit: BoxFit.fill,

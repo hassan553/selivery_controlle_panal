@@ -26,7 +26,7 @@ class _AllVicaleState extends State<AllVicale> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBarForSearch(context, ''),
+      appBar: customAppBar(),
       body: Column(
         children: [
           const CustomSizedBox(value: .02),
