@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomDialog extends StatefulWidget {
+  const CustomDialog({super.key});
+
   @override
   _CustomDialogState createState() => _CustomDialogState();
 }
@@ -13,40 +15,40 @@ class _CustomDialogState extends State<CustomDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       child: Container(
-        height: 100,
+        height: 300,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(
+            const Text(
               'Enter Details',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextField(
               onChanged: (value) {
                 setState(() {
                   _title = value;
                 });
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Title',
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               onChanged: (value) {
                 setState(() {
                   _image = value;
                 });
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Image URL',
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -57,13 +59,13 @@ class _CustomDialogState extends State<CustomDialog> {
                     print('Image URL: $_image');
                     Navigator.of(context).pop();
                   },
-                  child: Text('Save'),
+                  child: const Text('Save'),
                 ),
                 MaterialButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Cancel'),
+                  child: const Text('Cancel'),
                 ),
               ],
             ),

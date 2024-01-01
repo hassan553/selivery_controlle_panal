@@ -1,5 +1,6 @@
+//'https://selivery.onrender.com/';
 const baseUri =
-    'https://selivery.onrender.com/'; //'http://192.168.1.122:8000/';
+     'http://192.168.1.122:8000/';
 const authBaseUri = '${baseUri}auth/';
 final loginUri = Uri.parse('${authBaseUri}login/admin');
 final allCategory =

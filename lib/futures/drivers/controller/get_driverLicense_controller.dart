@@ -48,7 +48,24 @@ class GetDriverLicenseController extends GetxController {
     }
     print(allLicenseDataError.value);
   }
+Future approveDriver(String id)async{
+ 
+    var request = http.Request(
+        'GET',
+        Uri.parse(
+            'http://localhost:8000/dashboard/request/64e2ba58ce5e2848b5df1fb7/approve'));
 
+    request.headers.addAll(authHeadersWithToken(CacheStorageServices().token));
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 200) {
+      
+    } else {
+      print(response.reasonPhrase);
+    }
+
+}
   @override
   void onInit() {
     // TODO: implement onInit

@@ -27,29 +27,33 @@ class _AllVicaleState extends State<AllVicale> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar(),
-      body: Column(
-        children: [
-          const CustomSizedBox(value: .02),
-          const CustomColumnDivider(
-            title: 'المركبات',
-            imagePath: 'assets/Car.png',
-          ),
-          Expanded(
-            child: Obx(
-              () => categoryController.categoryList.isEmpty
-                  ? ErrorComponent(
-                      function: categoryController.getAllCategories,
-                      message: categoryController.categoryError.value)
-                  : ListView.builder(
-                      itemCount: categoryController.categoryList.length,
-                      itemBuilder: (context, index) {
-                        return customVicelWidget(
-                            context, categoryController.categoryList[index]);
-                      },
-                    ),
+      body: RefreshIndicator(
+        onRefresh: () => categoryController.getAllCategories(),
+        color: AppColors.primaryColor,
+        child: Column(
+          children: [
+            const CustomSizedBox(value: .02),
+            const CustomColumnDivider(
+              title: 'المركبات',
+              imagePath: 'assets/Car.png',
             ),
-          ),
-        ],
+            Expanded(
+              child: Obx(
+                () => categoryController.categoryList.isEmpty
+                    ? ErrorComponent(
+                        function: categoryController.getAllCategories,
+                        message: categoryController.categoryError.value)
+                    : ListView.builder(
+                        itemCount: categoryController.categoryList.length,
+                        itemBuilder: (context, index) {
+                          return customVicelWidget(
+                              context, categoryController.categoryList[index]);
+                        },
+                      ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -98,7 +102,7 @@ class _AllVicaleState extends State<AllVicale> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return CustomDialog();
+                        return const CustomDialog();
                       },
                     );
                   },

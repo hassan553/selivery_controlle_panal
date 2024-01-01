@@ -162,6 +162,7 @@ class CategoryController extends GetxController {
         final response = await http.delete(deleteCategoryUri(id),
             headers: authHeadersWithToken(CacheStorageServices().token));
         final result = jsonDecode(response.body);
+        print('result ${result['message'] } ${response.statusCode}');
         if (response.statusCode == 200) {
           showDialogWithGetX(result['message']);
           getAllCategories();
