@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../core/contants/api.dart';
 import '../../../core/functions/internet_checker.dart';
 import '../../../core/services/cache_storage_services.dart';
+import '../../../core/widgets/show_awesomeDialog.dart';
 import '../model/driver_license_model.dart';
 
 class GetDriverLicenseController extends GetxController {
@@ -48,24 +49,47 @@ class GetDriverLicenseController extends GetxController {
     }
     print(allLicenseDataError.value);
   }
-Future approveDriver(String id)async{
- 
-    var request = http.Request(
-        'GET',
-        Uri.parse(
-            'http://localhost:8000/dashboard/request/64e2ba58ce5e2848b5df1fb7/approve'));
 
-    request.headers.addAll(authHeadersWithToken(CacheStorageServices().token));
+  var approveLoading = false;
+  Future approveDriver(String id) async {
+    if (await checkInternet()) {
+      approveLoading = true;
+      update();
+      final response = await http.get(
+        approveDriverUri(id),
+        headers: authHeadersWithToken(CacheStorageServices().token),
+      );
+      final result = jsonDecode(response.body);
 
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      
+      showDialogWithGetX(result['message']);
+      approveLoading = false;
     } else {
-      print(response.reasonPhrase);
+      showDialogWithGetX("لا يوجد اتصال بالانترنت");
+      approveLoading = false;
     }
+    update();
+  }
 
-}
+  var rejectLoading = false;
+  Future rejectDriver(String id) async {
+    if (await checkInternet()) {
+      rejectLoading = true;
+      update();
+      final response = await http.get(
+        rejectDriverUri(id),
+        headers: authHeadersWithToken(CacheStorageServices().token),
+      );
+      final result = jsonDecode(response.body);
+
+      showDialogWithGetX(result['message']);
+      rejectLoading = false;
+    } else {
+      showDialogWithGetX("لا يوجد اتصال بالانترنت");
+      rejectLoading = false;
+    }
+    update();
+  }
+
   @override
   void onInit() {
     // TODO: implement onInit

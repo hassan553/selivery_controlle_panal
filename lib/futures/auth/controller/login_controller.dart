@@ -32,14 +32,14 @@ class LoginController extends GetxController {
           },
         );
         final result = jsonDecode(response.body);
-        if (response.statusCode == 200){
-        await  CacheStorageServices().setToken(result['token']);
+        if (response.statusCode == 200) {
+          await CacheStorageServices().setToken(result['token']);
           print('my token ${result['token']}');
           navigateOff(context, MainView());
           isLoading.value = false;
           showSnackBarWidget(
               context: context,
-              message: 'Admin loggedIn successfully',
+              message: 'تم التسجيل بنجاح',
               requestStates: RequestStates.success);
         } else {
           print(result);

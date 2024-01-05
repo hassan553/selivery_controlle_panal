@@ -1,6 +1,5 @@
 //'https://selivery.onrender.com/';
-const baseUri =
-     'http://192.168.1.122:8000/';
+const baseUri = 'http://192.168.1.122:8000/';
 const authBaseUri = '${baseUri}auth/';
 final loginUri = Uri.parse('${authBaseUri}login/admin');
 final allCategory =
@@ -23,6 +22,10 @@ Uri updateCategoryUri(String? id) =>
     Uri.parse('${baseUri}dashboard/category/$id');
 Uri deleteAdsUri(String id) =>
     Uri.parse("${baseUri}dashboard/advertisement/$id");
+Uri approveDriverUri(String id) =>
+    Uri.parse("${baseUri}dashboard/request/$id/approve");
+Uri rejectDriverUri(String id) =>
+    Uri.parse("${baseUri}dashboard/request/$id/reject");
 
 final authHeaders = {
   'Keep-Alive': 'timeout=5',
