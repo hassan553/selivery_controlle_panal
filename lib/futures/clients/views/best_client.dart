@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
 import 'package:selivery_controlle_panal/core/widgets/error_compant.dart';
 import 'package:selivery_controlle_panal/futures/clients/controller/clients_controller.dart';
 import 'package:selivery_controlle_panal/futures/clients/model/passengers_model.dart';
@@ -47,17 +48,20 @@ class _BestClientsState extends State<BestClients> {
               const CustomSizedBox(value: .02),
               Expanded(
                 child: Obx(() {
-                  return clientController.passengerList.isEmpty
-                      ? ErrorComponent(
-                          function: clientController.getTopPassengersData,
-                          message: clientController.passengersDataError.value)
-                      : ListView.builder(
-                          itemBuilder: (context, index) => bestClientWidget(
-                              context,
-                              titles[index],
-                              clientController.passengerList[index]),
-                          itemCount: clientController.passengerList.length,
-                        );
+                  return clientController.isLoading.value == true
+                      ? const CustomLoadingWidget()
+                      : clientController.passengerList.isEmpty
+                          ? ErrorComponent(
+                              function: clientController.getTopPassengersData,
+                              message:
+                                  clientController.passengersDataError.value)
+                          : ListView.builder(
+                              itemBuilder: (context, index) => bestClientWidget(
+                                  context,
+                                  titles[index],
+                                  clientController.passengerList[index]),
+                              itemCount: clientController.passengerList.length,
+                            );
                 }),
               ),
             ],

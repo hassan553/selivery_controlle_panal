@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
 import 'package:selivery_controlle_panal/futures/drivers/controller/get_driverLicense_controller.dart';
 import 'package:selivery_controlle_panal/futures/drivers/model/driver_license_model.dart';
 import 'package:selivery_controlle_panal/futures/drivers/views/image_details.dart';
@@ -36,15 +37,17 @@ class DriversLicenseView extends StatelessWidget {
             SizedBox(height: screenSize(context).height * .03),
             Expanded(
               child: Obx(() {
-                return controller.allLicenseList.isEmpty
-                    ? ErrorComponent(
-                        function: controller.getAllLicenseData,
-                        message: controller.allLicenseDataError.value)
-                    : ListView.builder(
-                        itemBuilder: (context, index) => licenseWidget(
-                            context, controller.allLicenseList[index]),
-                        itemCount: controller.allLicenseList.length,
-                      );
+                return controller.isLoading.value == true
+                    ? const CustomLoadingWidget()
+                    : controller.allLicenseList.isEmpty
+                        ? ErrorComponent(
+                            function: controller.getAllLicenseData,
+                            message: controller.allLicenseDataError.value)
+                        : ListView.builder(
+                            itemBuilder: (context, index) => licenseWidget(
+                                context, controller.allLicenseList[index]),
+                            itemCount: controller.allLicenseList.length,
+                          );
               }),
             ),
           ],

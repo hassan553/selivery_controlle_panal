@@ -35,7 +35,7 @@ class LoginController extends GetxController {
         if (response.statusCode == 200){
         await  CacheStorageServices().setToken(result['token']);
           print('my token ${result['token']}');
-          navigateTo(context, MainView());
+          navigateOff(context, MainView());
           isLoading.value = false;
           showSnackBarWidget(
               context: context,

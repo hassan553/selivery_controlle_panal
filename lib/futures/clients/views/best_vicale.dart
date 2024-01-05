@@ -53,7 +53,7 @@ class _BestVicaleState extends State<BestVicale> {
               const CustomSizedBox(value: .02),
               Expanded(
                 child: Obx(() {
-                  return clientController.isLoading.value == true
+                  return clientController.vehicleIsLoading.value == true
                       ? const CustomLoadingWidget()
                       : clientController.vehicleList.isEmpty
                           ? ErrorComponent(

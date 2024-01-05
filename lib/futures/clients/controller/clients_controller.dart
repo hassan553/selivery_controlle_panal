@@ -11,6 +11,7 @@ import '../../../core/services/cache_storage_services.dart';
 
 class ClientController extends GetxController {
   var isLoading = false.obs;
+    var vehicleIsLoading = false.obs;
   var passengersDataError = ''.obs;
   var vehiclesDataError = ''.obs;
   RxList passengerList = <PassengerModel>[
@@ -69,7 +70,7 @@ class ClientController extends GetxController {
 
   Future<void> getTopVehiclesData() async {
     if (await checkInternet()) {
-      isLoading.value = true;
+      vehicleIsLoading.value = true;
 
       try {
         final response = await http.get(
@@ -85,19 +86,19 @@ class ClientController extends GetxController {
             vehicleList.add(e);
           }).toList();
           print(vehicleList);
-          isLoading.value = false;
+          vehicleIsLoading.value = false;
           vehicleList.isEmpty
               ? vehiclesDataError.value = 'لا يوجد بيانات'
               : vehiclesDataError.value = '';
         } else {
-          isLoading.value = false;
+          vehicleIsLoading.value = false;
           vehiclesDataError.value = 'لقد حدث خطا يرجا اعادة المحاوله';
         }
       } catch (e) {
-        isLoading.value = false;
+        vehicleIsLoading.value = false;
         vehiclesDataError.value = e.toString();
       } finally {
-        isLoading.value = false;
+        vehicleIsLoading.value = false;
       }
     } else {
       vehiclesDataError.value = 'لا يوجد اتصال بالانترنت';
@@ -109,7 +110,7 @@ class ClientController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    //getTopPassengersData();
-    //getTopVehiclesData();
+    getTopPassengersData();
+    getTopVehiclesData();
   }
 }

@@ -7,6 +7,7 @@ import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
 import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_image.dart';
+import '../../../core/widgets/custom_loading_widget.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/error_compant.dart';
 import '../../../core/widgets/responsive_text.dart';
@@ -52,7 +53,8 @@ class _DriversViewState extends State<TopDriversView> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: InkWell(
-                        onTap: () => navigateTo(context, AllDriversView()),
+                        onTap: () =>
+                            navigateTo(context, const AllDriversView()),
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
@@ -137,17 +139,20 @@ class _DriversViewState extends State<TopDriversView> {
               const CustomSizedBox(value: .02),
               Expanded(
                 child: Obx(
-                  () => driversController.bestDriversList.isEmpty
-                      ? ErrorComponent(
-                          function: driversController.getTopDriversData,
-                          message: driversController.error.value)
-                      : ListView.builder(
-                          itemBuilder: (context, index) => bestDriverWidget(
-                              context,
-                              index,
-                              driversController.bestDriversList[index]),
-                          itemCount: driversController.bestDriversList.length,
-                        ),
+                  () => driversController.isLoading.value == true
+                      ? const CustomLoadingWidget()
+                      : driversController.bestDriversList.isEmpty
+                          ? ErrorComponent(
+                              function: driversController.getTopDriversData,
+                              message: driversController.error.value)
+                          : ListView.builder(
+                              itemBuilder: (context, index) => bestDriverWidget(
+                                  context,
+                                  index,
+                                  driversController.bestDriversList[index]),
+                              itemCount:
+                                  driversController.bestDriversList.length,
+                            ),
                 ),
               ),
             ],

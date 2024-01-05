@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/contants/api.dart';
 import 'package:selivery_controlle_panal/core/functions/global_function.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
+import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
 import 'package:selivery_controlle_panal/futures/setting/controller/setting_controller.dart';
 import 'package:selivery_controlle_panal/futures/setting/model/category_model.dart';
 import '../../../core/rescourcs/app_colors.dart';
@@ -39,17 +40,19 @@ class _AllVicaleState extends State<AllVicale> {
             ),
             Expanded(
               child: Obx(
-                () => categoryController.categoryList.isEmpty
-                    ? ErrorComponent(
-                        function: categoryController.getAllCategories,
-                        message: categoryController.categoryError.value)
-                    : ListView.builder(
-                        itemCount: categoryController.categoryList.length,
-                        itemBuilder: (context, index) {
-                          return customVicelWidget(
-                              context, categoryController.categoryList[index]);
-                        },
-                      ),
+                () => categoryController.isLoading.value == true
+                    ? const CustomLoadingWidget()
+                    : categoryController.categoryList.isEmpty
+                        ? ErrorComponent(
+                            function: categoryController.getAllCategories,
+                            message: categoryController.categoryError.value)
+                        : ListView.builder(
+                            itemCount: categoryController.categoryList.length,
+                            itemBuilder: (context, index) {
+                              return customVicelWidget(context,
+                                  categoryController.categoryList[index]);
+                            },
+                          ),
               ),
             ),
           ],
