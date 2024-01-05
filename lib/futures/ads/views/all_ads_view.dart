@@ -5,7 +5,6 @@ import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
 import 'package:selivery_controlle_panal/futures/ads/controller/all_ads_controller.dart';
 import 'package:selivery_controlle_panal/futures/ads/model/ads_model.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';
@@ -215,74 +214,5 @@ class _AllAdsViewState extends State<AllAdsView> {
         const SizedBox(height: 20),
       ],
     );
-  }
-}
-
-class YouTubePlayerWidget extends StatefulWidget {
-  final String videoId;
-
-  const YouTubePlayerWidget({super.key, required this.videoId});
-
-  @override
-  _YouTubePlayerWidgetState createState() => _YouTubePlayerWidgetState();
-}
-
-class _YouTubePlayerWidgetState extends State<YouTubePlayerWidget> {
-  YoutubePlayerController? _controller;
-  bool _videoError = false;
-  String? errorMessage;
-  initAds() {
-    try {
-      _controller = YoutubePlayerController(
-        initialVideoId: widget.videoId,
-        flags: const YoutubePlayerFlags(
-          autoPlay: false,
-          mute: false,
-        ),
-      );
-      _controller?.addListener(() {
-        if (_controller?.value.playerState == PlayerState.unknown) {
-          _videoError = true;
-          errorMessage = 'حدث خطأ أثناء تشغيل الفيديو.';
-        }
-      });
-    } catch (e) {
-      errorMessage = 'حدث خطأ أثناء تشغيل الفيديو.';
-      _videoError = true;
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    initAds();
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _videoError
-        ? Center(
-            child: Text(
-              errorMessage!,
-              style: const TextStyle(fontSize: 16),
-            ),
-          )
-        : YoutubePlayerBuilder(
-            player: YoutubePlayer(
-              controller: _controller!,
-            ),
-            builder: (context, player) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: player,
-              );
-            },
-          );
   }
 }

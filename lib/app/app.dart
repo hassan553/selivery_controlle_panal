@@ -16,9 +16,6 @@ class SeliveryControl extends StatelessWidget {
     ));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      // useInheritedMediaQuery: true,
-      // locale: DevicePreview.locale(context),
-      // builder: DevicePreview.appBuilder,
       textDirection: TextDirection.rtl,
       theme: appTheme(),
       title: 'Selivery control',

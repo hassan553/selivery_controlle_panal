@@ -20,7 +20,7 @@ class _CustomDialogState extends State<CustomDialog> {
         child: Column(
           children: [
             const Text(
-              'Enter Details',
+              'تعديل القسم',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class _CustomDialogState extends State<CustomDialog> {
                 });
               },
               decoration: const InputDecoration(
-                labelText: 'Title',
+                labelText: 'الاسم',
               ),
             ),
             const SizedBox(height: 10),
@@ -54,18 +54,17 @@ class _CustomDialogState extends State<CustomDialog> {
               children: [
                 MaterialButton(
                   onPressed: () {
-                    // Perform any actions with the entered title and image
                     print('Title: $_title');
                     print('Image URL: $_image');
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Save'),
+                  child: const Text('تعديل'),
                 ),
                 MaterialButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Cancel'),
+                  child: const Text('الغاء'),
                 ),
               ],
             ),
