@@ -30,10 +30,6 @@ class _BestVicaleState extends State<BestVicale> {
 
   @override
   Widget build(BuildContext context) {
-    List titles = [
-      'إسم السيارة \n Jeep cherokee 2017',
-      'إسم الدراجة النارية \n TVS sport 2018',
-    ];
     return Scaffold(
       appBar: customAppBar(),
       body: RefreshIndicator(
@@ -63,7 +59,6 @@ class _BestVicaleState extends State<BestVicale> {
                               itemBuilder: (context, index) => bestClientWidget(
                                   context,
                                   index,
-                                  titles[index],
                                   clientController.vehicleList[index]),
                               itemCount: clientController.vehicleList.length,
                             );
@@ -77,7 +72,7 @@ class _BestVicaleState extends State<BestVicale> {
   }
 
   Column bestClientWidget(
-      BuildContext context, int index, String title, VehicleModel? model) {
+      BuildContext context, int index, VehicleModel? model) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

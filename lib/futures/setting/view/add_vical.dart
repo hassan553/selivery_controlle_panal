@@ -152,7 +152,7 @@ class _AddVehicleViewState extends State<AddVehicleView> {
     return InkWell(
       onTap: () {
         settingController.postDataWithFile(
-            {'name': settingController.titleController.text},
+            {'name': settingController.titleController.text, 'commission': '8'},
             settingController.categoryImage);
       },
       child: Obx(

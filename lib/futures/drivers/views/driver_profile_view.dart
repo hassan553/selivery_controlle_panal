@@ -56,7 +56,7 @@ class DriverProfileView extends StatelessWidget {
               const CustomDivider(),
               driverEvaulte(),
               const CustomDivider(),
-              carType(context),
+              //carType(context),
               const CustomDivider(),
               UserInfo(driverModel: driverModel),
               const CustomDivider(),
@@ -171,13 +171,11 @@ class DriverProfileView extends StatelessWidget {
           ],
         ),
         const SizedBox(width: 10),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppColors.primaryColor)),
-            child: const CustomNetworkImage(imagePath: ''),
-          ),
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColors.primaryColor)),
+          child: CustomNetworkImage(imagePath: driverModel.image ?? ''),
         )
       ],
     );

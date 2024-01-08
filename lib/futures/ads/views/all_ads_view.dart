@@ -212,6 +212,8 @@ class _AllAdsViewState extends State<AllAdsView> {
           ],
         ),
         const SizedBox(height: 20),
+
+
       ],
     );
   }

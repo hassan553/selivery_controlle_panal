@@ -1,9 +1,10 @@
 //'https://selivery.onrender.com/';
-const baseUri = 'http://192.168.1.122:8000/';
+//'http://192.168.1.122:8000/'
+const baseUri =  'https://www.selivery-app.com/';
 const authBaseUri = '${baseUri}auth/';
 final loginUri = Uri.parse('${authBaseUri}login/admin');
 final allCategory =
-    Uri.parse('${baseUri}dashboard/category'); // Replace with your API URL
+    Uri.parse('${baseUri}dashboard/category'); 
 final topPassengers = Uri.parse("${baseUri}dashboard/trip/top_passengers");
 final topVehicles = Uri.parse("${baseUri}dashboard/trip/top_vehicles");
 final topDrivers = Uri.parse("${baseUri}dashboard/driver");

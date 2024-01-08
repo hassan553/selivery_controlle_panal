@@ -11,24 +11,11 @@ import '../../../core/services/cache_storage_services.dart';
 
 class ClientController extends GetxController {
   var isLoading = false.obs;
-    var vehicleIsLoading = false.obs;
+  var vehicleIsLoading = false.obs;
   var passengersDataError = ''.obs;
   var vehiclesDataError = ''.obs;
-  RxList passengerList = <PassengerModel>[
-    PassengerModel(
-        email: 'hassan@gmail.com',
-        image: '',
-        passenger: 'hassan',
-        phone: '01000',
-        sId: '12',
-        tripsCount: 12),
-  ].obs;
-  RxList vehicleList = <VehicleModel>[
-    VehicleModel(tripsCount: 2, model: 'frirrai', images: null),
-    VehicleModel(tripsCount: 2, model: 'frirrai', images: [
-      '2023-12-28T07-33-58.547Zscaled_IMG-20231227-WA0003.jpg',
-    ]),
-  ].obs;
+  RxList passengerList = <PassengerModel>[].obs;
+  RxList vehicleList = <VehicleModel>[].obs;
 
   Future<void> getTopPassengersData() async {
     if (await checkInternet()) {

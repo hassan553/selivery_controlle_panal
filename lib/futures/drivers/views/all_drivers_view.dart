@@ -41,12 +41,12 @@ class _AllDriversViewState extends State<AllDriversView> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Obx(
-            () => driversController.isLoading.value == true
+            () => driversController.allDriversLoading.value == true
                 ? const CustomLoadingWidget()
                 : driversController.filteredItems.isEmpty
                     ? ErrorComponent(
                         function: driversController.getAllDriversData,
-                        message: driversController.error.value)
+                        message: driversController.allDriverserror.value)
                     : ListView.builder(
                         itemBuilder: (context, index) => InkWell(
                           onTap: () => navigateTo(

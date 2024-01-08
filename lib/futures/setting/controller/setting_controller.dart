@@ -24,8 +24,9 @@ class CategoryController extends GetxController {
       categoryList.value = <CategoryModel>[];
       final response = await http.get(allCategory,
           headers: authHeadersWithToken(CacheStorageServices().token));
+      final result = json.decode(response.body);
       if (response.statusCode == 200) {
-        final result = json.decode(response.body);
+        print(result['categories']);
         result['categories'].forEach((json) {
           categoryList.add(CategoryModel.fromJson(json));
         });
@@ -34,7 +35,6 @@ class CategoryController extends GetxController {
             : categoryError.value = '';
         categoryLoading.value = false;
       } else {
-        final result = json.decode(response.body);
         print('error');
         categoryError.value = result['message'];
         categoryLoading.value = false;
@@ -94,6 +94,8 @@ class CategoryController extends GetxController {
           clearData();
           getAllCategories();
         } else {
+          print('//////');
+          print(CacheStorageServices().token);
           print(responsebody['message']);
           showDialogWithGetX(responsebody['message']);
           addLoading.value = false;
@@ -162,7 +164,7 @@ class CategoryController extends GetxController {
         final response = await http.delete(deleteCategoryUri(id),
             headers: authHeadersWithToken(CacheStorageServices().token));
         final result = jsonDecode(response.body);
-        print('result ${result['message'] } ${response.statusCode}');
+        print('result ${result['message']} ${response.statusCode}');
         if (response.statusCode == 200) {
           showDialogWithGetX(result['message']);
           getAllCategories();
