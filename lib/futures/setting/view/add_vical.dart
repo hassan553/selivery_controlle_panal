@@ -44,22 +44,24 @@ class _AddVehicleViewState extends State<AddVehicleView> {
                       Row(children: [
                         const FittedBox(
                           child: ResponsiveText(
-                            text: 'نوع المركبة',
+                            text: 'العموله',
                             scaleFactor: 0.05,
                             color: AppColors.black,
                           ),
                         ),
-                        const SizedBox(width: 55),
+                        const SizedBox(width: 85),
                         Expanded(
                           child: SizedBox(
                             height: 50,
                             child: TextFormField(
-                              controller: settingController.titleController,
+                              controller:
+                                  settingController.commissionController,
                               onTapOutside: (event) =>
                                   FocusScope.of(context).unfocus(),
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               cursorColor: AppColors.primaryColor,
+                              keyboardType: TextInputType.number,
                               validator: (value) {
                                 if (value == null) {
                                   return 'not valid empty value';
@@ -91,6 +93,8 @@ class _AddVehicleViewState extends State<AddVehicleView> {
                           ),
                         )
                       ]),
+                      const SizedBox(height: 10),
+                      categoryName(context),
                       SizedBox(height: screenSize(context).height * 0.01),
                       customAddCategoryImageForm(context),
                       SizedBox(height: screenSize(context).height * 0.02),
@@ -104,6 +108,53 @@ class _AddVehicleViewState extends State<AddVehicleView> {
         ),
       ),
     );
+  }
+
+  Row categoryName(BuildContext context) {
+    return Row(children: [
+      const FittedBox(
+        child: ResponsiveText(
+          text: 'نوع المركبة',
+          scaleFactor: 0.05,
+          color: AppColors.black,
+        ),
+      ),
+      const SizedBox(width: 55),
+      Expanded(
+        child: SizedBox(
+          height: 50,
+          child: TextFormField(
+            controller: settingController.titleController,
+            onTapOutside: (event) => FocusScope.of(context).unfocus(),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            cursorColor: AppColors.primaryColor,
+            validator: (value) {
+              if (value == null) {
+                return 'not valid empty value';
+              }
+              return null;
+            },
+            onFieldSubmitted: (value) => FocusScope.of(context).unfocus(),
+            decoration: InputDecoration(
+              fillColor: AppColors.white,
+              filled: true,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: AppColors.primaryColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: AppColors.primaryColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: AppColors.primaryColor),
+              ),
+            ),
+          ),
+        ),
+      )
+    ]);
   }
 
   customAddCategoryImageForm(context) {
@@ -151,9 +202,10 @@ class _AddVehicleViewState extends State<AddVehicleView> {
   Widget addButton(BuildContext context) {
     return InkWell(
       onTap: () {
-        settingController.postDataWithFile(
-            {'name': settingController.titleController.text, 'commission': '8'},
-            settingController.categoryImage);
+        settingController.postDataWithFile({
+          'name': settingController.titleController.text.trim(),
+          'commission': settingController.commissionController.text.trim()
+        }, settingController.categoryImage);
       },
       child: Obx(
         () => settingController.addLoading.value

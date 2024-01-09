@@ -14,12 +14,15 @@ final addAdsUri = Uri.parse('${baseUri}dashboard/advertisement');
 final getAllAdsUri = Uri.parse('${baseUri}dashboard/advertisement');
 final getAllDriverLicenseAdsUri = Uri.parse('${baseUri}dashboard/request');
 
+Uri driverVehicleUri(String id) =>
+    Uri.parse("${baseUri}dashboard/driver/$id/vehicle");
+
 Uri deleteDriverAccountUri(String id) =>
     Uri.parse("${baseUri}dashboard/driver/$id");
 
 Uri deleteCategoryUri(String? id) =>
     Uri.parse('${baseUri}dashboard/category/$id');
-Uri updateCategoryUri(String? id) =>
+Uri updateCategoryUri(String id) =>
     Uri.parse('${baseUri}dashboard/category/$id');
 Uri deleteAdsUri(String id) =>
     Uri.parse("${baseUri}dashboard/advertisement/$id");

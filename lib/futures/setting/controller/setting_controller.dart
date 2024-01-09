@@ -14,6 +14,7 @@ class CategoryController extends GetxController {
   var isLoading = false.obs;
   var addLoading = false.obs;
   final titleController = TextEditingController();
+  final commissionController = TextEditingController();
 
   RxList<CategoryModel> categoryList = <CategoryModel>[].obs;
   var categoryError = ''.obs;
@@ -110,27 +111,30 @@ class CategoryController extends GetxController {
     }
   }
 
+  bool updateLoading = false;
   updateDataWithFile(String id, Map data, File? image) async {
     if (await checkInternet()) {
       try {
-        addLoading.value = true;
+        updateLoading = true;
+        update();
         var headers = {
           'Accept': 'application/json',
           "Authorization": 'Bearer ${CacheStorageServices().token}',
           "Content-Type": 'multipart/form-data',
         };
 
-        var request = http.MultipartRequest("POST", updateCategoryUri(id));
+        var request =  http.MultipartRequest("PATCH", updateCategoryUri(id));
         request.headers.addAll(headers);
-        var fileExtension = image!.path;
+        if (image != null) {
+          var fileExtension = image.path;
 
-        var length = await image.length();
-        var stream = http.ByteStream(image.openRead());
+          var length = await image.length();
+          var stream = http.ByteStream(image.openRead());
 
-        var multipartFile =
-            http.MultipartFile("image", stream, length, filename: image.path);
-        request.files.add(multipartFile);
-
+          var multipartFile =
+              http.MultipartFile("image", stream, length, filename: image.path);
+          request.files.add(multipartFile);
+        }
         data.forEach((key, value) {
           request.fields[key] = value;
         });
@@ -142,19 +146,22 @@ class CategoryController extends GetxController {
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           showDialogWithGetX("تم التعديل بنجاح");
-          addLoading.value = false;
+          getAllCategories();
+          updateLoading = false;
         } else {
+          print('cccccccccc');
           showDialogWithGetX(responsebody['message']);
-          addLoading.value = false;
+          updateLoading = false;
         }
       } catch (error) {
+        print(error.toString());
         showDialogWithGetX(error.toString());
-        addLoading.value = false;
+        updateLoading = false;
       }
     } else {
       showDialogWithGetX("لا يوجد اتصال بالانترنت");
-      addLoading.value = false;
     }
+    update();
   }
 
   void deleteCategory(String? id) async {
@@ -195,6 +202,7 @@ class CategoryController extends GetxController {
   @override
   void dispose() {
     titleController.dispose();
+    commissionController.dispose();
     clearData();
     // TODO: implement dispose
     super.dispose();

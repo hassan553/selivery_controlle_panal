@@ -31,7 +31,7 @@ class TopTitleWidget extends StatelessWidget {
                 FittedBox(
                   child: ResponsiveText(
                     text: title1,
-                    scaleFactor: .25,
+                    scaleFactor: .20,
                     color: AppColors.primaryColor,
                   ),
                 ),
@@ -39,14 +39,14 @@ class TopTitleWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(60),
                   child: CustomNetworkImage(
                     boxFit: BoxFit.fill,
-                    width: 120,
+                    width: 100,
                     imagePath: image ?? '',
                   ),
                 ),
                 FittedBox(
                   child: ResponsiveText(
                     text: title2,
-                    scaleFactor: .25,
+                    scaleFactor: .20,
                     color: AppColors.primaryColor,
                   ),
                 ),

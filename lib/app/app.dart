@@ -12,7 +12,7 @@ class SeliveryControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: AppColors.primaryColor, // Set your desired color
+      statusBarColor: AppColors.primaryColor, 
     ));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,

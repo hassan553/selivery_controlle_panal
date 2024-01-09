@@ -70,92 +70,102 @@ class _AllVicaleState extends State<AllVicale> {
         borderRadius: BorderRadius.circular(15),
         color: const Color(0xffD9D9D9),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            const SizedBox(height: 3),
-            Expanded(
-              child: Padding(
+      child: FittedBox(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const SizedBox(height: 3),
+              Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: CustomNetworkImage(
                     imagePath: model?.image,
                     boxFit: BoxFit.fill,
+                    height: 80,
                     width: screenSize(context).width * .8,
                   ),
                 ),
               ),
-            ),
-            const Divider(color: AppColors.black),
-            FittedBox(
-              child: ResponsiveText(
-                text: 'النوع:${model?.name}',
-                scaleFactor: .04,
-                color: AppColors.black,
+              const Divider(color: AppColors.black),
+              FittedBox(
+                child: ResponsiveText(
+                  text: ' الاسم : ${model?.name ?? ''}',
+                  scaleFactor: .04,
+                  color: AppColors.black,
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return const CustomDialog();
-                      },
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: AppColors.primaryColor,
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                    child: const FittedBox(
-                      child: ResponsiveText(
-                        text: 'تعديل ',
-                        scaleFactor: .04,
-                        color: AppColors.white,
+              const SizedBox(height: 5),
+              FittedBox(
+                child: ResponsiveText(
+                  text: 'العمؤله : ${model?.commission.toString() ?? ''}',
+                  scaleFactor: .04,
+                  color: AppColors.black,
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CustomDialog(categoryModel: model);
+                        },
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.primaryColor,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 5),
+                      child: const FittedBox(
+                        child: ResponsiveText(
+                          text: 'تعديل ',
+                          scaleFactor: .04,
+                          color: AppColors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                InkWell(
-                  onTap: () => categoryController.deleteCategory(model?.sId),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: AppColors.red,
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    child: const FittedBox(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ResponsiveText(
-                            text: 'حذف ',
-                            scaleFactor: .04,
-                            color: AppColors.white,
-                          ),
-                          SizedBox(width: 2),
-                          Icon(
-                            Icons.delete,
-                            color: AppColors.white,
-                          ),
-                        ],
+                  const SizedBox(width: 30),
+                  InkWell(
+                    onTap: () => categoryController.deleteCategory(model?.sId),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: AppColors.red,
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      child: const FittedBox(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ResponsiveText(
+                              text: 'حذف ',
+                              scaleFactor: .04,
+                              color: AppColors.white,
+                            ),
+                            SizedBox(width: 2),
+                            Icon(
+                              Icons.delete,
+                              color: AppColors.white,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

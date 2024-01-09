@@ -178,6 +178,25 @@ class DriversController extends GetxController {
       showDialogWithGetX('لا يوجد اتصال بالانترنت');
     }
   }
+var vehicleLoading = false;
+  Future getDriverVehicle(String id) async {
+    if (await checkInternet()) {
+      vehicleLoading = true;
+      update();
+      final response = await http.get(
+        driverVehicleUri(id),
+        headers: authHeadersWithToken(CacheStorageServices().token),
+      );
+      final result = jsonDecode(response.body);
+
+      showDialogWithGetX(result['message']);
+      vehicleLoading = false;
+    } else {
+      showDialogWithGetX("لا يوجد اتصال بالانترنت");
+      vehicleLoading = false;
+    }
+    update();
+  }
 
   @override
   void onInit() {

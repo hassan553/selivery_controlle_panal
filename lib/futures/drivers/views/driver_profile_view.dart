@@ -56,13 +56,15 @@ class DriverProfileView extends StatelessWidget {
               const CustomDivider(),
               driverEvaulte(),
               const CustomDivider(),
-              //carType(context),
-              const CustomDivider(),
+              if (driverModel.vehicle?.images != null) ...[
+                carType(context),
+                const CustomDivider(),
+              ],
               UserInfo(driverModel: driverModel),
               const CustomDivider(),
               const CustomSizedBox(value: .02),
-               licensesWidget(),
-              const CustomDivider(),
+              //licensesWidget(context),
+              //const CustomDivider(),
               const CustomSizedBox(value: .02),
               deleteButton(context),
             ],
@@ -104,7 +106,7 @@ class DriverProfileView extends StatelessWidget {
     );
   }
 
-  Row licensesWidget() {
+  Row licensesWidget(context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -118,6 +120,8 @@ class DriverProfileView extends StatelessWidget {
             CustomNetworkImage(
               imagePath: driverModel.image,
               boxFit: BoxFit.fill,
+              width: screenSize(context).width * .2,
+              height: 100,
             ),
           ],
         ),
@@ -131,6 +135,8 @@ class DriverProfileView extends StatelessWidget {
             CustomNetworkImage(
               imagePath: driverModel.image,
               boxFit: BoxFit.fill,
+              width: screenSize(context).width * .2,
+              height: 100,
             ),
           ],
         ),
@@ -144,6 +150,8 @@ class DriverProfileView extends StatelessWidget {
             CustomNetworkImage(
               imagePath: driverModel.image,
               boxFit: BoxFit.fill,
+              width: screenSize(context).width * .2,
+              height: 100,
             ),
           ],
         ),
@@ -175,10 +183,20 @@ class DriverProfileView extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.primaryColor)),
-          child: CustomNetworkImage(imagePath: driverModel.image ?? ''),
+          child: CustomNetworkImage(
+              imagePath: checkImage(driverModel.vehicle?.images ?? [])),
         )
       ],
     );
+  }
+
+  String checkImage(List<String>? images) {
+    if (images == null) {
+      return '';
+    } else if (images.isEmpty) {
+      return '';
+    }
+    return images.first;
   }
 
   Row driverEvaulte() {
@@ -214,7 +232,7 @@ class DriverProfileView extends StatelessWidget {
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CustomText(title: '50%', fontSize: 8),
+                // CustomText(title: '50%', fontSize: 8),
                 driverEvaluate(
                     const Icon(
                       Icons.star,
@@ -222,7 +240,7 @@ class DriverProfileView extends StatelessWidget {
                     ),
                     'رائع',
                     driverModel.rating?.fair ?? 0),
-                CustomText(title: '50 تفاعل', fontSize: 8),
+                //  CustomText(title: '50 تفاعل', fontSize: 8),
               ],
             )
           ],
