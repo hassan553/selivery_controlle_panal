@@ -134,6 +134,8 @@ class DriversLicenseView extends StatelessWidget {
                             child: CustomNetworkImage(
                               imagePath: model.driverLicense,
                               boxFit: BoxFit.fill,
+                              width: screenSize(context).width * .2,
+                              height: 100,
                             ),
                           ),
                         ],
@@ -153,6 +155,8 @@ class DriversLicenseView extends StatelessWidget {
                             child: CustomNetworkImage(
                               imagePath: model.vehicleLicense,
                               boxFit: BoxFit.fill,
+                              width: screenSize(context).width * .2,
+                              height: 100,
                             ),
                           ),
                         ],
@@ -172,6 +176,8 @@ class DriversLicenseView extends StatelessWidget {
                             child: CustomNetworkImage(
                               imagePath: model.nationalId,
                               boxFit: BoxFit.fill,
+                              width: screenSize(context).width * .2,
+                              height: 100,
                             ),
                           ),
                         ],

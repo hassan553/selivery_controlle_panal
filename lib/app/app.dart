@@ -12,14 +12,14 @@ class SeliveryControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: AppColors.primaryColor, 
+      statusBarColor: AppColors.primaryColor,
     ));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       textDirection: TextDirection.rtl,
       theme: appTheme(),
       title: 'Selivery control',
-      home:  MainView(),
+      home: const SplashView(),
     );
   }
 }

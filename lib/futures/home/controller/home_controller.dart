@@ -19,7 +19,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getHomeData() async {
-    if (await  checkInternet()) {
+    if (await checkInternet()) {
       isLoading.value = true;
       try {
         print('oooo${CacheStorageServices().token}');
@@ -40,8 +40,7 @@ class HomeController extends GetxController {
           print(error.value);
           if (result['message'] == "Token is not valid" ||
               result['message'] == 'Your are not authorized.') {
-            print(CacheStorageServices().token);
-            navigatorOff(LoginView());
+           await refreshToken();
           }
         }
       } catch (e) {
@@ -53,6 +52,43 @@ class HomeController extends GetxController {
     } else {
       error.value = 'لا يوجد اتصال بالانترنت';
     }
+  }
+
+  bool refreshLoading = false;
+  Future<void> refreshToken() async {
+    if (await checkInternet()) {
+      refreshLoading = true;
+      update();
+      try {
+        print('oooo${CacheStorageServices().token}');
+        final response = await http.get(
+          Uri.parse('${authBaseUri}refresh-token'),
+          headers: authHeadersWithToken(CacheStorageServices().token),
+        );
+        final result = jsonDecode(response.body);
+        print(result['message']);
+        if (response.statusCode == 200) {
+          CacheStorageServices().setToken(result['token']);
+          refreshLoading = false;
+          error.value = '';
+        } else {
+          refreshLoading = false;
+          error.value = result['message'];
+          print(error.value);
+          if (result['message'] == "Token is not valid" ||
+              result['message'] == 'Your are not authorized.') {
+            print(CacheStorageServices().token);
+            navigatorOff(LoginView());
+          }
+        }
+      } catch (e) {
+        refreshLoading = false;
+        error.value = e.toString();
+      }
+    } else {
+      error.value = 'لا يوجد اتصال بالانترنت';
+    }
+    update();
   }
 
   @override

@@ -5,7 +5,9 @@ import 'package:selivery_controlle_panal/core/rescourcs/app_colors.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_sized_box.dart';
 import 'package:selivery_controlle_panal/futures/auth/view/login_view.dart';
+import 'package:selivery_controlle_panal/futures/home/view/main_view.dart';
 
+import '../../../core/services/cache_storage_services.dart';
 import '../../../core/widgets/responsive_text.dart';
 
 class SplashView extends StatefulWidget {
@@ -19,10 +21,16 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(
-      const Duration(seconds: 2),
-      () => navigateOff(context,  LoginView())
-    );
+    Future.delayed(const Duration(seconds: 2), () => checkAuth());
+  }
+
+  checkAuth() {
+    final token = CacheStorageServices().token;
+    if (token.isEmpty) {
+      navigateOff(context, LoginView());
+    } else {
+      navigateOff(context, MainView());
+    }
   }
 
   @override

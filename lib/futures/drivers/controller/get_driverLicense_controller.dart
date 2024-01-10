@@ -15,6 +15,7 @@ class GetDriverLicenseController extends GetxController {
   RxList<DriverLicenseModel> allLicenseList = <DriverLicenseModel>[].obs;
 
   Future<void> getAllLicenseData() async {
+    print(CacheStorageServices().token);
     if (await checkInternet()) {
       isLoading.value = true;
       try {
@@ -31,7 +32,9 @@ class GetDriverLicenseController extends GetxController {
           r.map((e) {
             allLicenseList.add(DriverLicenseModel.fromJson(e));
           }).toList();
-          print(allLicenseList[0].driverLicense);
+          r.isEmpty
+              ? allLicenseDataError.value = 'لا يوجد بيانات'
+              : allLicenseDataError.value = '';
           isLoading.value = false;
         } else {
           isLoading.value = false;
