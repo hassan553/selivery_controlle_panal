@@ -37,6 +37,8 @@ class LoginController extends GetxController {
           print('my token ${result['token']}');
           navigateOff(context, MainView());
           isLoading.value = false;
+          email.clear();
+          password.clear();
           showSnackBarWidget(
               context: context,
               message: 'تم التسجيل بنجاح',

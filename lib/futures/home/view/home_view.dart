@@ -168,8 +168,11 @@ class _HomeViewState extends State<HomeView> {
                                   Align(
                                     alignment: Alignment.center,
                                     child: InkWell(
-                                      onTap: () => navigateTo(
-                                          context, DriversLicenseView()),
+                                      onTap: () {
+                                        //homeController.refreshToken();
+                                        navigateTo(
+                                          context, DriversLicenseView());
+                                      },
                                       child: Container(
                                         decoration: BoxDecoration(
                                           borderRadius:

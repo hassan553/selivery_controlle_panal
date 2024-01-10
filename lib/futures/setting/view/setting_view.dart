@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/functions/global_function.dart';
@@ -7,11 +5,12 @@ import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
 import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
 import 'package:selivery_controlle_panal/futures/setting/view/add_vical.dart';
 import 'package:selivery_controlle_panal/futures/setting/view/all_vichal.dart';
-
 import '../../../core/rescourcs/app_colors.dart';
+import '../../../core/services/cache_storage_services.dart';
 import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
+import '../../auth/view/login_view.dart';
 import '../controller/setting_controller.dart';
 
 class SettingView extends StatefulWidget {
@@ -99,11 +98,11 @@ class _SettingViewState extends State<SettingView> {
   customExitWidget() {
     return InkWell(
       onTap: () async {
-        //ServiceClass().pickClientImage('title');
-        await settingController.pickImage();
+        CacheStorageServices().clear();
+        navigateOff(context, LoginView());
       },
-      child: Padding(
-        padding: const EdgeInsets.only(right: 10),
+      child: const Padding(
+        padding: EdgeInsets.only(right: 10),
         child: SizedBox(
           height: 50,
           child: Stack(

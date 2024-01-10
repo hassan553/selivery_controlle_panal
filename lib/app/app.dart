@@ -21,5 +21,6 @@ class SeliveryControl extends StatelessWidget {
       title: 'Selivery control',
       home: const SplashView(),
     );
+    
   }
 }

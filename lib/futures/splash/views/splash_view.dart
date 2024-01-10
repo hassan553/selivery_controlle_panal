@@ -9,7 +9,8 @@ import 'package:selivery_controlle_panal/futures/home/view/main_view.dart';
 
 import '../../../core/services/cache_storage_services.dart';
 import '../../../core/widgets/responsive_text.dart';
-
+//dart run flutter_native_splash:create
+//dart run flutter_native_splash:create --path=flutter_native_splash.yaml
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
