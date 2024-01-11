@@ -56,189 +56,191 @@ class DriversLicenseView extends StatelessWidget {
     );
   }
 
-  Column licenseWidget(BuildContext context, DriverLicenseModel model) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-            height: screenSize(context).height * .3,
-            width: screenSize(context).width,
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: const Color(0xffD9D9D9),
-            ),
-            child: LayoutBuilder(
-              builder: (p0, p1) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: p1.maxHeight / 2,
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: FittedBox(
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                children: [
-                                  ResponsiveText(
-                                    text:
-                                        'إسم السائق :  ${model.driverData!.isEmpty ? '' : model.driverData?[0].name ?? ''}',
-                                    scaleFactor: .06,
-                                    color: AppColors.black,
-                                  ),
-                                  const ResponsiveText(
-                                    text: 'رقم الموبايل ',
-                                    scaleFactor: .06,
-                                    color: AppColors.black,
-                                  ),
-                                  ResponsiveText(
-                                    text: model.driverData!.isEmpty
-                                        ? ''
-                                        : model.driverData?[0].name ?? '',
-                                    scaleFactor: .06,
-                                    color: AppColors.black,
-                                  ),
-                                ],
+  Widget licenseWidget(BuildContext context, DriverLicenseModel model) {
+    return FittedBox(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+              height: screenSize(context).height * .4,
+              width: screenSize(context).width,
+              margin: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color(0xffD9D9D9),
+              ),
+              child: LayoutBuilder(
+                builder: (p0, p1) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: p1.maxHeight / 2,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: FittedBox(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Column(
+                                  children: [
+                                    ResponsiveText(
+                                      text:
+                                          'إسم السائق :  ${model.driverData!.isEmpty ? '' : model.driverData?[0].name ?? ''}',
+                                      scaleFactor: .06,
+                                      color: AppColors.black,
+                                    ),
+                                    // const ResponsiveText(
+                                    //   text: 'رقم الموبايل ',
+                                    //   scaleFactor: .06,
+                                    //   color: AppColors.black,
+                                    // ),
+                                    // ResponsiveText(
+                                    //   text: model.driverData!.isEmpty
+                                    //       ? ''
+                                    //       : model.driverData?[0].name ?? '',
+                                    //   scaleFactor: .06,
+                                    //   color: AppColors.black,
+                                    // ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
+                          const SizedBox(width: 5),
+                          CustomNetworkImage(
+                            imagePath: checkImage(model.driverData),
+                            width: p1.maxWidth * .4,
+                            height: p1.maxHeight,
+                            boxFit: BoxFit.fill,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          children: [
+                            const ResponsiveText(
+                              text: 'رخصة القيادة',
+                              scaleFactor: .04,
+                              color: AppColors.black,
+                            ),
+                            InkWell(
+                              onTap: () => navigateTo(
+                                  context,
+                                  ImageDetails(
+                                      imagePath: model.driverLicense ?? '')),
+                              child: CustomNetworkImage(
+                                imagePath: model.driverLicense,
+                                boxFit: BoxFit.fill,
+                                width: screenSize(context).width * .2,
+                                height: 100,
+                              ),
+                            ),
+                          ],
                         ),
-                        const SizedBox(width: 5),
-                        CustomNetworkImage(
-                          imagePath: checkImage(model.driverData),
-                          width: p1.maxWidth * .4,
-                          height: p1.maxHeight,
-                          boxFit: BoxFit.fill,
+                        Column(
+                          children: [
+                            const ResponsiveText(
+                              text: 'رخصة السيارة',
+                              scaleFactor: .04,
+                              color: AppColors.black,
+                            ),
+                            InkWell(
+                              onTap: () => navigateTo(
+                                  context,
+                                  ImageDetails(
+                                      imagePath: model.vehicleLicense ?? '')),
+                              child: CustomNetworkImage(
+                                imagePath: model.vehicleLicense,
+                                boxFit: BoxFit.fill,
+                                width: screenSize(context).width * .2,
+                                height: 100,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            const ResponsiveText(
+                              text: 'صورة البطاقة',
+                              scaleFactor: .04,
+                              color: AppColors.black,
+                            ),
+                            InkWell(
+                              onTap: () => navigateTo(
+                                  context,
+                                  ImageDetails(
+                                      imagePath: model.nationalId ?? '')),
+                              child: CustomNetworkImage(
+                                imagePath: model.nationalId,
+                                boxFit: BoxFit.fill,
+                                width: screenSize(context).width * .2,
+                                height: 100,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ),
-                  const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          const ResponsiveText(
-                            text: 'رخصة القيادة',
-                            scaleFactor: .04,
-                            color: AppColors.black,
+                  ],
+                ),
+              )),
+          SizedBox(height: screenSize(context).height * .01),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GetBuilder<GetDriverLicenseController>(
+                builder: (controller) => controller.approveLoading
+                    ? const CustomLoadingWidget()
+                    : InkWell(
+                        onTap: () => controller.approveDriver(model.sId ?? ''),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 15,
                           ),
-                          InkWell(
-                            onTap: () => navigateTo(
-                                context,
-                                ImageDetails(
-                                    imagePath: model.driverLicense ?? '')),
-                            child: CustomNetworkImage(
-                              imagePath: model.driverLicense,
-                              boxFit: BoxFit.fill,
-                              width: screenSize(context).width * .2,
-                              height: 100,
-                            ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.green,
                           ),
-                        ],
+                          child: const ResponsiveText(
+                            text: 'قبول',
+                            scaleFactor: 0.04,
+                            color: AppColors.white,
+                          ),
+                        ),
                       ),
-                      Column(
-                        children: [
-                          const ResponsiveText(
-                            text: 'رخصة السيارة',
-                            scaleFactor: .04,
-                            color: AppColors.black,
-                          ),
-                          InkWell(
-                            onTap: () => navigateTo(
-                                context,
-                                ImageDetails(
-                                    imagePath: model.vehicleLicense ?? '')),
-                            child: CustomNetworkImage(
-                              imagePath: model.vehicleLicense,
-                              boxFit: BoxFit.fill,
-                              width: screenSize(context).width * .2,
-                              height: 100,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          const ResponsiveText(
-                            text: 'صورة البطاقة',
-                            scaleFactor: .04,
-                            color: AppColors.black,
-                          ),
-                          InkWell(
-                            onTap: () => navigateTo(
-                                context,
-                                ImageDetails(
-                                    imagePath: model.nationalId ?? '')),
-                            child: CustomNetworkImage(
-                              imagePath: model.nationalId,
-                              boxFit: BoxFit.fill,
-                              width: screenSize(context).width * .2,
-                              height: 100,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
               ),
-            )),
-        SizedBox(height: screenSize(context).height * .01),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            GetBuilder<GetDriverLicenseController>(
-              builder: (controller) => controller.approveLoading
-                  ? const CustomLoadingWidget()
-                  : InkWell(
-                      onTap: () => controller.approveDriver(model.sId ?? ''),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 15,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.green,
-                        ),
-                        child: const ResponsiveText(
-                          text: 'قبول',
-                          scaleFactor: 0.04,
-                          color: AppColors.white,
+              const SizedBox(width: 50),
+              GetBuilder<GetDriverLicenseController>(
+                builder: (controller) => controller.rejectLoading
+                    ? const CustomLoadingWidget()
+                    : InkWell(
+                        onTap: () => controller.rejectDriver(model.sId ?? ''),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 15,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.red,
+                          ),
+                          child: const ResponsiveText(
+                            text: 'رفض',
+                            scaleFactor: 0.04,
+                            color: AppColors.white,
+                          ),
                         ),
                       ),
-                    ),
-            ),
-            const SizedBox(width: 20),
-            GetBuilder<GetDriverLicenseController>(
-              builder: (controller) => controller.rejectLoading
-                  ? const CustomLoadingWidget()
-                  : InkWell(
-                      onTap: () => controller.rejectDriver(model.sId ?? ''),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8,
-                          horizontal: 15,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.red,
-                        ),
-                        child: const ResponsiveText(
-                          text: 'رفض',
-                          scaleFactor: 0.04,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    ),
-            ),
-          ],
-        ),
-      ],
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 

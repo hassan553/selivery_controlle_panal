@@ -159,7 +159,7 @@ class DriverProfileView extends StatelessWidget {
     );
   }
 
-  Row carType(context) {
+  Widget carType(context) {
     return Row(
       children: [
         Column(
@@ -171,10 +171,18 @@ class DriverProfileView extends StatelessWidget {
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
-            CustomText(
-              title: driverModel.vehicle?.model ?? '',
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+            Container(
+              constraints:
+                  BoxConstraints(maxWidth: screenSize(context).width * .4),
+              child: Text(
+                driverModel.vehicle?.model ?? '',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
             ),
           ],
         ),
@@ -184,6 +192,9 @@ class DriverProfileView extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: AppColors.primaryColor)),
           child: CustomNetworkImage(
+              width: screenSize(context).width * .4,
+              height: 100,
+              boxFit: BoxFit.fitWidth,
               imagePath: checkImage(driverModel.vehicle?.images ?? [])),
         )
       ],
