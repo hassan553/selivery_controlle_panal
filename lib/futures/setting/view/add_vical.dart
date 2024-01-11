@@ -61,7 +61,7 @@ class _AddVehicleViewState extends State<AddVehicleView> {
                               autovalidateMode:
                                   AutovalidateMode.onUserInteraction,
                               cursorColor: AppColors.primaryColor,
-                              keyboardType: TextInputType.number,
+                              keyboardType: TextInputType.text,
                               validator: (value) {
                                 if (value == null) {
                                   return 'not valid empty value';

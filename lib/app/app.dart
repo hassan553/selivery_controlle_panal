@@ -19,7 +19,7 @@ class SeliveryControl extends StatelessWidget {
       textDirection: TextDirection.rtl,
       theme: appTheme(),
       title: 'Selivery control',
-      home: const SplashView(),
+      home:  MainView(),
     );
     
   }

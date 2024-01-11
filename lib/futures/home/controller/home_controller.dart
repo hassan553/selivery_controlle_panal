@@ -40,12 +40,11 @@ class HomeController extends GetxController {
           print(error.value);
           if (result['message'] == "Token is not valid" ||
               result['message'] == 'Your are not authorized.') {
-                navigatorOff(LoginView());
-            // if (CacheStorageServices().token.isNotEmpty) {
-            //   await refreshToken();
-            // } else {
-            //   navigatorOff(LoginView());
-            // }
+            if (CacheStorageServices().token.isNotEmpty) {
+              await refreshToken();
+            } else {
+              navigatorOff(LoginView());
+            }
           }
         }
       } catch (e) {
@@ -78,14 +77,13 @@ class HomeController extends GetxController {
           refreshLoading = false;
           error.value = '';
           print('done');
-          //getHomeData();
+          getHomeData();
         } else {
           refreshLoading = false;
           error.value = result['message'];
           print(error.value);
           if (result['message'] == "Token is not valid" ||
               result['message'] == 'Your are not authorized.') {
-            print(CacheStorageServices().token);
             navigatorOff(LoginView());
           }
         }
