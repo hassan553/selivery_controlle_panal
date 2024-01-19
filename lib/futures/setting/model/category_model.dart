@@ -2,7 +2,7 @@ class CategoryModel {
   String? sId;
   String? name;
   String? image;
-  int? commission;
+  num? commission;
   int? iV;
 
   CategoryModel({this.sId, this.name, this.image, this.iV, this.commission});

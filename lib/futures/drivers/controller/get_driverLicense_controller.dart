@@ -27,7 +27,7 @@ class GetDriverLicenseController extends GetxController {
         final result = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          print('all ads   ${result['requests']}');
+          print('all ads   ${result['requests'][0]}');
           var r = result['requests'] as List;
           r.map((e) {
             allLicenseList.add(DriverLicenseModel.fromJson(e));

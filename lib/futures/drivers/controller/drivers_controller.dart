@@ -157,11 +157,12 @@ class DriversController extends GetxController {
           headers: authHeadersWithToken(CacheStorageServices().token),
         );
         final result = jsonDecode(response.body);
-
-        if (response.statusCode == 200) {
+        print('delete Driver  ${result['message']}');
+        print('delete Driver  ${response.statusCode}}');
+        if (response.statusCode == 200|| response.statusCode == 201) {
           // print('delete Driver  ${result['message']}');
           // showDialogWithGetX(result['message']);
-          navigateOff(context, AllDriversView());
+          navigateOff(context, const AllDriversView());
           deleteIsLoading.value = false;
         } else {
           deleteIsLoading.value = false;
@@ -178,7 +179,8 @@ class DriversController extends GetxController {
       showDialogWithGetX('لا يوجد اتصال بالانترنت');
     }
   }
-var vehicleLoading = false;
+
+  var vehicleLoading = false;
   Future getDriverVehicle(String id) async {
     if (await checkInternet()) {
       vehicleLoading = true;

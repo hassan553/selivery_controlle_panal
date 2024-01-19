@@ -3,12 +3,10 @@ import 'package:get/get.dart';
 import 'package:selivery_controlle_panal/core/contants/api.dart';
 import 'package:selivery_controlle_panal/futures/drivers/controller/drivers_controller.dart';
 import 'package:selivery_controlle_panal/futures/drivers/model/driver_model.dart';
-
 import '../../../../../core/functions/global_function.dart';
 import '../../../../../core/rescourcs/app_colors.dart';
 import '../../../../../core/widgets/custom_image.dart';
 import '../../../../../core/widgets/custom_text.dart';
-
 import '../../../../../core/widgets/custom_appBar.dart';
 import '../../../../../core/widgets/custom_divider.dart';
 import '../../../../../core/widgets/custom_sized_box.dart';
