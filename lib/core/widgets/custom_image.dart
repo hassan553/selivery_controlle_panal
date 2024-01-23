@@ -47,6 +47,7 @@ class CustomNetworkImage extends StatelessWidget {
   String checkImage(String? image) {
     try {
       String i = '${baseUri}images/$image';
+
       if (i == baseUri) {
         return '';
       }
@@ -58,32 +59,30 @@ class CustomNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Image.network(
-        checkImage(imagePath),
-        fit: boxFit,
-        width: width,
-        height: height,
-        loadingBuilder: (BuildContext context, Widget child,
-            ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) {
-            return child;
-          }
-          return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded /
-                      loadingProgress.expectedTotalBytes!
-                  : null,
-              color: AppColors.primaryColor,
-            ),
-          );
-        },
-        errorBuilder:
-            (BuildContext context, Object exception, StackTrace? stackTrace) {
-          return const Icon(Icons.error);
-        },
-      ),
+    return Image.network(
+      checkImage(imagePath),
+      fit: boxFit,
+      width: width,
+      height: height,
+      loadingBuilder: (BuildContext context, Widget child,
+          ImageChunkEvent? loadingProgress) {
+        if (loadingProgress == null) {
+          return child;
+        }
+        return Center(
+          child: CircularProgressIndicator(
+            value: loadingProgress.expectedTotalBytes != null
+                ? loadingProgress.cumulativeBytesLoaded /
+                    loadingProgress.expectedTotalBytes!
+                : null,
+            color: AppColors.primaryColor,
+          ),
+        );
+      },
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return const Icon(Icons.error);
+      },
     );
   }
 }

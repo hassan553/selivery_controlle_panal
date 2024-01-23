@@ -159,10 +159,8 @@ class DriversController extends GetxController {
         final result = jsonDecode(response.body);
         print('delete Driver  ${result['message']}');
         print('delete Driver  ${response.statusCode}}');
-        if (response.statusCode == 200|| response.statusCode == 201) {
-          // print('delete Driver  ${result['message']}');
-          // showDialogWithGetX(result['message']);
-          navigateOff(context, const AllDriversView());
+        if (response.statusCode == 200 || response.statusCode == 201) {
+          Future(() => navigateOff(context, const AllDriversView()));
           deleteIsLoading.value = false;
         } else {
           deleteIsLoading.value = false;

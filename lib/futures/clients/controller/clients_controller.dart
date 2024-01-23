@@ -18,6 +18,7 @@ class ClientController extends GetxController {
   RxList vehicleList = <VehicleModel>[].obs;
 
   Future<void> getTopPassengersData() async {
+    passengerList.value = <PassengerModel>[];
     if (await checkInternet()) {
       isLoading.value = true;
       try {
@@ -31,7 +32,7 @@ class ClientController extends GetxController {
           print('top passengers  $result');
           var r = result['users'] as List;
           r.map((e) {
-            passengerList.add(e);
+            passengerList.add(PassengerModel.fromJson(e));
           }).toList();
           print(passengerList);
           isLoading.value = false;
@@ -56,6 +57,7 @@ class ClientController extends GetxController {
   }
 
   Future<void> getTopVehiclesData() async {
+    vehicleList.value = <VehicleModel>[];
     if (await checkInternet()) {
       vehicleIsLoading.value = true;
 
@@ -66,13 +68,12 @@ class ClientController extends GetxController {
         );
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
-          //homeModel.value=HomeModel.fromJson(result['stats']);
           print('top Vehicles  $result');
           var r = result['vehicles'] as List;
           r.map((e) {
-            vehicleList.add(e);
+            vehicleList.add(VehicleModel.fromJson(e));
           }).toList();
-          print(vehicleList);
+          print(vehicleList[0]);
           vehicleIsLoading.value = false;
           vehicleList.isEmpty
               ? vehiclesDataError.value = 'لا يوجد بيانات'

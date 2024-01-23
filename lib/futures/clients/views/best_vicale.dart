@@ -192,10 +192,12 @@ class _BestVicaleState extends State<BestVicale> {
   }
 
   String checkImage(List<String>? images) {
+     
     if (images == null) {
       return '';
     } else if (images.isEmpty) {
       return '';
+     
     }
     return images.first;
   }
