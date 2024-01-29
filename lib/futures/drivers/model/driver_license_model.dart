@@ -1,6 +1,7 @@
 class DriverLicenseModel {
   String? sId;
   String? vehicleName;
+  bool? approved;
   List<String>? vehicleImages;
   String? nationalId;
   String? vehicleLicense;
@@ -14,9 +15,11 @@ class DriverLicenseModel {
       this.nationalId,
       this.vehicleLicense,
       this.driverLicense,
+      this.approved,
       this.driverData});
 
   DriverLicenseModel.fromJson(Map<String, dynamic> json) {
+    approved = json['approved'];
     sId = json['_id'];
     vehicleName = json['vehicle_name'];
     vehicleImages = json['vehicle_images'].cast<String>();
@@ -34,6 +37,7 @@ class DriverLicenseModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
     data['_id'] = sId;
+    data['approved'] = approved;
     data['vehicle_name'] = vehicleName;
     data['vehicle_images'] = vehicleImages;
     data['National_id'] = nationalId;

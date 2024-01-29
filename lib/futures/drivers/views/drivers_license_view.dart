@@ -192,7 +192,8 @@ class DriversLicenseView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              GetBuilder<GetDriverLicenseController>(
+             if(model.approved==false)...[
+               GetBuilder<GetDriverLicenseController>(
                 builder: (controller) => controller.approveLoading
                     ? const CustomLoadingWidget()
                     : InkWell(
@@ -214,29 +215,32 @@ class DriversLicenseView extends StatelessWidget {
                         ),
                       ),
               ),
+             ],
               const SizedBox(width: 50),
-              GetBuilder<GetDriverLicenseController>(
-                builder: (controller) => controller.rejectLoading
-                    ? const CustomLoadingWidget()
-                    : InkWell(
-                        onTap: () => controller.rejectDriver(model.sId ?? ''),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 8,
-                            horizontal: 15,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.red,
-                          ),
-                          child: const ResponsiveText(
-                            text: 'رفض',
-                            scaleFactor: 0.04,
-                            color: AppColors.white,
+             if(model.approved==true)...[
+               GetBuilder<GetDriverLicenseController>(
+                  builder: (controller) => controller.rejectLoading
+                      ? const CustomLoadingWidget()
+                      : InkWell(
+                          onTap: () => controller.rejectDriver(model.sId ?? ''),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8,
+                              horizontal: 15,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.red,
+                            ),
+                            child: const ResponsiveText(
+                              text: 'رفض',
+                              scaleFactor: 0.04,
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
-                      ),
-              ),
+                )
+             ],
             ],
           ),
         ],
