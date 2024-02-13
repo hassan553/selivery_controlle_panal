@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/core/functions/global_function.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
-import 'package:selivery_controlle_panal/futures/setting/view/add_vical.dart';
-import 'package:selivery_controlle_panal/futures/setting/view/all_vichal.dart';
+import '../../../core/functions/global_function.dart';
+import '../../../core/widgets/custom_appBar.dart';
+import '../../../core/widgets/custom_image.dart';
+import 'add_vical.dart';
+import 'all_vichal.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/services/cache_storage_services.dart';
 import '../../../core/widgets/custom_column_divider.dart';
@@ -43,14 +43,14 @@ class _SettingViewState extends State<SettingView> {
               const CustomSizedBox(value: .01),
               InkWell(
                 onTap: () => navigateTo(context, const AddVehicleView()),
-                child: SizedBox(
+                child: const SizedBox(
                   height: 50,
                   child: Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
-                      const Divider(color: Colors.grey),
+                      Divider(color: Colors.grey),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 5),
+                        padding: EdgeInsets.only(bottom: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,8 +75,8 @@ class _SettingViewState extends State<SettingView> {
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 5),
-                            const ResponsiveText(
+                            SizedBox(width: 5),
+                            ResponsiveText(
                               text: 'اضافه مركبه',
                               scaleFactor: .06,
                               color: AppColors.black,
@@ -108,13 +108,13 @@ class _SettingViewState extends State<SettingView> {
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              const Divider(color: Colors.grey),
+              Divider(color: Colors.grey),
               Padding(
-                padding: const EdgeInsets.only(bottom: 5),
+                padding: EdgeInsets.only(bottom: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.logout,
                       color: Colors.red,
@@ -138,7 +138,7 @@ class _SettingViewState extends State<SettingView> {
   Widget customSettingWidget(
       BuildContext context, String imagePath, String title) {
     return InkWell(
-      onTap: () => navigateTo(context, AllVicale()),
+      onTap: () => navigateTo(context, const AllVicale()),
       child: Padding(
         padding: const EdgeInsets.only(right: 10),
         child: SizedBox(

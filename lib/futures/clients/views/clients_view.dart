@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/futures/clients/controller/clients_controller.dart';
-import 'package:selivery_controlle_panal/futures/clients/views/best_client.dart';
-import 'package:selivery_controlle_panal/futures/clients/views/best_vicale.dart';
+import '../controller/clients_controller.dart';
+import 'best_client.dart';
+import 'best_vicale.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';

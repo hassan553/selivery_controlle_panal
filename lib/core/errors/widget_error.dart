@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:selivery_controlle_panal/core/rescourcs/app_colors.dart';
+import '../rescourcs/app_colors.dart';
 
 customErrorWidget() {
   ErrorWidget.builder(FlutterErrorDetails(exception: (error) {

@@ -15,7 +15,6 @@ class GetDriverLicenseController extends GetxController {
   RxList<DriverLicenseModel> allLicenseList = <DriverLicenseModel>[].obs;
 
   Future<void> getAllLicenseData() async {
-    print(CacheStorageServices().token);
     if (await checkInternet()) {
       isLoading.value = true;
       try {
@@ -27,7 +26,6 @@ class GetDriverLicenseController extends GetxController {
         final result = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          print('all ads   ${result['requests'][0]}');
           var r = result['requests'] as List;
           r.map((e) {
             allLicenseList.add(DriverLicenseModel.fromJson(e));
@@ -41,7 +39,6 @@ class GetDriverLicenseController extends GetxController {
           allLicenseDataError.value = result['message'];
         }
       } catch (e) {
-        print(e.toString());
         isLoading.value = false;
         allLicenseDataError.value = e.toString();
       } finally {
@@ -50,7 +47,6 @@ class GetDriverLicenseController extends GetxController {
     } else {
       allLicenseDataError.value = 'لا يوجد اتصال بالانترنت';
     }
-    print(allLicenseDataError.value);
   }
 
   var approveLoading = false;

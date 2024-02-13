@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
-import 'package:selivery_controlle_panal/core/widgets/error_compant.dart';
-import 'package:selivery_controlle_panal/futures/clients/controller/clients_controller.dart';
-import 'package:selivery_controlle_panal/futures/clients/model/passengers_model.dart';
+import '../../../core/widgets/custom_loading_widget.dart';
+import '../../../core/widgets/error_compant.dart';
+import '../controller/clients_controller.dart';
+import '../model/passengers_model.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';

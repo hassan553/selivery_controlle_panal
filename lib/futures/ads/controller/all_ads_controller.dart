@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
+import '../../../core/functions/internet_checker.dart';
 import 'package:http/http.dart' as http;
-import 'package:selivery_controlle_panal/core/services/cache_storage_services.dart';
+import '../../../core/services/cache_storage_services.dart';
 import '../../../core/contants/api.dart';
 import '../../../core/widgets/show_awesomeDialog.dart';
-import '../../../main.dart';
 import '../model/ads_model.dart';
 
 class AllAdsController extends GetxController {
@@ -27,7 +26,6 @@ class AllAdsController extends GetxController {
         final result = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          print('all ads   ${result['ads']}');
           var r = result['ads'] as List;
           r.map((e) {
             allAdsList.add(AdsModel.fromJson(e));
@@ -41,7 +39,6 @@ class AllAdsController extends GetxController {
           allAdsDataError.value = result['message'];
         }
       } catch (e) {
-        print(e.toString());
         isLoading.value = false;
         allAdsDataError.value = e.toString();
       } finally {
@@ -50,7 +47,6 @@ class AllAdsController extends GetxController {
     } else {
       allAdsDataError.value = 'لا يوجد اتصال بالانترنت';
     }
-    print(allAdsList);
   }
 
   void deleteAds(String? id) async {

@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:selivery_controlle_panal/core/contants/api.dart';
-import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
-import 'package:selivery_controlle_panal/futures/clients/model/passengers_model.dart';
-import 'package:selivery_controlle_panal/futures/clients/model/vehicle_model.dart';
+import '../../../core/contants/api.dart';
+import '../../../core/functions/internet_checker.dart';
+import '../model/passengers_model.dart';
+import '../model/vehicle_model.dart';
 
 import '../../../core/services/cache_storage_services.dart';
 
@@ -29,12 +29,10 @@ class ClientController extends GetxController {
         final result = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          print('top passengers  $result');
           var r = result['users'] as List;
           r.map((e) {
             passengerList.add(PassengerModel.fromJson(e));
           }).toList();
-          print(passengerList);
           isLoading.value = false;
           passengerList.isEmpty
               ? passengersDataError.value = 'لا يوجد بيانات'
@@ -44,7 +42,6 @@ class ClientController extends GetxController {
           passengersDataError.value = result['message'];
         }
       } catch (e) {
-        print(e.toString());
         isLoading.value = false;
         passengersDataError.value = e.toString();
       } finally {
@@ -53,7 +50,6 @@ class ClientController extends GetxController {
     } else {
       passengersDataError.value = 'لا يوجد اتصال بالانترنت';
     }
-    print(passengersDataError.value);
   }
 
   Future<void> getTopVehiclesData() async {
@@ -68,12 +64,10 @@ class ClientController extends GetxController {
         );
         final result = jsonDecode(response.body);
         if (response.statusCode == 200) {
-          print('top Vehicles  $result');
           var r = result['vehicles'] as List;
           r.map((e) {
             vehicleList.add(VehicleModel.fromJson(e));
           }).toList();
-          print(vehicleList[0]);
           vehicleIsLoading.value = false;
           vehicleList.isEmpty
               ? vehiclesDataError.value = 'لا يوجد بيانات'
@@ -91,7 +85,6 @@ class ClientController extends GetxController {
     } else {
       vehiclesDataError.value = 'لا يوجد اتصال بالانترنت';
     }
-    print(vehiclesDataError.value);
   }
 
   @override

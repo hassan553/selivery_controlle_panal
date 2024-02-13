@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:selivery_controlle_panal/core/functions/global_function.dart';
-
-import 'package:selivery_controlle_panal/core/rescourcs/app_colors.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_sized_box.dart';
-import 'package:selivery_controlle_panal/futures/auth/view/login_view.dart';
-import 'package:selivery_controlle_panal/futures/home/view/main_view.dart';
-
+import '../../../core/functions/global_function.dart';
+import '../../../core/rescourcs/app_colors.dart';
+import '../../../core/widgets/custom_image.dart';
+import '../../../core/widgets/custom_sized_box.dart';
+import '../../auth/view/login_view.dart';
+import '../../home/view/main_view.dart';
 import '../../../core/services/cache_storage_services.dart';
 import '../../../core/widgets/responsive_text.dart';
-//dart run flutter_native_splash:create
-//dart run flutter_native_splash:create --path=flutter_native_splash.yaml
+
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 

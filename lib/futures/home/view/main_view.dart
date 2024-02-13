@@ -9,7 +9,7 @@ import '../controller/home_controller.dart';
 import 'home_view.dart';
 
 class MainView extends StatelessWidget {
-  MainView({super.key});
+   MainView({super.key});
 
   final controller = Get.put(HomeController());
 

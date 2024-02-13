@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/core/rescourcs/app_colors.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_button.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_sized_box.dart';
-import 'package:selivery_controlle_panal/core/widgets/responsive_text.dart';
+import '../../../core/rescourcs/app_colors.dart';
+import '../../../core/widgets/custom_button.dart';
+import '../../../core/widgets/custom_loading_widget.dart';
+import '../../../core/widgets/custom_sized_box.dart';
+import '../../../core/widgets/responsive_text.dart';
 
 import '../../../core/functions/global_function.dart';
 import '../../../core/widgets/custom_image.dart';
@@ -13,6 +13,8 @@ import '../controller/login_controller.dart';
 class LoginView extends StatelessWidget {
   final loginController = Get.put(LoginController());
   final formKey = GlobalKey<FormState>();
+
+  LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {

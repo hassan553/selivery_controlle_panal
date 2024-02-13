@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/core/rescourcs/app_colors.dart';
-import 'package:selivery_controlle_panal/core/services/cache_storage_services.dart';
-import 'package:selivery_controlle_panal/futures/setting/model/category_model.dart';
-
+import '../../../core/rescourcs/app_colors.dart';
+import '../model/category_model.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/widgets/custom_image.dart';
 import '../../../core/widgets/responsive_text.dart';
@@ -111,8 +109,7 @@ class _CustomDialogState extends State<CustomDialog> {
                 MaterialButton(
                   color: AppColors.primaryColor,
                   onPressed: () {
-                    print(CacheStorageServices().token);
-                    print(widget.categoryModel?.sId);
+                    
                     settingController.updateDataWithFile(
                         widget.categoryModel?.sId ?? '',
                         {

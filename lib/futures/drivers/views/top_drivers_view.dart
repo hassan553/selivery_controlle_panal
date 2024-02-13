@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/futures/drivers/controller/drivers_controller.dart';
-import 'package:selivery_controlle_panal/futures/drivers/views/all_drivers_view.dart';
+import '../controller/drivers_controller.dart';
+import 'all_drivers_view.dart';
 import '../../../core/functions/global_function.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_appBar.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:selivery_controlle_panal/core/functions/global_function.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
+import '../../../core/functions/global_function.dart';
+import '../../../core/widgets/custom_appBar.dart';
+import '../../../core/widgets/custom_image.dart';
 
 class ImageDetails extends StatelessWidget {
   final String imagePath;

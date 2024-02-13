@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:selivery_controlle_panal/core/functions/global_function.dart';
-import 'package:selivery_controlle_panal/core/rescourcs/app_colors.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_sized_box.dart';
-
+import '../../../core/functions/global_function.dart';
+import '../../../core/rescourcs/app_colors.dart';
+import '../../../core/widgets/custom_image.dart';
+import '../../../core/widgets/custom_sized_box.dart';
 import '../../../core/widgets/responsive_text.dart';
 
 class SearchView extends StatelessWidget {

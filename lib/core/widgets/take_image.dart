@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:selivery_controlle_panal/core/widgets/responsive_text.dart';
+import 'responsive_text.dart';
 
 import '../functions/global_function.dart';
 import '../rescourcs/app_colors.dart';

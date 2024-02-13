@@ -1,6 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_button.dart';
+import 'custom_button.dart';
 
 import '../functions/global_function.dart';
 import '../rescourcs/app_colors.dart';

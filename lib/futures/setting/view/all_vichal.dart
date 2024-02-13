@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/core/contants/api.dart';
-import 'package:selivery_controlle_panal/core/functions/global_function.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
-import 'package:selivery_controlle_panal/futures/setting/controller/setting_controller.dart';
-import 'package:selivery_controlle_panal/futures/setting/model/category_model.dart';
+import '../../../core/functions/global_function.dart';
+import '../../../core/widgets/custom_appBar.dart';
+import '../../../core/widgets/custom_loading_widget.dart';
+import '../controller/setting_controller.dart';
+import '../model/category_model.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_image.dart';

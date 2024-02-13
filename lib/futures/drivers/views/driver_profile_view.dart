@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/core/contants/api.dart';
-import 'package:selivery_controlle_panal/futures/drivers/controller/drivers_controller.dart';
-import 'package:selivery_controlle_panal/futures/drivers/model/driver_model.dart';
+import '../controller/drivers_controller.dart';
+import '../model/driver_model.dart';
 import '../../../../../core/functions/global_function.dart';
 import '../../../../../core/rescourcs/app_colors.dart';
 import '../../../../../core/widgets/custom_image.dart';

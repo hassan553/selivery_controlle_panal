@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_image.dart';
-import 'package:selivery_controlle_panal/core/widgets/responsive_text.dart';
+import 'custom_image.dart';
+import 'responsive_text.dart';
 
 import '../functions/global_function.dart';
 import '../rescourcs/app_colors.dart';

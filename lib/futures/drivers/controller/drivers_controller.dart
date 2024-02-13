@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:selivery_controlle_panal/core/contants/api.dart';
-import 'package:selivery_controlle_panal/core/functions/global_function.dart';
-import 'package:selivery_controlle_panal/core/functions/internet_checker.dart';
-import 'package:selivery_controlle_panal/core/widgets/show_awesomeDialog.dart';
-import 'package:selivery_controlle_panal/futures/drivers/views/all_drivers_view.dart';
+import '../../../core/contants/api.dart';
+import '../../../core/functions/global_function.dart';
+import '../../../core/functions/internet_checker.dart';
+import '../../../core/widgets/show_awesomeDialog.dart';
+import '../views/all_drivers_view.dart';
 import '../../../core/services/cache_storage_services.dart';
 import '../model/driver_model.dart';
 
@@ -58,13 +58,11 @@ class DriversController extends GetxController {
   ].obs;
   final searchText = ''.obs;
   List<DriverModel?> get filteredItems {
-    print(searchText.value);
     if (searchText.value.isEmpty) {
       return driversList;
     } else {
       return driversList.where((item) {
         String? name = item.name ?? '';
-        print(name);
         return name.toLowerCase().startsWith(searchText.value.toLowerCase());
       }).toList();
     }
@@ -82,7 +80,6 @@ class DriversController extends GetxController {
         final result = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          print('All Drivers  $result');
           var r = result['drivers'] as List;
           r.map((e) {
             driversList.add(DriverModel.fromJson(e));
@@ -90,14 +87,12 @@ class DriversController extends GetxController {
           driversList.isEmpty
               ? allDriverserror.value = 'لا يوجد بيانات'
               : allDriverserror.value = '';
-          print('i get succ$driversList');
           allDriversLoading.value = false;
         } else {
           allDriversLoading.value = false;
           allDriverserror.value = result['message'];
         }
       } catch (e) {
-        print(e.toString());
         allDriversLoading.value = false;
         allDriverserror.value = e.toString();
       } finally {
@@ -106,7 +101,6 @@ class DriversController extends GetxController {
     } else {
       allDriverserror.value = 'لا يوجد اتصال بالانترنت';
     }
-    print(allDriverserror.value);
   }
 
   Future<void> getTopDriversData() async {
@@ -121,7 +115,6 @@ class DriversController extends GetxController {
         final result = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          print('top Drivers  $result');
           var r = result['drivers'] as List;
           r.map((e) {
             bestDriversList.add(DriverModel.fromJson(e));
@@ -129,14 +122,12 @@ class DriversController extends GetxController {
           filteredItems.isEmpty
               ? error.value = 'لا يوجد بيانات'
               : error.value = '';
-          print('i get succ$bestDriversList');
           isLoading.value = false;
         } else {
           isLoading.value = false;
           error.value = result['message'];
         }
       } catch (e) {
-        print(e.toString());
         isLoading.value = false;
         error.value = e.toString();
       } finally {
@@ -145,7 +136,6 @@ class DriversController extends GetxController {
     } else {
       error.value = 'لا يوجد اتصال بالانترنت';
     }
-    print(error.value);
   }
 
   void deleteDriverAccount(String id, BuildContext context) async {
@@ -157,8 +147,7 @@ class DriversController extends GetxController {
           headers: authHeadersWithToken(CacheStorageServices().token),
         );
         final result = jsonDecode(response.body);
-        print('delete Driver  ${result['message']}');
-        print('delete Driver  ${response.statusCode}}');
+       
         if (response.statusCode == 200 || response.statusCode == 201) {
           Future(() => navigateOff(context, const AllDriversView()));
           deleteIsLoading.value = false;
@@ -167,7 +156,6 @@ class DriversController extends GetxController {
           showDialogWithGetX(result['message']);
         }
       } catch (e) {
-        print(e.toString());
         deleteIsLoading.value = false;
         showDialogWithGetX(e.toString());
       } finally {

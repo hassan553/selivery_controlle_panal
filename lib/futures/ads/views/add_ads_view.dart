@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:selivery_controlle_panal/core/functions/global_function.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_appBar.dart';
-import 'package:selivery_controlle_panal/core/widgets/custom_loading_widget.dart';
-import 'package:selivery_controlle_panal/futures/ads/controller/ads_controller.dart';
+import '../../../core/functions/global_function.dart';
+import '../../../core/widgets/custom_appBar.dart';
+import '../../../core/widgets/custom_loading_widget.dart';
+import '../controller/ads_controller.dart';
 import '../../../core/rescourcs/app_colors.dart';
 import '../../../core/widgets/custom_column_divider.dart';
 import '../../../core/widgets/custom_image.dart';
